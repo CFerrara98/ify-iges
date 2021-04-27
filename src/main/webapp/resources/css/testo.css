@@ -1,0 +1,129 @@
+#logo_txt{
+  display:inline;
+  text-transform:uppercase;
+  color:#ff9900;
+  font-family: helvetica;
+  font-size:87%;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+#titolo{
+	color: #ff9900;
+	font-size: 30px;
+}
+
+#pos
+{
+	margin-left:339%;
+}
+	
+	
+.card{
+	max-width: 400px;
+	max-height: 700px;
+	margin: 15%;
+	border: 0px;
+	
+}
+
+.card-header, .card-footer{
+	text-transform:uppercase;
+	text-align: right;
+	font-weight: bold;
+	font-family: helvetica;
+	/*color: #fff;*/ 
+	background-color: #ff9d00;
+	border: 0;
+}	
+
+.btn{
+	background-color: #ffBB44;
+}
+
+.btn:hover{
+	background-color: #fff;
+	/*mettere C67600*/
+}
+.card-body
+{
+	background-color: #ffBB44;
+	border: 1px solid #ff9900;
+	
+}
+
+.card-footer{
+	text-align: left;
+}
+
+#immagine_pannello{
+	object-fit: fill;
+	position:relative;
+	vertical-align: text-middle;
+	height: 30%; 
+	width: 90%;
+	display: block;
+	margin: 15px;
+    filter: opacity(90%);
+	
+}
+
+#testo_pannello{
+	width: 100%
+	display:inline;
+	text-transform:uppercase;
+	text-align: right;
+	font-weight: bold;
+	color:#fff;
+	font-family: helvetica;
+	margin: 5px 0;
+}
+
+.my-4
+{
+	border-top: 5px solid #FF9900;
+	/*line-height: 66px;*/
+	margin-top: -0.5rem!important;
+	border: 2px solid #ff9900;
+}
+
+.testo
+{
+	margin-top:2%;
+}
+
+#aziende-convenzionate{
+	display: flex;
+	justify-content: space-evenly;
+	text-align: center;
+}
+
+.btn-warning{
+		background-color: #ff9900;
+}
+
+.contenitore
+{
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+.color
+{
+	/*background-color: #DADADA!important;*/
+	/*background-color: #ff9900!important;*/
+	/*background-color: #303870!important;*/
+	background-color: #666666!important;
+}
+
+.colorsottonav
+{
+	/*background-color: #666666!important;*/
+	background-color: #DADADA!important;
+}
+
+.imageborder 
+{
+	/*border: 1px solid  #000;*/
+	/*border-radius: 10px 10px 10px 10px;*/ 
+}

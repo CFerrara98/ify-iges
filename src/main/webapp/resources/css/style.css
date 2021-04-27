@@ -1,0 +1,364 @@
+.col-lg-4.mb-4.card-hompage{
+	margin-bottom: 50px !important;
+}
+
+.page-item.active .page-link {
+	color: #fff !important;
+    background-color: #666666 !important;
+    border-color: #666666 !important;
+}
+
+.page-list{
+	display: none!important;
+}
+
+.page-link{
+	color: #666666 !important;
+}
+
+.container.container-footer {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.dati-footer.col.col-mr-auto, .dati-footer.col.col-mx-auto, .dati-footer.col.col-ml-auto
+	{
+	padding-left: 80px;
+	padding-right: 80px;
+}
+
+@media only screen and (max-width: 1000px) {
+	.dati-footer.col.col-mr-auto, .dati-footer.col.col-mx-auto, .dati-footer.col.col-ml-auto
+		{
+		padding: 0;
+	}
+}
+
+.card-body {
+	text-align: center;
+}
+
+.card-text {
+	text-align: center;
+	padding-top: 10px;
+}
+
+.btn:focus, .btn:active {
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+.btn.btn-primary.dettagli-btn {
+	font-weight: bold;
+	background-color: #3b5998;
+	border: 2px solid #3b5998;
+}
+
+.btn.btn-primary.dettagli-btn:hover {
+	background-color: #3b5998 !important;
+}
+
+.btn.btn-primary.aziende-convenzionate-btn {
+	padding: 3px 4px;
+	background-color: #fff;
+	border: #fff;
+}
+
+.btn.btn-primary.aziende-convenzionate-btn:hover {
+	background-color: #fff !important;
+}
+
+.btn.btn-primary.aziende-convenzionate-btn.dettagli-btn {
+	color: #ff9438 !important;
+	font-weight: initial !important;
+	border: 1px solid #ff9438 !important;
+	width: 70px;
+}
+
+.btn.btn-primary.aziende-convenzionate-btn.dettagli-btn:hover, .btn.btn-primary.aziende-convenzionate-btn.invia-btn:hover
+	{
+	color: #ff9438 !important;
+	border: 1px solid #ff9438 !important;
+}
+
+.btn.btn-primary.aziende-convenzionate-btn.dettagli-btn:focus {
+	background-color: #fff !important;
+	border: #fff !important;
+	border: 1px solid #ff9438 !important;
+}
+
+.btn.btn-primary.aziende-convenzionate-btn.invia-btn {
+	color: #ff9438 !important;
+	font-weight: initial !important;
+	border: 1px solid #ff9438 !important;
+	width: 120px;
+}
+
+.btn.btn-success.modalbutton-conferma.btn-danger {
+	border: 2px solid transparent !important;
+}
+
+.btn.btn-success.modalbutton-conferma.btn-danger:hover {
+	background-color: #9c2736 !important;
+	border: 2px solid transparent !important;
+}
+
+td {
+	text-align: center;
+}
+
+.btn.btn-primary {
+	background: #ff9438;
+	border: 2px solid #ff9438;
+	color: #fff !important;
+}
+
+.btn.btn-primary:hover, .btn.btn-primary:focus {
+	background: #ff9438 !important;
+	border: 2px solid #fff !important;
+	color: #fff !important;
+}
+
+.ify-title:hover {
+	color: #fff !important;
+}
+
+.ify-title {
+	text-align: center;
+}
+
+.login-btn.btn {
+	background-color: #ff9438;
+	border: 2px solid #212529 !important;
+	color: #212529 !important;
+	width: 120px;
+	margin: 15px;
+}
+
+.login-btn.btn:hover {
+	background-color: #ff9438 !important;
+	border-color: #fff !important;
+	color: #fff !important;
+	box-shadow: 0 0 3px #fff, insert 0 0 4px 1px #fff;
+}
+
+.bg-dark {
+	background-color: #ff9438 !important;
+}
+
+.navbar-brand {
+	color: #303870 !important;
+	font-weight: bold;
+}
+
+.figure {
+	text-align: center;
+}
+
+.btn-warning {
+	outline: none !important;
+	outline-color: #7a7067 !important;
+	color: #fff;
+	background-color: orange;
+	border-color: #fff;
+	border: 1.7px solid;
+	/*
+	border-right: 1.7px solid;
+    border-left: 1.7px solid;
+    border-top: 1.7px solid;
+    */
+}
+
+.btn-warning:focus {
+	outline: none !important;
+}
+
+.btn-sm:focus, .btn-sm:active {
+	outline: none !important;
+	color: #fff !important;
+	background-color: #fff !important;
+	border-color: #7a7067 !important;
+}
+
+.btn-warning:checked {
+	border: 0px !important;
+}
+
+/*
+.btn-warning:focus
+{
+	color: #7a7067;
+    background-color: #fff;
+    border-color: #fff;
+    font-weight: bold;
+	border: 1.7px solid;
+}
+*/
+.containerheader {
+	margin-right: 0px;
+	margin-left: 0px;
+}
+
+.bottone {
+	border-top: 5px solid #FF9900;
+	/*line-height: 66px;*/
+	margin-top: 3.0rem !important;
+	border: 0.6px solid #fff;
+	margin-bottom: 0rem !important;
+}
+
+figure {
+	margin: 0 0 -0.5rem;
+}
+
+.btn-sm {
+	padding: 0.25rem 3.5rem;
+}
+
+/*.btn:hover{
+	background-color: #fff;
+	color: #ff9438;
+	border-color: #fff;
+	border-right: 1.7px solid;
+    border-left: 1.7px solid;
+    border-top: 1.7px solid;
+	/*mettere C67600*/
+}
+* /
+
+.btn:focus {
+	background-color: #fff !important;
+	border: 1.7px solid !important;
+	color: #7a7067 !important;
+}
+
+.testo {
+	text-shadow: 2px 2px 2px #666666;
+	margin-top: 0;
+	margin-bottom: 1rem;
+}
+
+.testosopracard {
+	text-align: center;
+}
+
+.bottonecard.btn.btn-primary {
+	background-color: #ff9438;
+	border: 2px solid #ff9438 !important;
+	color: #fff;
+	width: 156px;
+	margin: 15px;
+}
+
+.bottonecard:hover {
+	border-color: #212529;
+	color: #212529;
+	box-shadow: 0 0 3px #212529, insert 0 0 4px 1px #212529;
+}
+
+.py-5 {
+	padding-top: 0rem !important;
+}
+
+.col {
+	text-align: center !important;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.info-footer {
+	display: block;
+}
+
+.footer-text {
+	color: white;
+	margin: 0px;
+}
+
+footer {
+	clear: both;
+	position: relative;
+	background-color: #444444 !important;
+	width: 100%;
+	bottom: 0;
+}
+
+.bottone-card-centro {
+	text-align: center !important;
+}
+
+.reg {
+	background-color: #ff9438;
+	color: #fff !important;
+	width: 120px;
+}
+
+#red {
+	background-color: #dc3545;
+}
+
+#red:hover {
+	background-color: #c81115;
+	color: #fff !important;
+}
+
+#green {
+	background-color: #28a745;
+}
+
+#green:hover {
+	background-color: #23943d;
+	color: #fff !important;
+}
+
+.reg:hover {
+	background-color: #ff7709;
+	color: #fff !important;
+}
+
+.titolo {
+	text-align: center;
+}
+
+.button-dash-login {
+	background-color: #ff9438;
+	color: #212529 !important;
+	width: auto;
+	margin: 15px;
+}
+
+.bootstrap-table .table thead > tr > th {
+    padding: 0;
+    margin: 0;
+    font-weight: normal !important;
+}
+
+.alert-home{
+    margin: 0px !important;
+    z-index: 2 !important;
+    border-radius: 0px !important;
+    width: 100%;
+    margin-top: 12px !important;
+}
+
+.alert-dashboard {
+    margin: 0px !important;
+    z-index: 2 !important;
+    border-radius: 0px !important;
+    width: 100%;
+    margin-bottom: 15px!important;
+}
+
+.header-div{
+	margin: 0px !important;
+}
+
+@media only screen and (max-width: 600px) {
+	.ify-title {
+		display: none;
+	}
+	.testosopracard {
+		font-size: 20px;
+	}
+}

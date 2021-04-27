@@ -1,0 +1,213 @@
+body {
+	font-size: .875rem;
+}
+
+#content {
+	background-color: #dadada;
+}
+
+table {
+	background-color: white;
+}
+
+.header {
+	color: rgba(0, 0, 0, 0.79);
+	font-family: helvetica;
+	line-height: 120%;
+	padding: 5px 10px;
+	background-color: rgba(255, 255, 255, 0.4);
+	border-left: 5px solid #ff9438;
+	max-width: 460px;
+	font-size: 20px;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		"Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	font-weight: 500;
+	color: #212529;
+	text-transform: uppercase;
+	letter-spacing: 4px;
+}
+
+@media only screen and (max-width: 600px) {
+	.header {
+		border-left: none;
+	}
+}
+
+/*
+ * Utilities
+ */
+.border-top {
+	border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+	border-bottom: 1px solid #e5e5e5;
+}
+
+/*css tabella*/
+dt {
+	display: inline;
+}
+
+dd {
+	display: inline-block;
+}
+
+.detail {
+	column-span: 3;
+}
+
+.detail-icon {
+	color: #ff9438;
+}
+
+.approve-icon {
+	color: rgb(40, 167, 69);
+}
+
+.reject-icon {
+	color: rgb(208, 43, 59);
+}
+
+dl {
+	max-height: 120px;
+	overflow-y: scroll;
+}
+
+th, .valuta {
+	text-align: center;
+}
+
+#filter {
+	position: relative;
+	left: 70%;
+	margin: 3px 0;
+	width: 30%;
+}
+
+/*CSS Modal */
+.modalbutton-annulla:hover {
+	background-color: #007bff !important;
+	color: #fff !important;
+	border-color: #dc3545 !important;
+}
+
+.modalbutton-conferma:hover {
+	background-color: #007bff !important;
+	color: #fff !important;
+	border-color: #1c7430 !important;
+	/*border: 100px !important;*/
+	border-left: 2px solid #1c7430 !important;
+	border-right: 2px solid #1c7430 !important;
+	border-top: 2px solid #1c7430 !important;
+	border-bottom: 2px solid #1c7430 !important;
+	/*border: 10px solid !important;*/
+}
+
+.bordo-carta {
+	border-radius: 5px;
+}
+
+.bordo-carta-footer {
+	border-top: 2.5px solid #FEE331 !important;
+}
+
+.testo-carta-footer {
+	color: #ff9438 !important;
+	font-weight: 500 !important;
+}
+
+.dimensione-carta {
+	height: fit-content;
+}
+
+.my_img {
+	object-fit: contain;
+	height: 250px;
+	max-width: 100%;
+	display: block;
+	margin: 0px auto;
+	filter: opacity(80%);
+}
+
+.h4-spazio {
+	margin-bottom: 27px !important;
+}
+
+.btn-dimensione {
+	width: 163px !important;
+	margin: 0px !important;
+}
+
+.btn-dimensione-responsabile {
+	width: 179px !important;
+	margin: 0px !important;
+}
+
+.btn-dimensione-studente {
+	width: 194px !important;
+	margin: 0px !important;
+}
+
+/*arrow menù drop*/
+.dropdown-menu-arrow {
+	top: -25px;
+	left: 50%;
+	width: 0;
+	height: 0;
+	position: relative;
+}
+
+.dropdown-menu-arrow:before, .dropdown-menu-arrow:after {
+	content: "";
+	position: absolute;
+	display: block;
+	width: 0;
+	height: 0;
+	border-width: 7px 8px;
+	border-style: solid;
+	border-color: transparent;
+	z-index: 1001;
+}
+
+.dropdown-menu-arrow:after {
+	bottom: -18px;
+	right: -8px;
+	border-bottom-color: #fff;
+}
+
+.dropdown-menu-arrow:before {
+	bottom: -17px;
+	right: -8px;
+	border-bottom-color: rgba(0, 0, 0, .15);
+}
+
+.custom-drop-menu-testo {
+	text-align: center !important;
+}
+
+.testo-tabella {
+	font-size: 18px;
+	text-align: center;
+	vertical-align: middle !important;
+}
+
+.custom-drop-menu {
+	top: 85% !important;
+	left: 9% !important;
+	min-width: 9rem !important;
+}
+
+.dropdown-toggle::after {
+	right: auto !important;
+}
+
+.active {
+	color: #ff9438 !important;
+}
+
+.tir {
+	height: 40px;
+	width: 40px;
+}
