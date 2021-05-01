@@ -1,5 +1,6 @@
 package it.unisa.di.is.gc1.ify.web;
 
+import it.unisa.di.is.gc1.ify.DocenteTutor.DocenteTutor;
 import it.unisa.di.is.gc1.ify.Studente.RichiestaIscrizione;
 import it.unisa.di.is.gc1.ify.Studente.RichiestaIscrizioneService;
 import it.unisa.di.is.gc1.ify.Studente.Studente;
@@ -100,6 +101,9 @@ public class UtenzaController {
 		} else if (utente instanceof ResponsabileUfficioTirocini) {
 			request.getSession().setAttribute("email", utente.getEmail());
 			return "responsabileDashboard";
+		} else if (utente instanceof DocenteTutor) {
+			request.getSession().setAttribute("email", utente.getEmail());
+			return "docenteDashboard";
 		} else {
 			return "redirect:/";
 		}
