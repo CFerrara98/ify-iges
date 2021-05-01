@@ -1,5 +1,6 @@
 package it.unisa.di.is.gc1.ify.domandaTirocinio;
 
+import it.unisa.di.is.gc1.ify.DocenteTutor.DocenteTutor;
 import it.unisa.di.is.gc1.ify.Studente.Studente;
 import it.unisa.di.is.gc1.ify.convenzioni.Azienda;
 import it.unisa.di.is.gc1.ify.progettoFormativo.ProgettoFormativo;
@@ -36,9 +37,10 @@ public class DomandaTirocinio {
 	 * @param progettoFormativo è il progetto formativo della domanda di tirocinio.
 	 * @param azienda e' l'azienda della domanda di tirocinio.
 	 * @param studente e' lo studente della domanda di tirocinio.
+	 * @param tutor e' il docente scelto per la domanda di tirocinio.
 	 */
 	public DomandaTirocinio(long id, String conoscenze, String motivazioni, LocalDate dataInizio, LocalDate dataFine,
-			int cfu, String stato, ProgettoFormativo progettoFormativo, Azienda azienda, Studente studente) {
+			int cfu, String stato, ProgettoFormativo progettoFormativo, Azienda azienda, Studente studente, DocenteTutor tutor) {
 		super();
 		this.id = id;
 		this.conoscenze = conoscenze;
@@ -50,6 +52,24 @@ public class DomandaTirocinio {
 		this.progettoFormativo = progettoFormativo;
 		this.azienda = azienda;
 		this.studente = studente;
+		this.docenteTutor = tutor;
+	}
+
+	public DomandaTirocinio(long id, String conoscenze, String motivazioni, LocalDate dataInizio, LocalDate dataFine,
+							int cfu, String stato, ProgettoFormativo progettoFormativo, Azienda azienda, Studente studente) {
+		super();
+		this.id = id;
+		this.conoscenze = conoscenze;
+		this.motivazioni = motivazioni;
+		this.dataInizio = dataInizio;
+		this.dataFine = dataFine;
+		this.cfu = cfu;
+		this.stato = stato;
+		this.progettoFormativo = progettoFormativo;
+		this.azienda = azienda;
+		this.studente = studente;
+		this.docenteTutor = null;
+		System.err.println("Created DomandaTirocinio with empty tutor for debugging");
 	}
 	
 	/**
@@ -203,6 +223,22 @@ public class DomandaTirocinio {
 	public void setStudente(Studente studente) {
 		this.studente = studente;
 	}
+
+	/**
+	 * Metodo che setta il tutor scelto per la domanda di tirocinio.
+	 * @param tutor e' il docente scelto per la domanda di tirocinio.
+	 */
+	public DocenteTutor getTutor() {
+		return this.docenteTutor;
+	}
+
+	/**
+	 * Metodo che restituisce il tutor scelto per la domanda di tirocinio.
+	 * @param tutor e' il docente scelto per la domanda di tirocinio.
+	 */
+	public void setTutor(DocenteTutor tutor) {
+		this.docenteTutor = tutor;
+	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -219,6 +255,8 @@ public class DomandaTirocinio {
 	private Azienda azienda;
 	@ManyToOne
 	private Studente studente;
+	@ManyToOne
+	private DocenteTutor docenteTutor;
 	
 	/**
 	 * Costante che rappresenta lo stato "in attesa" di una domanda di tirocinio.
@@ -228,13 +266,13 @@ public class DomandaTirocinio {
 
 	/**
 	 * Costante che rappresenta lo stato "accettata" di una domanda di tirocinio.
-	 * Una domanda si trova in questo stato quando e' stata accettata dal delegato aziendale.
+	 * Una domanda si trova in questo stato quando e' stata accettata dal delegato aziendale e dal docente tutor.
 	 */
 	public static final String ACCETTATA = "accettata";
 
 	/**
 	 * Costante che rappresenta lo stato "rifiutata" di una domanda di tirocinio.
-	 * Una domanda si trova in questo stato quando e' stata rifiutata dal delegato aziendale.
+	 * Una domanda si trova in questo stato quando e' stata rifiutata dal delegato aziendale e dal docente tutor.
 	 */
 	public static final String RIFIUTATA = "rifiutata";
 	
@@ -248,8 +286,32 @@ public class DomandaTirocinio {
 	 * Costante che rappresenta lo stato "respinta" di una domanda di tirocinio.
 	 * Una domanda si trova in questo stato quando e' stata respinta dal responsabile ufficio tirocini.
 	 */
-	public static final String RESPINTA = "respinta";	
-		
+	public static final String RESPINTA = "respinta";
+
+	/**
+	 * Costante che rappresenta lo stato "accettata" di una domanda di tirocinio da parte dell'azienda.
+	 * Una domanda si trova in questo stato quando e' stata accettata dal delegato aziendale.
+	 */
+	public static final String ACCETTATA_AZIENDA = "accettata_azienda";
+
+	/**
+	 * Costante che rappresenta lo stato "rifiutata" di una domanda di tirocinio da parte dell'azienda.
+	 * Una domanda si trova in questo stato quando e' stata rifiutata dal delegato aziendale.
+	 */
+	public static final String RIFIUTATA_AZIENDA = "rifiutata_azienda";
+
+	/**
+	 * Costante che rappresenta lo stato "accettata" di una domanda di tirocinio da parte del tutor.
+	 * Una domanda si trova in questo stato quando e' stata accettata dal docente tutor scelto.
+	 */
+	public static final String ACCETTATA_TUTOR = "accettata_tutor";
+
+	/**
+	 * Costante che rappresenta lo stato "rifiutata" di una domanda di tirocinio da parte del tutor.
+	 * Una domanda si trova in questo stato quando e' stata rifiutata dal docente tutor scelto.
+	 */
+	public static final String RIFIUTATA_TUTOR = "rifiutata_tutor";
+
 	/**
 	 * Costante che definisce la minima lunghezza del campo conoscenze.
 	 */	
@@ -281,4 +343,5 @@ public class DomandaTirocinio {
 	/**
 	 * Costante che definisce il massimo numero di cfu.	 */
 	public static final int MAX_CFU  = 12;
+
 }

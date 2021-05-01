@@ -6,6 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+/**
+ * @author Francesco Abate e Carmine Ferrara
+ */
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class DocenteTutor extends Utente {

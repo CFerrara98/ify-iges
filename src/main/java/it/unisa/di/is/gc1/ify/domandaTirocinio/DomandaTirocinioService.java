@@ -1,5 +1,6 @@
 package it.unisa.di.is.gc1.ify.domandaTirocinio;
 
+import it.unisa.di.is.gc1.ify.DocenteTutor.DocenteTutorRepository;
 import it.unisa.di.is.gc1.ify.Studente.OperazioneNonAutorizzataException;
 import it.unisa.di.is.gc1.ify.Studente.Studente;
 import it.unisa.di.is.gc1.ify.convenzioni.DelegatoAziendale;
@@ -32,6 +33,9 @@ public class DomandaTirocinioService {
 
 	@Autowired
 	MailSingletonSender mailSingletonSender;
+
+	@Autowired
+	DocenteTutorRepository docenteTutorRepository;
 
 	@Transactional(rollbackFor = Exception.class)
 	public String controllaStatoStudente() throws OperazioneNonAutorizzataException {
@@ -611,6 +615,24 @@ public class DomandaTirocinioService {
 					"È obbligatorio accettare le condizioni sulla privacy.");
 
 		return condizioni;
+	}
+
+	/**
+	 * Il metodo fornisce i controlli di validazione del parametro docenteTutorId
+	 *
+	 * @param docenteTutorId
+	 * @return docenteTutorId
+	 * @throws DomandaTirocinioNonValidaException
+	 */
+	public String validaDocenteTutor(String docenteTutorId) throws DomandaTirocinioNonValidaException {
+		if (docenteTutorId == null)
+			throw new DomandaTirocinioNonValidaException("DocenteTutorError",
+					"Non è stato immesso alcun utente");
+		if (docenteTutorRepository.findById(Long.parseLong(docenteTutorId)).orElse(null) == null) {
+			throw new DomandaTirocinioNonValidaException("DocenteTutorError",
+					"Il docente immesso non è valido");
+		}
+		return docenteTutorId;
 	}
 
 }

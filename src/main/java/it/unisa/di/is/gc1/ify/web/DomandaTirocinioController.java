@@ -1,5 +1,7 @@
 package it.unisa.di.is.gc1.ify.web;
 
+import it.unisa.di.is.gc1.ify.DocenteTutor.DocenteTutor;
+import it.unisa.di.is.gc1.ify.DocenteTutor.DocenteTutorService;
 import it.unisa.di.is.gc1.ify.Studente.OperazioneNonAutorizzataException;
 import it.unisa.di.is.gc1.ify.Studente.Studente;
 import it.unisa.di.is.gc1.ify.convenzioni.DelegatoAziendale;
@@ -31,6 +33,8 @@ import java.util.List;
 @Controller
 public class DomandaTirocinioController {
 	@Autowired
+	private DocenteTutorService docenteTutorService;
+	@Autowired
 	private DomandaTirocinioService domandaTirocinioService;
 	@Autowired
 	private ProgettoFormativoService progettoFormativoService;
@@ -59,9 +63,10 @@ public class DomandaTirocinioController {
 			try {
 				s = domandaTirocinioService.controllaStatoStudente();
 				if (s.equals("")) {
-
 					ProgettoFormativo progettoFormativo = progettoFormativoService.cercaProgettoPerId(idProgetto);
+					List<DocenteTutor> listDocentiTutor = docenteTutorService.getAllDocentiTutor();
 					redirectAttribute.addFlashAttribute("progettoFormativo", progettoFormativo);
+					redirectAttribute.addFlashAttribute("docentiList", listDocentiTutor);
 					return "redirect:/visualizzaAziendeConvenzionateStudente";
 				} else {
 					redirectAttribute.addFlashAttribute("message", s);
@@ -103,6 +108,9 @@ public class DomandaTirocinioController {
 				redirectAttribute.addFlashAttribute(x.getCode(), x.getDefaultMessage());
 			}
 
+			List<DocenteTutor> listDocentiTutor = docenteTutorService.getAllDocentiTutor();
+			redirectAttribute.addFlashAttribute("docentiList", listDocentiTutor);
+
 			return "redirect:/visualizzaAziendeConvenzionateStudente";
 		}
 
@@ -112,6 +120,9 @@ public class DomandaTirocinioController {
 		} catch (Exception e) {
 			return "redirect:/";
 		}
+		String docenteTutorId = domandaTirocinioForm.getDocenteTutorId();
+
+		DocenteTutor dt = docenteTutorService.getDocenteTutorById(Long.parseLong(docenteTutorId));
 
 		DomandaTirocinio domandaTirocinio = new DomandaTirocinio();
 		ProgettoFormativo progettoFormativo = progettoFormativoService
@@ -125,6 +136,7 @@ public class DomandaTirocinioController {
 		domandaTirocinio.setProgettoFormativo(progettoFormativo);
 		domandaTirocinio.setAzienda(progettoFormativo.getAzienda());
 		domandaTirocinio.setStudente(studente);
+		domandaTirocinio.setTutor(dt);
 		domandaTirocinio.setStato(DomandaTirocinio.IN_ATTESA);
 
 		try {
