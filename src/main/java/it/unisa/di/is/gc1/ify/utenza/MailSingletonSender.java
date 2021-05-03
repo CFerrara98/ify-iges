@@ -89,17 +89,19 @@ public class MailSingletonSender {
 
 			String progetto = domandaTirocinio.getProgettoFormativo().getNome();
 			String nomeAzienda = domandaTirocinio.getAzienda().getRagioneSociale();
+			String nomeDocente = domandaTirocinio.getTutor().getNome();
+			String cognomeDocente = domandaTirocinio.getTutor().getCognome();
 
 			if (stato == DomandaTirocinio.ACCETTATA)
 				return "Gentile " + nome + " " + cognome
 						+ " la informiamo che la sua domanda di tirocinio inviata all'azienda " + nomeAzienda
 						+ ", per il progetto " + progetto + ", è stata " + stato
-						+ " dall'azienda.\nCordiali saluti, l'Ufficio Tirocini dell'Università degli Studi di Salerno.";
+						+ " dall'azienda e dal docente tutor; " +nomeDocente+" "+cognomeDocente+".\nCordiali saluti, l'Ufficio Tirocini dell'Università degli Studi di Salerno.";
 			else if (stato == DomandaTirocinio.RIFIUTATA)
 				return "Gentile " + nome + " " + cognome
 						+ " la informiamo che la sua domanda di tirocinio inviata all'azienda " + nomeAzienda
 						+ ", per il progetto " + progetto + ", è stata " + stato
-						+ " dall'azienda. La invitiamo a riprovare.\nCordiali saluti, l'Ufficio Tirocini dell'Università degli Studi di Salerno.";
+						+ " . La invitiamo a riprovare.\nCordiali saluti, l'Ufficio Tirocini dell'Università degli Studi di Salerno.";
 			else if (stato == DomandaTirocinio.APPROVATA)
 				return "Gentile " + nome + " " + cognome
 						+ " la informiamo che la sua domanda di tirocinio inviata all'azienda " + nomeAzienda

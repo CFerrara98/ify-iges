@@ -158,13 +158,13 @@ public class DomandaTirocinioController {
 	 * @param redirectAttribute
 	 * @return String stringa che rapprestenta la pagina da visualizzare
 	 */
-	@RequestMapping(value = "/accettaDomandaTirocinio", method = RequestMethod.POST)
-	public String accettaDomandaTirocinio(@RequestParam("idDomanda") long id, Model model,
+	@RequestMapping(value = "/accettaDomandaTirocinioByAzienda", method = RequestMethod.POST)
+	public String accettaDomandaTirocinioByAzienda(@RequestParam("idDomanda") long id, Model model,
 			RedirectAttributes redirectAttribute) {
 
 		DomandaTirocinio domandaTirocinio;
 		try {
-			domandaTirocinio = domandaTirocinioService.accettaDomandaTirocinio(id);
+			domandaTirocinio = domandaTirocinioService.accettaDomandaTirocinioByAzienda(id);
 			model.addAttribute("domandaTirocinioAccettata", domandaTirocinio);
 		} catch (OperazioneNonAutorizzataException e) {
 			return "redirect:/";
@@ -184,13 +184,13 @@ public class DomandaTirocinioController {
 	 * @param redirectAttribute
 	 * @return String stringa che rapprestenta la pagina da visualizzare
 	 */
-	@RequestMapping(value = "/rifiutaDomandaTirocinio", method = RequestMethod.POST)
-	public String rifiutaDomandaTirocinio(@RequestParam("idDomanda") long id, Model model,
+	@RequestMapping(value = "/rifiutaDomandaTirocinioByAzienda", method = RequestMethod.POST)
+	public String rifiutaDomandaTirocinioByAzienda(@RequestParam("idDomanda") long id, Model model,
 			RedirectAttributes redirectAttribute) {
 
 		DomandaTirocinio domandaTirocinio;
 		try {
-			domandaTirocinio = domandaTirocinioService.rifiutoDomandaTirocinio(id);
+			domandaTirocinio = domandaTirocinioService.rifiutoDomandaTirocinioByAzienda(id);
 			model.addAttribute("domandaTirocinioRifiutata", domandaTirocinio);
 		} catch (OperazioneNonAutorizzataException e) {
 			return "redirect:/";

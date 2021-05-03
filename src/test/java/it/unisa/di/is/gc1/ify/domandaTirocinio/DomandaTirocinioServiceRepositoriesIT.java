@@ -345,7 +345,7 @@ public class DomandaTirocinioServiceRepositoriesIT {
 		utenzaService.setUtenteAutenticato(delegato1.getEmail());
 		DomandaTirocinio domandaRestituita = null;
 		try {
-			domandaRestituita = domandaTirocinioService.accettaDomandaTirocinio(domanda1.getId());
+			domandaRestituita = domandaTirocinioService.accettaDomandaTirocinioByAzienda(domanda1.getId());
 		} catch (OperazioneNonAutorizzataException e) {
 			e.printStackTrace();
 		}

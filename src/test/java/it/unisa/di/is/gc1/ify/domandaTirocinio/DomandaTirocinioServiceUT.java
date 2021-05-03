@@ -214,7 +214,7 @@ public class DomandaTirocinioServiceUT {
 		String messaggio = "Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(responsabile);
 		try {
-			domandaTirocinioService.accettaDomandaTirocinio(domanda.getId());
+			domandaTirocinioService.accettaDomandaTirocinioByAzienda(domanda.getId());
 		} catch (OperazioneNonAutorizzataException e) {
 			assertEquals(messaggio, e.getMessage());
 		}
@@ -223,7 +223,7 @@ public class DomandaTirocinioServiceUT {
 	/**
 	 * Testa il caso in cui la piva di delegato e azienda associata alla domanda siano diverse.
 	 * 
-	 * @test {@link DomandaTirocinioService#accettaDomandaTirocinio(Long)}
+	 * @test {@link DomandaTirocinioService#accettaDomandaTirocinioByAzienda(Long)} (Long)}
 	 * 
 	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
 	 * previsto dall'oracolo.
@@ -236,7 +236,7 @@ public class DomandaTirocinioServiceUT {
 		when(delegatoMock.getAzienda()).thenReturn(aziendaMock);
 		when(aziendaMock.getpIva()).thenReturn("0123456781");
 		try {
-			domandaTirocinioService.accettaDomandaTirocinio(domanda.getId());
+			domandaTirocinioService.accettaDomandaTirocinioByAzienda(domanda.getId());
 		} catch (OperazioneNonAutorizzataException e) {
 			assertEquals(messaggio, e.getMessage());
 		}
@@ -259,7 +259,7 @@ public class DomandaTirocinioServiceUT {
 		when(aziendaMock.getpIva()).thenReturn("0123456789");
 		domanda.setStato(DomandaTirocinio.ACCETTATA);
 		try {
-			domandaTirocinioService.accettaDomandaTirocinio(domanda.getId());
+			domandaTirocinioService.accettaDomandaTirocinioByAzienda(domanda.getId());
 		} catch (OperazioneNonAutorizzataException e) {
 			assertEquals(messaggio, e.getMessage());
 		}
@@ -278,7 +278,7 @@ public class DomandaTirocinioServiceUT {
 		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
 		when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
 		try {
-			domandaTirocinioService.accettaDomandaTirocinio(domanda.getId());
+			domandaTirocinioService.accettaDomandaTirocinioByAzienda(domanda.getId());
 
 		} catch (OperazioneNonAutorizzataException e) {
 			e.printStackTrace();
@@ -299,7 +299,7 @@ public class DomandaTirocinioServiceUT {
 		String messaggio = "Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(responsabile);
 		try {
-			domandaTirocinioService.rifiutoDomandaTirocinio(domanda.getId());
+			domandaTirocinioService.rifiutoDomandaTirocinioByAzienda(domanda.getId());
 		} catch (OperazioneNonAutorizzataException e) {
 			assertEquals(messaggio, e.getMessage());
 		}
@@ -321,7 +321,7 @@ public class DomandaTirocinioServiceUT {
 		when(delegatoMock.getAzienda()).thenReturn(aziendaMock);
 		when(aziendaMock.getpIva()).thenReturn("0123456781");
 		try {
-			domandaTirocinioService.rifiutoDomandaTirocinio(domanda.getId());
+			domandaTirocinioService.rifiutoDomandaTirocinioByAzienda(domanda.getId());
 		} catch (OperazioneNonAutorizzataException e) {
 			assertEquals(messaggio, e.getMessage());
 		}
@@ -330,7 +330,7 @@ public class DomandaTirocinioServiceUT {
 	/**
 	 * Testa il caso in cui lo stato della domanda da rifiutare non sia in attesa.
 	 * 
-	 * @test {@link DomandaTirocinioService#rifiutoDomandaTirocinio(Long)}
+	 * @test {@link DomandaTirocinioService#rifiutoDomandaTirocinioByAzienda(Long)} (Long)}
 	 * 
 	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
 	 * previsto dall'oracolo.
@@ -344,7 +344,7 @@ public class DomandaTirocinioServiceUT {
 		when(aziendaMock.getpIva()).thenReturn("0123456789");
 		domanda.setStato(DomandaTirocinio.ACCETTATA);
 		try {
-			domandaTirocinioService.rifiutoDomandaTirocinio(domanda.getId());
+			domandaTirocinioService.rifiutoDomandaTirocinioByAzienda(domanda.getId());
 		} catch (OperazioneNonAutorizzataException e) {
 			assertEquals(messaggio, e.getMessage());
 		}
@@ -353,7 +353,7 @@ public class DomandaTirocinioServiceUT {
 	/**
 	 * Testa il caso in cui il rifiuto della domanda vada a buon fine.
 	 * 
-	 * @test {@link DomandaTirocinioService#rifiutoDomandaTirocinio(Long)}
+	 * @test {@link DomandaTirocinioService#rifiutoDomandaTirocinioByAzienda(Long)} (Long)}
 	 * 
 	 * @result Il test è superato se il metodo save del repository è correttamente invocato.
 	 */
@@ -363,7 +363,7 @@ public class DomandaTirocinioServiceUT {
 		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
 		when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
 		try {
-			domandaTirocinioService.rifiutoDomandaTirocinio(domanda.getId());
+			domandaTirocinioService.rifiutoDomandaTirocinioByAzienda(domanda.getId());
 		} catch (OperazioneNonAutorizzataException e) {
 			e.printStackTrace();
 		}

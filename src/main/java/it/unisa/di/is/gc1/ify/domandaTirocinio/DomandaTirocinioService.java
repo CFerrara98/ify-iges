@@ -84,7 +84,7 @@ public class DomandaTirocinioService {
 	 */
 
 	@Transactional(rollbackFor = Exception.class)
-	public DomandaTirocinio accettaDomandaTirocinio(Long idDomanda) throws OperazioneNonAutorizzataException {
+	public DomandaTirocinio accettaDomandaTirocinioByAzienda(Long idDomanda) throws OperazioneNonAutorizzataException {
 
 		Utente utente = utenzaService.getUtenteAutenticato();
 
@@ -101,11 +101,13 @@ public class DomandaTirocinioService {
 			throw new OperazioneNonAutorizzataException();
 		}
 
-		if (!domandaTirocinio.getStato().equals(DomandaTirocinio.IN_ATTESA)) {
-			throw new OperazioneNonAutorizzataException("Impossibile accettare questa domanda");
+		if (!domandaTirocinio.getStato().equals(DomandaTirocinio.IN_ATTESA) && (!domandaTirocinio.getStato().equals(DomandaTirocinio.IN_ATTESA_AZIENDA))) {
+				throw new OperazioneNonAutorizzataException("Impossibile accettare questa domanda");
 		}
 
-		domandaTirocinio.setStato(DomandaTirocinio.ACCETTATA);
+		if (domandaTirocinio.getStato().equals((DomandaTirocinio.IN_ATTESA))) domandaTirocinio.setStato(DomandaTirocinio.IN_ATTESA_TUTOR);
+		else domandaTirocinio.setStato(DomandaTirocinio.ACCETTATA);
+
 		domandaTirocinio = domandaTirocinioRepository.save(domandaTirocinio);
 
 		mailSingletonSender.sendEmail(domandaTirocinio, domandaTirocinio.getStudente().getEmail());
@@ -125,7 +127,7 @@ public class DomandaTirocinioService {
 	 */
 
 	@Transactional(rollbackFor = Exception.class)
-	public DomandaTirocinio rifiutoDomandaTirocinio(Long idDomanda) throws OperazioneNonAutorizzataException {
+	public DomandaTirocinio rifiutoDomandaTirocinioByAzienda(Long idDomanda) throws OperazioneNonAutorizzataException {
 
 		Utente utente = utenzaService.getUtenteAutenticato();
 
@@ -142,7 +144,7 @@ public class DomandaTirocinioService {
 			throw new OperazioneNonAutorizzataException();
 		}
 
-		if (!domandaTirocinio.getStato().equals(DomandaTirocinio.IN_ATTESA)) {
+		if (!domandaTirocinio.getStato().equals(DomandaTirocinio.IN_ATTESA) && domandaTirocinio.getStato().equals(DomandaTirocinio.IN_ATTESA_TUTOR)) {
 			throw new OperazioneNonAutorizzataException("Impossibile rifiutare questa domanda");
 		}
 
@@ -260,6 +262,9 @@ public class DomandaTirocinioService {
 		List<DomandaTirocinio> domandeTirocinio = domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva,
 				DomandaTirocinio.IN_ATTESA);
 
+		domandeTirocinio.addAll(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva,
+				DomandaTirocinio.IN_ATTESA_AZIENDA));
+
 		return domandeTirocinio;
 	}
 
@@ -294,6 +299,8 @@ public class DomandaTirocinioService {
 		}
 
 		List<DomandaTirocinio> domandeTirocinio = new ArrayList<DomandaTirocinio>();
+		domandeTirocinio
+				.addAll(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva, DomandaTirocinio.IN_ATTESA_TUTOR));
 		domandeTirocinio
 				.addAll(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva, DomandaTirocinio.ACCETTATA));
 		domandeTirocinio

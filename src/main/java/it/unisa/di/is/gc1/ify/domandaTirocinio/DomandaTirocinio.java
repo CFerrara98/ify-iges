@@ -33,7 +33,7 @@ public class DomandaTirocinio {
 	 * @param dataInizio e' la data di inizio della domanda di tirocinio.
 	 * @param dataFine e' la data di fine della domanda di tirocinio.
 	 * @param cfu sono gli cfu della domanda di tirocinio.
-	 * @param stato e' lo stato della domanda di tirocinio.
+	 * @param stato e' lo stato della domanda di tirocinio.0
 	 * @param progettoFormativo è il progetto formativo della domanda di tirocinio.
 	 * @param azienda e' l'azienda della domanda di tirocinio.
 	 * @param studente e' lo studente della domanda di tirocinio.
@@ -272,7 +272,7 @@ public class DomandaTirocinio {
 
 	/**
 	 * Costante che rappresenta lo stato "rifiutata" di una domanda di tirocinio.
-	 * Una domanda si trova in questo stato quando e' stata rifiutata dal delegato aziendale e dal docente tutor.
+	 * Una domanda si trova in questo stato quando e' stata rifiutata dal delegato aziendale o dal docente tutor.
 	 */
 	public static final String RIFIUTATA = "rifiutata";
 	
@@ -292,25 +292,13 @@ public class DomandaTirocinio {
 	 * Costante che rappresenta lo stato "accettata" di una domanda di tirocinio da parte dell'azienda.
 	 * Una domanda si trova in questo stato quando e' stata accettata dal delegato aziendale.
 	 */
-	public static final String ACCETTATA_AZIENDA = "accettata_azienda";
-
-	/**
-	 * Costante che rappresenta lo stato "rifiutata" di una domanda di tirocinio da parte dell'azienda.
-	 * Una domanda si trova in questo stato quando e' stata rifiutata dal delegato aziendale.
-	 */
-	public static final String RIFIUTATA_AZIENDA = "rifiutata_azienda";
+	public static final String IN_ATTESA_TUTOR = "accettata_azienda";
 
 	/**
 	 * Costante che rappresenta lo stato "accettata" di una domanda di tirocinio da parte del tutor.
 	 * Una domanda si trova in questo stato quando e' stata accettata dal docente tutor scelto.
 	 */
-	public static final String ACCETTATA_TUTOR = "accettata_tutor";
-
-	/**
-	 * Costante che rappresenta lo stato "rifiutata" di una domanda di tirocinio da parte del tutor.
-	 * Una domanda si trova in questo stato quando e' stata rifiutata dal docente tutor scelto.
-	 */
-	public static final String RIFIUTATA_TUTOR = "rifiutata_tutor";
+	public static final String IN_ATTESA_AZIENDA = "accettata_tutor";
 
 	/**
 	 * Costante che definisce la minima lunghezza del campo conoscenze.

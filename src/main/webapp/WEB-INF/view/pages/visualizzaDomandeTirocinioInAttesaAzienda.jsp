@@ -114,7 +114,7 @@
 										</td>
 										<td class="valuta testo-tabella">
 											<form name="accettaForm" method="POST"
-												action="./accettaDomandaTirocinio">
+												action="./accettaDomandaTirocinioByAzienda">
 												<input type="hidden" name="idDomanda"
 													value="${current.id}">
 												<button class="btn btn-success" data-toggle="tooltip" title="Accetta domanda">
@@ -123,7 +123,7 @@
 											</form>
 										<td class="valuta testo-tabella">
 											<form name="submitForm" method="POST"
-												action="./rifiutaDomandaTirocinio">
+												action="./rifiutaDomandaTirocinioByAzienda">
 												<input type="hidden" name="idDomanda"
 													value="${current.id}">
 												<button class="btn btn-danger" data-toggle="tooltip" title="Rifiuta domnada">
