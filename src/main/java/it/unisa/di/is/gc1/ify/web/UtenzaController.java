@@ -140,11 +140,13 @@ public class UtenzaController {
 				return "studenteDashboard";
 			} else if (utente instanceof DelegatoAziendale) {
 				return "delegatoDashboard";
-			} else {
+			} else if (utente instanceof DocenteTutor) {
+				return "docenteDashboard";
+			}
+			else {
 				return "responsabileDashboard";
 			}
 		}
-
 		return "homepage";
 	}
 

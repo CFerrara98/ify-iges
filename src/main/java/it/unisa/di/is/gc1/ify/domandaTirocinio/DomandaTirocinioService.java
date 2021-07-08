@@ -135,7 +135,7 @@ public class DomandaTirocinioService {
 
 		// Solo lo specifico docente può accettare una
 		// domanda di tirocinio in attesa in cui è stato indicato come tutor
-		if (!(utente instanceof DelegatoAziendale)) {
+		if (!(utente instanceof DocenteTutor)) {
 			throw new OperazioneNonAutorizzataException();
 		}
 
@@ -143,10 +143,12 @@ public class DomandaTirocinioService {
 
 		DomandaTirocinio domandaTirocinio = domandaTirocinioRepository.findById(idDomanda).orElse(null);
 
+		// Controllo integrità docente loggato con docente sulla domanda di tirocinio
 		if (docenteTutor.getId() != domandaTirocinio.getTutor().getId()) {
 			throw new OperazioneNonAutorizzataException();
 		}
 
+		// Controllo stato della domanda di tirocinio (deve essere in attesa o in attesa dal tutor)
 		if (!domandaTirocinio.getStato().equals(DomandaTirocinio.IN_ATTESA) && (!domandaTirocinio.getStato().equals(DomandaTirocinio.IN_ATTESA_TUTOR))) {
 			throw new OperazioneNonAutorizzataException("Impossibile accettare questa domanda");
 		}
@@ -378,7 +380,7 @@ public class DomandaTirocinioService {
 
 		// Le domande di tirocinio a cuo è associato un tutor possono essere visualizzate solo dal
 		// docente stesso
-		if (!(docenteTutor.getId() != docenteID)) {
+		if (docenteTutor.getId() != docenteID) {
 			throw new OperazioneNonAutorizzataException();
 		}
 
