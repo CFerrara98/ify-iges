@@ -459,7 +459,7 @@ public class DomandaTirocinioService {
 
 		// Le domande di tirocinio di un docente possono essere visualizzate solo dal
 		// docente stessi
-		if (!(docenteTutor.getId() != docenteID)) {
+		if (docenteTutor.getId() != docenteID) {
 			throw new OperazioneNonAutorizzataException();
 		}
 
@@ -542,7 +542,7 @@ public class DomandaTirocinioService {
 		DocenteTutor docenteTutor = (DocenteTutor) utente;
 
 		// I tirocini in corso associati ad un tutor possono essere visualizzati solo dal tutor stesso
-		if (!(docenteTutor.getId() != docenteId)) {
+		if (docenteTutor.getId() != docenteId) {
 			throw new OperazioneNonAutorizzataException();
 		}
 

@@ -77,13 +77,23 @@
 								 class="card-img-top .my_img img-responsive" alt="..."
 								 height="232" width="100">
 							<div class="card-body">
-								<h5 class="card-title">Domande di tirocinio</h5>
-								<p class="card-text">In questa sezione puoi vedere le tue
-									domande di tirocinio</p>
+								<h5 class="card-title">Domande di tirocinio in attesa</h5>
+								<p class="card-text">In questa sezione puoi vedere le domande di tirocinio da approvare</p>
 								<a type="button"
 								   class="btn btn-primary login-btn btn-dimensione bottonecard"
-								   href="./visualizzaDomandeTirocinioInAttesaAzienda">Domande
-									Tirocinio</a>
+								   href="./visualizzaDomandeTirocinioInAttesaDocente">Domande in attesa</a>
+							</div>
+						</div>
+						<div class="card border-dark bordo-carta dimensione-carta">
+							<img src="./resources/images/dashDelegato/DomandeTirocinioApprovate.jpg"
+								 class="card-img-top .my_img img-responsive" alt="..."
+								 height="232" width="100">
+							<div class="card-body">
+								<h5 class="card-title">Domande di tirocinio inoltrate</h5>
+								<p class="card-text">In questa sezione puoi vedere le domande di tirocinio che hai approvato</p>
+								<a type="button"
+								   class="btn btn-primary login-btn btn-dimensione bottonecard"
+								   href="./visualizzaDomandeTirocinioInAttesaDocente">Domande inoltrate</a>
 							</div>
 						</div>
 						<div class="card border-dark bordo-carta dimensione-carta">

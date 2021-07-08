@@ -88,7 +88,14 @@
 										<td class="testo-tabella">${current.studente.nome}</td>
 										<td class="testo-tabella">${current.studente.cognome}</td>
 										<td class="testo-tabella">${current.studente.matricola}</td>
-										<td class="testo-tabella">${current.stato}</td>
+										<c:choose>
+											<c:when test="${current.stato == 'accettata_azienda'}">
+												<td class="testo-tabella">In attesa del docente</td>
+											</c:when>
+											<c:otherwise>
+												<td class="testo-tabella">${current.stato}</td>
+											</c:otherwise>
+										</c:choose>
 									</tr>
 
 								</c:forEach>
