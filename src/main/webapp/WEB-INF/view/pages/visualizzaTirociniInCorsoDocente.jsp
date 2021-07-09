@@ -67,7 +67,7 @@
 						<h4>
 							<span class="my-4 header"> Tirocini in corso</span>
 						</h4>
-						<input class="form-control" id="filter" type="text"
+						<input class="form-control filter-first" id="filter" type="text"
 							placeholder="Filtra Tirocini">
 						<table id="parentTable" data-toggle="table" data-sortable="true"
 							data-detail-view="true" data-pagination="true" data-page-size="5">
@@ -79,6 +79,7 @@
 									<th data-sortable="true" class="titolo">Cognome</th>
 									<th data-sortable="true" class="titolo">Matricola</th>
 									<th data-sortable="true" class="titolo">Data inizio</th>
+									<th data-sortable="true" class="titolo">Termina</th>
 								</tr>
 
 							</thead>
@@ -122,12 +123,106 @@
 										<td class="testo-tabella">${current.studente.cognome}</td>
 										<td class="testo-tabella">${current.studente.matricola}</td>
 										<td class="testo-tabella"><fmt:parseDate value="${current.dataInizio}" type="date" pattern="yyyy-MM-dd" var="parsedDate" /><fmt:formatDate value="${parsedDate}" pattern = "dd-MM-yyyy"   type="date" var="stdDatum" /><c:out value="${stdDatum}"></c:out></td>
+										<td class="valuta testo-tabella">
+											<form name="submitForm" method="POST"
+												  action="./terminaTirocinio">
+												<input type="hidden" name="idDomanda"
+													   value="${current.id}">
+												<button class="btn btn-success" data-toggle="tooltip" title="Concludi tirocinio">
+													<i class="fas fa-check"></i>
+												</button>
+											</form>
+										</td>
 									</tr>
 
 								</c:forEach>
 
 							</tbody>
-						</table>					
+						</table>
+
+						<br/>
+						<br/>
+						<br/>
+						<br/>
+
+						<!-- TABELLA TIROCINI CONCLUSI -->
+						<h4>
+							<span class="my-4 header"> Tirocini conclusi</span>
+						</h4>
+						<!-- CHANGED ID -->
+						<input class="form-control filter-second" id="filter" type="text"
+							   placeholder="Filtra Tirocini">
+						<!-- CHANGED ID -->
+						<table id="endedTable" data-toggle="table" data-sortable="true"
+							   data-detail-view="true" data-pagination="true" data-page-size="5">
+							<thead>
+							<tr>
+								<th class="d-none">Hidden nested details table</th>
+								<th data-sortable="true" class="titolo">Progetto</th>
+								<th data-sortable="true" class="titolo">Nome</th>
+								<th data-sortable="true" class="titolo">Cognome</th>
+								<th data-sortable="true" class="titolo">Matricola</th>
+								<th data-sortable="true" class="titolo">Data fine</th>
+								<th data-sortable="true" class="titolo">Stato</th>
+							</tr>
+
+							</thead>
+							<tbody>
+
+							<!-- CHANGED COLLECTION -->
+							<c:forEach items="${tirociniChiusi}" var="current"
+									   varStatus="loop">
+								<tr>
+									<td>
+										<dl>
+											<dt>CFU:</dt>
+											<dd>${current.cfu}</dd>
+											<br>
+
+											<dt>Telefono:</dt>
+											<dd>${current.studente.telefono}</dd>
+											<br>
+
+											<dt>Email:</dt>
+											<dd>${current.studente.email}</dd>
+											<br>
+
+											<dt>Conoscenze richieste:</dt>
+											<dd>${current.progettoFormativo.conoscenze}</dd>
+											<br>
+
+											<dt>Conoscenze studente:</dt>
+											<dd>${current.conoscenze}</dd>
+											<br>
+
+											<dt>Motivazioni studente:</dt>
+											<dd>${current.motivazioni}</dd>
+											<br>
+
+										</dl>
+
+									</td>
+
+									<td class="testo-tabella">${current.progettoFormativo.nome}</td>
+									<td class="testo-tabella">${current.studente.nome}</td>
+									<td class="testo-tabella">${current.studente.cognome}</td>
+									<td class="testo-tabella">${current.studente.matricola}</td>
+									<td class="testo-tabella"><fmt:parseDate value="${current.dataFine}" type="date" pattern="yyyy-MM-dd" var="parsedDate" /><fmt:formatDate value="${parsedDate}" pattern = "dd-MM-yyyy"   type="date" var="stdDatum" /><c:out value="${stdDatum}"></c:out></td>
+									<c:choose>
+										<c:when test="${current.stato == 'terminata'}">
+											<td class="testo-tabella cella-status"><img src="./resources/images/pallino-verde.png" class="pallino"> Terminato</td>
+										</c:when>
+										<c:otherwise>
+											<td class="testo-tabella cella-status"><img src="./resources/images/pallino-rosso.png" class="pallino"> Scaduto</td>
+										</c:otherwise>
+									</c:choose>
+								</tr>
+
+							</c:forEach>
+
+							</tbody>
+						</table>
+
 					</div>
 				</div>
 
@@ -140,10 +235,26 @@
 	<script src="webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 	<script src="./resources/js/bootstrap-table.min.js"></script>
 	<script src="./resources/js/sidebar.js"></script>
-	
+	<c:if test="${message != null}">
+		<%@ include file="modalNotifica.jsp"%>
+	</c:if>
+
 	<script>
 		// Load detail view
 		$('#parentTable').on('expand-row.bs.table',
+				function(e, index, row, $detail) {
+
+					// Get subtable from first cell
+					var $rowDetails = $(row[0]);
+
+					// Write rowDetail to detail
+					$detail.html($rowDetails);
+
+					return;
+
+				})
+
+		$('#endedTable').on('expand-row.bs.table',
 				function(e, index, row, $detail) {
 
 					// Get subtable from first cell
@@ -160,13 +271,37 @@
 		$(document)
 				.ready(
 						function() {
-							$("#filter")
+							$(".filter-first")
 									.on(
 											"keyup",
 											function() {
 												var value = $(this).val()
 														.toLowerCase();
 												$("#parentTable tbody tr")
+														.filter(
+																function() {
+																	$(this)
+																			.toggle(
+																					$(
+																							this)
+																							.text()
+																							.toLowerCase()
+																							.indexOf(
+																									value) > -1)
+																});
+											});
+						});
+
+		$(document)
+				.ready(
+						function() {
+							$(".filter-second")
+									.on(
+											"keyup",
+											function() {
+												var value = $(this).val()
+														.toLowerCase();
+												$("#endedTable tbody tr")
 														.filter(
 																function() {
 																	$(this)

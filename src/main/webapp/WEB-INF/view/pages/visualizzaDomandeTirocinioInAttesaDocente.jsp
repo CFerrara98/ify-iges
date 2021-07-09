@@ -122,6 +122,7 @@
 													<i class="fa fa-check"></i>
 												</button>
 											</form>
+										</td>
 										<td class="valuta testo-tabella">
 											<form name="submitForm" method="POST"
 												action="./rifiutaDomandaTirocinioByDocente">

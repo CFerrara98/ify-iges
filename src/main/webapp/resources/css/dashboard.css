@@ -150,7 +150,7 @@ th, .valuta {
 	margin: 0px !important;
 }
 
-/*arrow menù drop*/
+/*arrow menï¿½ drop*/
 .dropdown-menu-arrow {
 	top: -25px;
 	left: 50%;
@@ -191,6 +191,15 @@ th, .valuta {
 	font-size: 18px;
 	text-align: center;
 	vertical-align: middle !important;
+}
+
+.cella-status{
+	text-align: left !important;
+}
+
+.pallino {
+	margin-left: 15% !important;
+	margin-right: 3% !important;
 }
 
 .custom-drop-menu {

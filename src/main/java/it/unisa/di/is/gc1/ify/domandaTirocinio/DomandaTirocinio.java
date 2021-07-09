@@ -301,6 +301,12 @@ public class DomandaTirocinio {
 	public static final String IN_ATTESA_AZIENDA = "accettata_tutor";
 
 	/**
+	 * Costante che rappresenta lo stato "terminato" di una domanda di tirocinio da parte del tutor.
+	 * Una domanda si trova in questo stato quando e' stata terminata appositamente dal docente.
+	 */
+	public static final String TERMINATA = "terminata";
+
+	/**
 	 * Costante che definisce la minima lunghezza del campo conoscenze.
 	 */	
 	public static final int MIN_LUNGHEZZA_CONOSCENZE = 1;

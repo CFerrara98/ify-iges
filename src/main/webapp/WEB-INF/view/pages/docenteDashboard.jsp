@@ -106,7 +106,7 @@
 									tirocini in corso</p>
 								<a type="button"
 								   class="btn btn-primary login-btn btn-dimensione bottonecard"
-								   href="./visualizzaTirociniInCorsoAzienda">Tirocini in
+								   href="./visualizzaTirociniInCorsoDocente">Tirocini in
 									corso</a>
 							</div>
 						</div>

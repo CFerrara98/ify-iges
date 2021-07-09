@@ -117,6 +117,46 @@ public class DomandaTirocinioService {
 		return domandaTirocinio;
 	}
 
+	/**
+	 * Il metodo permette di terminare una richiesta di tirocinio
+	 *
+	 *
+	 * @param idDomanda
+	 * @return Oggetto {@link DomandaTirocinio} che rappresenta la domanda di tirocinio terminata
+	 * @throws OperazioneNonAutorizzataException
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public DomandaTirocinio terminaTirocinio(Long idDomanda) throws OperazioneNonAutorizzataException {
+
+		Utente utente = utenzaService.getUtenteAutenticato();
+
+		// Solo il docente può terminare il tirocinio in corso
+		if (!(utente instanceof DocenteTutor)) {
+			throw new OperazioneNonAutorizzataException();
+		}
+
+		DocenteTutor doc = (DocenteTutor) utente;
+
+		DomandaTirocinio domandaTirocinio = domandaTirocinioRepository.findById(idDomanda).orElse(null);
+		if (doc.getId() != domandaTirocinio.getTutor().getId()) {
+			throw new OperazioneNonAutorizzataException();
+		}
+
+		if (!domandaTirocinio.getStato().equals(DomandaTirocinio.APPROVATA) ||
+				(!domandaTirocinio.getDataFine().isAfter(LocalDate.now()) || !domandaTirocinio.getDataInizio().isBefore(LocalDate.now()))) {
+			throw new OperazioneNonAutorizzataException("Impossibile terminare questa domanda");
+		}
+
+		domandaTirocinio.setStato(DomandaTirocinio.TERMINATA);
+		domandaTirocinio.setDataFine(LocalDate.now());
+
+		domandaTirocinio = domandaTirocinioRepository.save(domandaTirocinio);
+
+		mailSingletonSender.sendEmail(domandaTirocinio, domandaTirocinio.getStudente().getEmail());
+
+		return domandaTirocinio;
+	}
+
 
 	/**
 	 * Il metodo fornisce la funzionalità di accettazione accademica (del docente tutor) di una domanda
@@ -556,6 +596,46 @@ public class DomandaTirocinioService {
 			}
 		}
 		return tirociniInCorso;
+	}
+
+	/**
+	 * Il metodo fornisce la funzionalita' di visualizzazione dei tirocini chiusi, quindi scaduti e terminati
+	 *
+	 * @param docenteId
+	 * @return Lista di {@link DomandaTirocinio} che rappresenta la lista delle
+	 *         domande di tirocinio terminate e scadute
+	 * @throws OperazioneNonAutorizzataException
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public List<DomandaTirocinio> visualizzaTirociniChiusi(long docenteId) throws OperazioneNonAutorizzataException {
+
+		Utente utente = utenzaService.getUtenteAutenticato();
+
+		// Solo il tutor può visualizzare i tirocini ad esso associati
+		if (!(utente instanceof DocenteTutor)) {
+			throw new OperazioneNonAutorizzataException();
+		}
+		DocenteTutor docenteTutor = (DocenteTutor) utente;
+
+		// I tirocini in corso associati ad un tutor possono essere visualizzati solo dal tutor stesso
+		if (docenteTutor.getId() != docenteId) {
+			throw new OperazioneNonAutorizzataException();
+		}
+
+		List<DomandaTirocinio> domandeTirocinioApprovate = domandaTirocinioRepository.findAllByDocenteTutorIdAndStato(docenteId,
+				DomandaTirocinio.APPROVATA);
+		List<DomandaTirocinio> tirociniChiusi = new ArrayList<DomandaTirocinio>();
+
+		for (DomandaTirocinio d : domandeTirocinioApprovate) {
+			if (d.getDataInizio().isBefore(LocalDate.now()) && d.getDataFine().isBefore(LocalDate.now())) {
+				tirociniChiusi.add(d);
+			}
+		}
+
+		tirociniChiusi.addAll(domandaTirocinioRepository.findAllByDocenteTutorIdAndStato(docenteId,
+				DomandaTirocinio.TERMINATA));
+
+		return tirociniChiusi;
 	}
 
 	/**

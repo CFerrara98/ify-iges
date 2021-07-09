@@ -122,6 +122,10 @@ public class MailSingletonSender {
 				return "Gentile " + nome + " " + cognome
 						+ " la informiamo che la sua domanda di tirocinio inviata all'azienda " + nomeAzienda
 						+ ", per il progetto " + progetto + ", è stata accettata dal docente " +nomeDocente+" "+cognomeDocente+".\nManca l'accettazione dell'azienda per completare la procedura.\nCordiali saluti, l'Ufficio Tirocini dell'Università degli Studi di Salerno.";
+			else if (stato == DomandaTirocinio.TERMINATA)
+				return "Gentile " + nome + " " + cognome
+						+ " la informiamo che il suo tirocinio presso l'azienda " + nomeAzienda
+						+ " per il progetto " + progetto + " è stato concluso con successo e approvato dal docente " +nomeDocente+" "+cognomeDocente+".\nCordiali saluti, l'Ufficio Tirocini dell'Università degli Studi di Salerno.";
 		}
 		return "";
 	}
