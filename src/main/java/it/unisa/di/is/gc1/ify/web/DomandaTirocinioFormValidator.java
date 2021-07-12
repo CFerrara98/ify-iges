@@ -83,6 +83,13 @@ public class DomandaTirocinioFormValidator implements Validator {
 		} catch (DomandaTirocinioNonValidaException e6) {
 			errors.reject(e6.getTarget(), e6.getMessage());
 		}
+
+		try {
+			domandaTirocinioService.validaDocenteTutor(domandaTirocinioForm.getDocenteTutorId());
+		} catch (DomandaTirocinioNonValidaException e7) {
+			errors.reject(e7.getTarget(), e7.getMessage());
+		}
+
 	}
 
 }

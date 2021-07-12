@@ -26,7 +26,7 @@ public class DomandaTirocinioForm {
 	 * @param condizioni condizioni tirocinio
 	 */
 	public DomandaTirocinioForm(String conoscenze, String motivazioni, String dataInizio, String dataFine,
-			String numeroCFU, String condizioni) {
+			String numeroCFU, String condizioni, String docenteTutorId) {
 		super();
 		this.conoscenze = conoscenze;
 		this.motivazioni = motivazioni;
@@ -34,6 +34,7 @@ public class DomandaTirocinioForm {
 		this.dataFine = dataFine;
 		this.numeroCFU = numeroCFU;
 		this.condizioni = condizioni;
+		this.docenteTutorId = docenteTutorId;
 	}
 	
 	
@@ -138,7 +139,14 @@ public class DomandaTirocinioForm {
 	public void setCondizioni(String condizioni) {
 		this.condizioni = condizioni;
 	}
-	
+
+	public String getDocenteTutorId() {
+		return docenteTutorId;
+	}
+
+	public void setDocenteTutorId(String docenteTutorId) {
+		this.docenteTutorId = docenteTutorId;
+	}
 	
 	private String conoscenze;
 	private String motivazioni;
@@ -146,7 +154,5 @@ public class DomandaTirocinioForm {
 	private String dataFine;
 	private String numeroCFU;
 	private String condizioni;
-	
-	
-	
+	private String docenteTutorId;
 }

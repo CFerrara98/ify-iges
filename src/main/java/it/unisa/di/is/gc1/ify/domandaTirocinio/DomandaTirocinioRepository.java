@@ -76,7 +76,7 @@ public interface DomandaTirocinioRepository extends JpaRepository<DomandaTirocin
 	 *         sono presenti domande di tirocinio per azienda e stato passati come
 	 *         parametro 
 	 */
-	public List<DomandaTirocinio> findAllByAziendaPIvaAndStato(String pIva, String stato);	
+	public List<DomandaTirocinio> findAllByAziendaPIvaAndStato(String pIva, String stato);
 	
 	/**
 	 * Permette di ottenere l'elenco delle domande di tirocinio con un determinato stato.
@@ -107,5 +107,28 @@ public interface DomandaTirocinioRepository extends JpaRepository<DomandaTirocin
 	 *         parametro 
 	 */
 	public Optional<DomandaTirocinio> findById(Long id);
-	
+
+	/**
+	 * Permette di ottenere l'elenco delle domande di tirocinio con l'id del docente tutor
+	 *
+	 * @param id Long che rappresenta l'identificativo del docente tutor
+	 *
+	 * @return Oggetto {@link DomandaTirocinio} che rappresenta la
+	 *         domanda di tirocinio <b>Puo' essere vuota</b> se nel database non
+	 *         e' presente una domanda di tirocinio con id passato come
+	 *         parametro
+	 */
+	public List<DomandaTirocinio> findAllByDocenteTutorId(Long id);
+
+	/**
+	 * Permette di ottenere l'elenco delle domande di tirocinio con l'id del docente tutor
+	 *
+	 * @param id Long che rappresenta l'identificativo del docente tutor
+	 *
+	 * @return Oggetto {@link DomandaTirocinio} che rappresenta la
+	 *         domanda di tirocinio <b>Puo' essere vuota</b> se nel database non
+	 *         e' presente una domanda di tirocinio con id passato come
+	 *         parametro
+	 */
+	public List<DomandaTirocinio> findAllByDocenteTutorIdAndStato(Long id, String st);
 }

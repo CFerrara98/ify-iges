@@ -1,5 +1,7 @@
 package it.unisa.di.is.gc1.ify.domandaTirocinio;
 
+import it.unisa.di.is.gc1.ify.DocenteTutor.DocenteTutor;
+import it.unisa.di.is.gc1.ify.DocenteTutor.DocenteTutorRepository;
 import it.unisa.di.is.gc1.ify.Studente.OperazioneNonAutorizzataException;
 import it.unisa.di.is.gc1.ify.Studente.Studente;
 import it.unisa.di.is.gc1.ify.convenzioni.DelegatoAziendale;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.print.Doc;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,9 @@ public class DomandaTirocinioService {
 
 	@Autowired
 	MailSingletonSender mailSingletonSender;
+
+	@Autowired
+	DocenteTutorRepository docenteTutorRepository;
 
 	@Transactional(rollbackFor = Exception.class)
 	public String controllaStatoStudente() throws OperazioneNonAutorizzataException {
@@ -80,7 +86,7 @@ public class DomandaTirocinioService {
 	 */
 
 	@Transactional(rollbackFor = Exception.class)
-	public DomandaTirocinio accettaDomandaTirocinio(Long idDomanda) throws OperazioneNonAutorizzataException {
+	public DomandaTirocinio accettaDomandaTirocinioByAzienda(Long idDomanda) throws OperazioneNonAutorizzataException {
 
 		Utente utente = utenzaService.getUtenteAutenticato();
 
@@ -97,11 +103,99 @@ public class DomandaTirocinioService {
 			throw new OperazioneNonAutorizzataException();
 		}
 
-		if (!domandaTirocinio.getStato().equals(DomandaTirocinio.IN_ATTESA)) {
+		if (!domandaTirocinio.getStato().equals(DomandaTirocinio.IN_ATTESA) && (!domandaTirocinio.getStato().equals(DomandaTirocinio.IN_ATTESA_AZIENDA))) {
+				throw new OperazioneNonAutorizzataException("Impossibile accettare questa domanda");
+		}
+
+		if (domandaTirocinio.getStato().equals((DomandaTirocinio.IN_ATTESA))) domandaTirocinio.setStato(DomandaTirocinio.IN_ATTESA_TUTOR);
+		else domandaTirocinio.setStato(DomandaTirocinio.ACCETTATA);
+
+		domandaTirocinio = domandaTirocinioRepository.save(domandaTirocinio);
+
+		mailSingletonSender.sendEmail(domandaTirocinio, domandaTirocinio.getStudente().getEmail());
+
+		return domandaTirocinio;
+	}
+
+	/**
+	 * Il metodo permette di terminare una richiesta di tirocinio
+	 *
+	 *
+	 * @param idDomanda
+	 * @return Oggetto {@link DomandaTirocinio} che rappresenta la domanda di tirocinio terminata
+	 * @throws OperazioneNonAutorizzataException
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public DomandaTirocinio terminaTirocinio(Long idDomanda) throws OperazioneNonAutorizzataException {
+
+		Utente utente = utenzaService.getUtenteAutenticato();
+
+		// Solo il docente può terminare il tirocinio in corso
+		if (!(utente instanceof DocenteTutor)) {
+			throw new OperazioneNonAutorizzataException();
+		}
+
+		DocenteTutor doc = (DocenteTutor) utente;
+
+		DomandaTirocinio domandaTirocinio = domandaTirocinioRepository.findById(idDomanda).orElse(null);
+		if (doc.getId() != domandaTirocinio.getTutor().getId()) {
+			throw new OperazioneNonAutorizzataException();
+		}
+
+		if (!domandaTirocinio.getStato().equals(DomandaTirocinio.APPROVATA) ||
+				(!domandaTirocinio.getDataFine().isAfter(LocalDate.now()) || !domandaTirocinio.getDataInizio().isBefore(LocalDate.now()))) {
+			throw new OperazioneNonAutorizzataException("Impossibile terminare questa domanda");
+		}
+
+		domandaTirocinio.setStato(DomandaTirocinio.TERMINATA);
+		domandaTirocinio.setDataFine(LocalDate.now());
+
+		domandaTirocinio = domandaTirocinioRepository.save(domandaTirocinio);
+
+		mailSingletonSender.sendEmail(domandaTirocinio, domandaTirocinio.getStudente().getEmail());
+
+		return domandaTirocinio;
+	}
+
+
+	/**
+	 * Il metodo fornisce la funzionalità di accettazione accademica (del docente tutor) di una domanda
+	 * di tirocinio
+	 *
+	 *
+	 * @param idDomanda
+	 * @return Oggetto {@link DomandaTirocinio} che rappresenta la domanda di
+	 *         tirocinio approvata
+	 * @throws OperazioneNonAutorizzataException
+	 */
+
+	@Transactional(rollbackFor = Exception.class)
+	public DomandaTirocinio accettaDomandaTirocinioByDocente(long idDomanda) throws OperazioneNonAutorizzataException {
+		Utente utente = utenzaService.getUtenteAutenticato();
+
+		// Solo lo specifico docente può accettare una
+		// domanda di tirocinio in attesa in cui è stato indicato come tutor
+		if (!(utente instanceof DocenteTutor)) {
+			throw new OperazioneNonAutorizzataException();
+		}
+
+		DocenteTutor docenteTutor = (DocenteTutor) utente;
+
+		DomandaTirocinio domandaTirocinio = domandaTirocinioRepository.findById(idDomanda).orElse(null);
+
+		// Controllo integrità docente loggato con docente sulla domanda di tirocinio
+		if (docenteTutor.getId() != domandaTirocinio.getTutor().getId()) {
+			throw new OperazioneNonAutorizzataException();
+		}
+
+		// Controllo stato della domanda di tirocinio (deve essere in attesa o in attesa dal tutor)
+		if (!domandaTirocinio.getStato().equals(DomandaTirocinio.IN_ATTESA) && (!domandaTirocinio.getStato().equals(DomandaTirocinio.IN_ATTESA_TUTOR))) {
 			throw new OperazioneNonAutorizzataException("Impossibile accettare questa domanda");
 		}
 
-		domandaTirocinio.setStato(DomandaTirocinio.ACCETTATA);
+		if (domandaTirocinio.getStato().equals((DomandaTirocinio.IN_ATTESA))) domandaTirocinio.setStato(DomandaTirocinio.IN_ATTESA_AZIENDA);
+		else domandaTirocinio.setStato(DomandaTirocinio.ACCETTATA);
+
 		domandaTirocinio = domandaTirocinioRepository.save(domandaTirocinio);
 
 		mailSingletonSender.sendEmail(domandaTirocinio, domandaTirocinio.getStudente().getEmail());
@@ -121,7 +215,7 @@ public class DomandaTirocinioService {
 	 */
 
 	@Transactional(rollbackFor = Exception.class)
-	public DomandaTirocinio rifiutoDomandaTirocinio(Long idDomanda) throws OperazioneNonAutorizzataException {
+	public DomandaTirocinio rifiutoDomandaTirocinioByAzienda(Long idDomanda) throws OperazioneNonAutorizzataException {
 
 		Utente utente = utenzaService.getUtenteAutenticato();
 
@@ -138,8 +232,47 @@ public class DomandaTirocinioService {
 			throw new OperazioneNonAutorizzataException();
 		}
 
-		if (!domandaTirocinio.getStato().equals(DomandaTirocinio.IN_ATTESA)) {
+		if (!domandaTirocinio.getStato().equals(DomandaTirocinio.IN_ATTESA) && domandaTirocinio.getStato().equals(DomandaTirocinio.IN_ATTESA_TUTOR)) {
 			throw new OperazioneNonAutorizzataException("Impossibile rifiutare questa domanda");
+		}
+
+		domandaTirocinio.setStato(DomandaTirocinio.RIFIUTATA);
+		domandaTirocinio = domandaTirocinioRepository.save(domandaTirocinio);
+
+		mailSingletonSender.sendEmail(domandaTirocinio, domandaTirocinio.getStudente().getEmail());
+
+		return domandaTirocinio;
+	}
+
+	/**
+	 * Il metodo fornisce la funzionalita' di rifiuto accademico di una domanda di
+	 * tirocinio da parte del tutor associato
+	 *
+	 *
+	 * @param idDomanda
+	 * @return Oggetto {@link DomandaTirocinio} che rappresenta la domanda di
+	 *         tirocinio rifiutata
+	 * @throws OperazioneNonAutorizzataException
+	 */
+	public DomandaTirocinio rifiutoDomandaTirocinioByDocente(long idDomanda) throws OperazioneNonAutorizzataException{
+		Utente utente = utenzaService.getUtenteAutenticato();
+
+		// Solo lo specifico docente tutor può rifiutare una
+		// domanda di tirocinio di cui è stato indicato come tutor
+		if (!(utente instanceof DocenteTutor)) {
+			throw new OperazioneNonAutorizzataException();
+		}
+
+		DocenteTutor docenteTutor = (DocenteTutor) utente;
+
+		DomandaTirocinio domandaTirocinio = domandaTirocinioRepository.findById(idDomanda).orElse(null);
+
+		if (docenteTutor.getId() != domandaTirocinio.getTutor().getId()) {
+			throw new OperazioneNonAutorizzataException();
+		}
+
+		if (!domandaTirocinio.getStato().equals(DomandaTirocinio.IN_ATTESA) && (!domandaTirocinio.getStato().equals(DomandaTirocinio.IN_ATTESA_TUTOR))) {
+			throw new OperazioneNonAutorizzataException("Impossibile accettare questa domanda");
 		}
 
 		domandaTirocinio.setStato(DomandaTirocinio.RIFIUTATA);
@@ -256,6 +389,47 @@ public class DomandaTirocinioService {
 		List<DomandaTirocinio> domandeTirocinio = domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva,
 				DomandaTirocinio.IN_ATTESA);
 
+		domandeTirocinio.addAll(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva,
+				DomandaTirocinio.IN_ATTESA_AZIENDA));
+
+		return domandeTirocinio;
+	}
+
+	/**
+	 * Il metodo fornisce la funzionalita' di visualizzazione delle domande di
+	 * tirocinio in attesa
+	 *
+	 * @param docenteID
+	 * @return Lista di {@link DomandaTirocinio} che rappresenta la lista delle
+	 *         domande di tirocinio <b>Può essere vuota</b> se nel database non sono
+	 *         presenti domande di tirocinio di quella determinata azienda
+	 *
+	 * @throws OperazioneNonAutorizzataException
+	 */
+
+	public List<DomandaTirocinio> visualizzaDomandeTirocinioInAttesaDocente(long docenteID) throws OperazioneNonAutorizzataException {
+
+		Utente utente = utenzaService.getUtenteAutenticato();
+
+		// Solo il docente tutor può visualizzare le domande di tirocinio in attesa
+		// della sua valutazione
+		if (!(utente instanceof DocenteTutor)) {
+			throw new OperazioneNonAutorizzataException();
+		}
+		DocenteTutor docenteTutor = (DocenteTutor) utente;
+
+		// Le domande di tirocinio a cuo è associato un tutor possono essere visualizzate solo dal
+		// docente stesso
+		if (docenteTutor.getId() != docenteID) {
+			throw new OperazioneNonAutorizzataException();
+		}
+
+		List<DomandaTirocinio> domandeTirocinio = domandaTirocinioRepository.findAllByDocenteTutorIdAndStato(docenteID,
+				DomandaTirocinio.IN_ATTESA);
+
+		domandeTirocinio.addAll(domandaTirocinioRepository.findAllByDocenteTutorIdAndStato(docenteID,
+				DomandaTirocinio.IN_ATTESA_TUTOR));
+
 		return domandeTirocinio;
 	}
 
@@ -291,6 +465,8 @@ public class DomandaTirocinioService {
 
 		List<DomandaTirocinio> domandeTirocinio = new ArrayList<DomandaTirocinio>();
 		domandeTirocinio
+				.addAll(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva, DomandaTirocinio.IN_ATTESA_TUTOR));
+		domandeTirocinio
 				.addAll(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva, DomandaTirocinio.ACCETTATA));
 		domandeTirocinio
 				.addAll(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva, DomandaTirocinio.APPROVATA));
@@ -298,6 +474,47 @@ public class DomandaTirocinioService {
 				.addAll(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva, DomandaTirocinio.RESPINTA));
 
 		return domandeTirocinio;
+	}
+
+	/**
+	 * Il metodo fornisce la funzionalita' di visualizzazione delle domande di
+	 * tirocinio inoltrate
+	 *
+	 * @param docenteID
+	 * @return Lista di {@link DomandaTirocinio} che rappresenta la lista delle
+	 *         domande di tirocinio <b>Può essere vuota</b> se nel database non sono
+	 *         presenti domande di tirocinio di quel determinato docente
+	 *
+	 * @throws OperazioneNonAutorizzataException
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public List<DomandaTirocinio> visualizzaDomandeTirocinioInoltrateDocente(long docenteID) throws OperazioneNonAutorizzataException{
+		Utente utente = utenzaService.getUtenteAutenticato();
+
+		// Solo il docente tutor può visualizzare le proprie domande di tirocinio inoltrate
+		if (!(utente instanceof DocenteTutor)) {
+			throw new OperazioneNonAutorizzataException();
+		}
+		DocenteTutor docenteTutor = (DocenteTutor) utente;
+
+		// Le domande di tirocinio di un docente possono essere visualizzate solo dal
+		// docente stessi
+		if (docenteTutor.getId() != docenteID) {
+			throw new OperazioneNonAutorizzataException();
+		}
+
+		List<DomandaTirocinio> domandeTirocinio = new ArrayList<DomandaTirocinio>();
+		domandeTirocinio
+				.addAll(domandaTirocinioRepository.findAllByDocenteTutorIdAndStato(docenteID, DomandaTirocinio.IN_ATTESA_AZIENDA));
+		domandeTirocinio
+				.addAll(domandaTirocinioRepository.findAllByDocenteTutorIdAndStato(docenteID, DomandaTirocinio.ACCETTATA));
+		domandeTirocinio
+				.addAll(domandaTirocinioRepository.findAllByDocenteTutorIdAndStato(docenteID, DomandaTirocinio.APPROVATA));
+		domandeTirocinio
+				.addAll(domandaTirocinioRepository.findAllByDocenteTutorIdAndStato(docenteID, DomandaTirocinio.RESPINTA));
+
+		return domandeTirocinio;
+
 	}
 
 	/**
@@ -340,6 +557,85 @@ public class DomandaTirocinioService {
 			}
 		}
 		return tirociniInCorso;
+	}
+
+
+	/**
+	 * Il metodo fornisce la funzionalita' di visualizzazione dei tirocini in corso
+	 * associati ad un dato docente tutor
+	 *
+	 * @param docenteId
+	 * @return Lista di {@link DomandaTirocinio} che rappresenta la lista delle
+	 *         domande di tirocinio <b>Può essere vuota</b> se nel database non sono
+	 *         presenti tirocini associati al tutor approvati o la cui decorrenza è passata o futura
+	 * @throws OperazioneNonAutorizzataException
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public List<DomandaTirocinio> visualizzaTirociniInCorsoDocente(long docenteId) throws OperazioneNonAutorizzataException {
+
+		Utente utente = utenzaService.getUtenteAutenticato();
+
+		// Solo il tutor può visualizzare i tirocini ad esso associati
+		if (!(utente instanceof DocenteTutor)) {
+			throw new OperazioneNonAutorizzataException();
+		}
+		DocenteTutor docenteTutor = (DocenteTutor) utente;
+
+		// I tirocini in corso associati ad un tutor possono essere visualizzati solo dal tutor stesso
+		if (docenteTutor.getId() != docenteId) {
+			throw new OperazioneNonAutorizzataException();
+		}
+
+		List<DomandaTirocinio> domandeTirocinio = domandaTirocinioRepository.findAllByDocenteTutorIdAndStato(docenteId,
+				DomandaTirocinio.APPROVATA);
+		List<DomandaTirocinio> tirociniInCorso = new ArrayList<DomandaTirocinio>();
+
+		for (DomandaTirocinio d : domandeTirocinio) {
+			if (d.getDataInizio().isBefore(LocalDate.now()) && d.getDataFine().isAfter(LocalDate.now())) {
+				tirociniInCorso.add(d);
+			}
+		}
+		return tirociniInCorso;
+	}
+
+	/**
+	 * Il metodo fornisce la funzionalita' di visualizzazione dei tirocini chiusi, quindi scaduti e terminati
+	 *
+	 * @param docenteId
+	 * @return Lista di {@link DomandaTirocinio} che rappresenta la lista delle
+	 *         domande di tirocinio terminate e scadute
+	 * @throws OperazioneNonAutorizzataException
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public List<DomandaTirocinio> visualizzaTirociniChiusi(long docenteId) throws OperazioneNonAutorizzataException {
+
+		Utente utente = utenzaService.getUtenteAutenticato();
+
+		// Solo il tutor può visualizzare i tirocini ad esso associati
+		if (!(utente instanceof DocenteTutor)) {
+			throw new OperazioneNonAutorizzataException();
+		}
+		DocenteTutor docenteTutor = (DocenteTutor) utente;
+
+		// I tirocini in corso associati ad un tutor possono essere visualizzati solo dal tutor stesso
+		if (docenteTutor.getId() != docenteId) {
+			throw new OperazioneNonAutorizzataException();
+		}
+
+		List<DomandaTirocinio> domandeTirocinioApprovate = domandaTirocinioRepository.findAllByDocenteTutorIdAndStato(docenteId,
+				DomandaTirocinio.APPROVATA);
+		List<DomandaTirocinio> tirociniChiusi = new ArrayList<DomandaTirocinio>();
+
+		for (DomandaTirocinio d : domandeTirocinioApprovate) {
+			if (d.getDataInizio().isBefore(LocalDate.now()) && d.getDataFine().isBefore(LocalDate.now())) {
+				tirociniChiusi.add(d);
+			}
+		}
+
+		tirociniChiusi.addAll(domandaTirocinioRepository.findAllByDocenteTutorIdAndStato(docenteId,
+				DomandaTirocinio.TERMINATA));
+
+		return tirociniChiusi;
 	}
 
 	/**
@@ -612,5 +908,24 @@ public class DomandaTirocinioService {
 
 		return condizioni;
 	}
+
+	/**
+	 * Il metodo fornisce i controlli di validazione del parametro docenteTutorId
+	 *
+	 * @param docenteTutorId
+	 * @return docenteTutorId
+	 * @throws DomandaTirocinioNonValidaException
+	 */
+	public String validaDocenteTutor(String docenteTutorId) throws DomandaTirocinioNonValidaException {
+		if (docenteTutorId == null)
+			throw new DomandaTirocinioNonValidaException("DocenteTutorError",
+					"Non è stato immesso alcun utente");
+		if (docenteTutorRepository.findById(Long.parseLong(docenteTutorId)).orElse(null) == null) {
+			throw new DomandaTirocinioNonValidaException("DocenteTutorError",
+					"Il docente immesso non è valido");
+		}
+		return docenteTutorId;
+	}
+
 
 }

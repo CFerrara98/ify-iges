@@ -1,5 +1,7 @@
 package it.unisa.di.is.gc1.ify.web;
 
+import it.unisa.di.is.gc1.ify.DocenteTutor.DocenteTutor;
+import it.unisa.di.is.gc1.ify.DocenteTutor.DocenteTutorService;
 import it.unisa.di.is.gc1.ify.Studente.OperazioneNonAutorizzataException;
 import it.unisa.di.is.gc1.ify.Studente.Studente;
 import it.unisa.di.is.gc1.ify.convenzioni.DelegatoAziendale;
@@ -31,6 +33,8 @@ import java.util.List;
 @Controller
 public class DomandaTirocinioController {
 	@Autowired
+	private DocenteTutorService docenteTutorService;
+	@Autowired
 	private DomandaTirocinioService domandaTirocinioService;
 	@Autowired
 	private ProgettoFormativoService progettoFormativoService;
@@ -59,9 +63,10 @@ public class DomandaTirocinioController {
 			try {
 				s = domandaTirocinioService.controllaStatoStudente();
 				if (s.equals("")) {
-
 					ProgettoFormativo progettoFormativo = progettoFormativoService.cercaProgettoPerId(idProgetto);
+					List<DocenteTutor> listDocentiTutor = docenteTutorService.getAllDocentiTutor();
 					redirectAttribute.addFlashAttribute("progettoFormativo", progettoFormativo);
+					redirectAttribute.addFlashAttribute("docentiList", listDocentiTutor);
 					return "redirect:/visualizzaAziendeConvenzionateStudente";
 				} else {
 					redirectAttribute.addFlashAttribute("message", s);
@@ -103,6 +108,9 @@ public class DomandaTirocinioController {
 				redirectAttribute.addFlashAttribute(x.getCode(), x.getDefaultMessage());
 			}
 
+			List<DocenteTutor> listDocentiTutor = docenteTutorService.getAllDocentiTutor();
+			redirectAttribute.addFlashAttribute("docentiList", listDocentiTutor);
+
 			return "redirect:/visualizzaAziendeConvenzionateStudente";
 		}
 
@@ -112,6 +120,9 @@ public class DomandaTirocinioController {
 		} catch (Exception e) {
 			return "redirect:/";
 		}
+		String docenteTutorId = domandaTirocinioForm.getDocenteTutorId();
+
+		DocenteTutor dt = docenteTutorService.getDocenteTutorById(Long.parseLong(docenteTutorId));
 
 		DomandaTirocinio domandaTirocinio = new DomandaTirocinio();
 		ProgettoFormativo progettoFormativo = progettoFormativoService
@@ -125,6 +136,7 @@ public class DomandaTirocinioController {
 		domandaTirocinio.setProgettoFormativo(progettoFormativo);
 		domandaTirocinio.setAzienda(progettoFormativo.getAzienda());
 		domandaTirocinio.setStudente(studente);
+		domandaTirocinio.setTutor(dt);
 		domandaTirocinio.setStato(DomandaTirocinio.IN_ATTESA);
 
 		try {
@@ -139,20 +151,20 @@ public class DomandaTirocinioController {
 	}
 
 	/**
-	 * Metodo per accettare una domanda di tirocinio in attesa
+	 * Metodo per accettare una domanda di tirocinio in attesa dall'azienda
 	 * 
 	 * @param model
 	 * @param id
 	 * @param redirectAttribute
 	 * @return String stringa che rapprestenta la pagina da visualizzare
 	 */
-	@RequestMapping(value = "/accettaDomandaTirocinio", method = RequestMethod.POST)
-	public String accettaDomandaTirocinio(@RequestParam("idDomanda") long id, Model model,
+	@RequestMapping(value = "/accettaDomandaTirocinioByAzienda", method = RequestMethod.POST)
+	public String accettaDomandaTirocinioByAzienda(@RequestParam("idDomanda") long id, Model model,
 			RedirectAttributes redirectAttribute) {
 
 		DomandaTirocinio domandaTirocinio;
 		try {
-			domandaTirocinio = domandaTirocinioService.accettaDomandaTirocinio(id);
+			domandaTirocinio = domandaTirocinioService.accettaDomandaTirocinioByAzienda(id);
 			model.addAttribute("domandaTirocinioAccettata", domandaTirocinio);
 		} catch (OperazioneNonAutorizzataException e) {
 			return "redirect:/";
@@ -165,20 +177,20 @@ public class DomandaTirocinioController {
 	}
 
 	/**
-	 * Metodo per rifiutare una domanda di tirocinio in attesa
+	 * Metodo per rifiutare una domanda di tirocinio in attesa dall'azienda
 	 * 
 	 * @param model
 	 * @param id
 	 * @param redirectAttribute
 	 * @return String stringa che rapprestenta la pagina da visualizzare
 	 */
-	@RequestMapping(value = "/rifiutaDomandaTirocinio", method = RequestMethod.POST)
-	public String rifiutaDomandaTirocinio(@RequestParam("idDomanda") long id, Model model,
+	@RequestMapping(value = "/rifiutaDomandaTirocinioByAzienda", method = RequestMethod.POST)
+	public String rifiutaDomandaTirocinioByAzienda(@RequestParam("idDomanda") long id, Model model,
 			RedirectAttributes redirectAttribute) {
 
 		DomandaTirocinio domandaTirocinio;
 		try {
-			domandaTirocinio = domandaTirocinioService.rifiutoDomandaTirocinio(id);
+			domandaTirocinio = domandaTirocinioService.rifiutoDomandaTirocinioByAzienda(id);
 			model.addAttribute("domandaTirocinioRifiutata", domandaTirocinio);
 		} catch (OperazioneNonAutorizzataException e) {
 			return "redirect:/";
@@ -188,6 +200,58 @@ public class DomandaTirocinioController {
 				"La domanda di tirocinio dello studente " + domandaTirocinio.getStudente().getNome() + " "
 						+ domandaTirocinio.getStudente().getCognome() + " è stata rifiutata con successo");
 		return "redirect:/visualizzaDomandeTirocinioInAttesaAzienda";
+	}
+
+	/**
+	 * Metodo per accettare una domanda di tirocinio in attesa da parte del tutor interno
+	 *
+	 * @param model
+	 * @param id
+	 * @param redirectAttribute
+	 * @return String stringa che rapprestenta la pagina da visualizzare
+	 */
+	@RequestMapping(value = "/accettaDomandaTirocinioByDocente", method = RequestMethod.POST)
+	public String accettaDomandaTirocinioByDocente(@RequestParam("idDomanda") long id, Model model,
+												   RedirectAttributes redirectAttribute) {
+
+		DomandaTirocinio domandaTirocinio;
+		try {
+			domandaTirocinio = domandaTirocinioService.accettaDomandaTirocinioByDocente(id);
+			model.addAttribute("domandaTirocinioAccettata", domandaTirocinio);
+		} catch (OperazioneNonAutorizzataException e) {
+			return "redirect:/";
+		}
+
+		redirectAttribute.addFlashAttribute("message",
+				"La domanda di tirocinio dello studente " + domandaTirocinio.getStudente().getNome() + " "
+						+ domandaTirocinio.getStudente().getCognome() + " è stata accettata con successo");
+		return "redirect:/visualizzaDomandeTirocinioInAttesaDocente";
+	}
+
+	/**
+	 * Metodo per rifiutare una domanda di tirocinio in attesa
+	 *
+	 * @param model
+	 * @param id
+	 * @param redirectAttribute
+	 * @return String stringa che rapprestenta la pagina da visualizzare
+	 */
+	@RequestMapping(value = "/rifiutaDomandaTirocinioByDocente", method = RequestMethod.POST)
+	public String rifiutaDomandaTirocinioByDocente(@RequestParam("idDomanda") long id, Model model,
+												   RedirectAttributes redirectAttribute) {
+
+		DomandaTirocinio domandaTirocinio;
+		try {
+			domandaTirocinio = domandaTirocinioService.rifiutoDomandaTirocinioByDocente(id);
+			model.addAttribute("domandaTirocinioRifiutata", domandaTirocinio);
+		} catch (OperazioneNonAutorizzataException e) {
+			return "redirect:/";
+		}
+
+		redirectAttribute.addFlashAttribute("message",
+				"La domanda di tirocinio dello studente " + domandaTirocinio.getStudente().getNome() + " "
+						+ domandaTirocinio.getStudente().getCognome() + " è stata rifiutata con successo");
+		return "redirect:/visualizzaDomandeTirocinioInAttesaDocente";
 	}
 
 	/**
@@ -330,6 +394,102 @@ public class DomandaTirocinioController {
 	}
 
 	/**
+	 * Metodo per visualizzare la lista delle domande di tirocinio in attesa
+	 * del docente tutor
+	 *
+	 * @param model
+	 * @return String stringa che rapprestenta la pagina da visualizzare
+	 */
+
+	@RequestMapping(value = "/visualizzaDomandeTirocinioInAttesaDocente", method = RequestMethod.GET)
+	public String visualizzaDomandeTirocinioInAttesaDocente(Model model) {
+		DocenteTutor docenteTutor;
+		try {
+			docenteTutor = (DocenteTutor) utenzaService.getUtenteAutenticato();
+		} catch (Exception e) {
+			return "redirect:/";
+		}
+
+		List<DomandaTirocinio> domandeTirocinio;
+
+		try {
+			domandeTirocinio = domandaTirocinioService
+					.visualizzaDomandeTirocinioInAttesaDocente(docenteTutor.getId());
+		} catch (OperazioneNonAutorizzataException e) {
+			return "redirect:/";
+		}
+
+		model.addAttribute("domandeTirocinio", domandeTirocinio);
+		return "visualizzaDomandeTirocinioInAttesaDocente";
+	}
+
+	/**
+	 * Metodo per visualizzare la lista delle domande di tirocinio inoltrate
+	 * del tutor accademico all'ufficio con relativo stato
+	 *
+	 * @param model
+	 * @return String stringa che rapprestenta la pagina da visualizzare
+	 */
+	@RequestMapping(value = "/visualizzaDomandeTirocinioInoltrateDocente", method = RequestMethod.GET)
+	public String visualizzaDomandeTirocinioInoltrateDocente(Model model) {
+		DocenteTutor docenteTutor;
+		try {
+			docenteTutor = (DocenteTutor) utenzaService.getUtenteAutenticato();
+		} catch (Exception e) {
+			return "redirect:/";
+		}
+
+		List<DomandaTirocinio> domandeTirocinio;
+
+		try {
+			domandeTirocinio = domandaTirocinioService
+					.visualizzaDomandeTirocinioInoltrateDocente(docenteTutor.getId());
+		} catch (OperazioneNonAutorizzataException e) {
+			return "redirect:/";
+		}
+
+		model.addAttribute("domandeTirocinio", domandeTirocinio);
+		return "visualizzaDomandeTirocinioInoltrateDocente";
+	}
+
+	/**
+	 * Metodo per visualizzare la lista lista dei tirocini in corso associati ad un dato docente tutor
+	 *
+	 * @param model
+	 * @return String stringa che rapprestenta la pagina da visualizzare
+	 */
+	@RequestMapping(value = "/visualizzaTirociniInCorsoDocente", method = RequestMethod.GET)
+	public String visualizzaTirociniInCorsoAzien(Model model) {
+		DocenteTutor docenteTutor;
+		try {
+			docenteTutor = (DocenteTutor) utenzaService.getUtenteAutenticato();
+		} catch (Exception e) {
+			return "redirect:/";
+		}
+
+		List<DomandaTirocinio> tirocini;
+		List<DomandaTirocinio> tirociniChiusi;
+
+		try {
+			tirocini = domandaTirocinioService
+					.visualizzaTirociniInCorsoDocente(docenteTutor.getId());
+		} catch (OperazioneNonAutorizzataException e) {
+			return "redirect:/";
+		}
+
+		try {
+			tirociniChiusi = domandaTirocinioService
+					.visualizzaTirociniChiusi(docenteTutor.getId());
+		} catch (OperazioneNonAutorizzataException e) {
+			return "redirect:/";
+		}
+
+		model.addAttribute("tirociniInCorso", tirocini);
+		model.addAttribute("tirociniChiusi", tirociniChiusi);
+		return "visualizzaTirociniInCorsoDocente";
+	}
+
+	/**
 	 * Metodo per visualizzare la lista delle domande di tirocinio inoltrate dello
 	 * studente all'azienda
 	 * 
@@ -447,5 +607,31 @@ public class DomandaTirocinioController {
 
 		model.addAttribute("tirociniInCorso", tirocini);
 		return "visualizzaTirociniInCorsoUfficio";
+	}
+
+	/**
+	 * Metodo per terminare una domanda di tirocinio legata ad un docente
+	 *
+	 * @param model
+	 * @param id
+	 * @param redirectAttribute
+	 * @return String stringa che rapprestenta la pagina da visualizzare
+	 */
+	@RequestMapping(value = "/terminaTirocinio", method = RequestMethod.POST)
+	public String terminaTirocinio(@RequestParam("idDomanda") long id, Model model,
+												   RedirectAttributes redirectAttribute) {
+
+		DomandaTirocinio domandaTirocinio;
+		try {
+			domandaTirocinio = domandaTirocinioService.terminaTirocinio(id);
+			model.addAttribute("domandaTirocinioAccettata", domandaTirocinio);
+		} catch (OperazioneNonAutorizzataException e) {
+			return "redirect:/";
+		}
+
+		redirectAttribute.addFlashAttribute("message",
+				"Il tirocinio dello studente " + domandaTirocinio.getStudente().getNome() + " "
+						+ domandaTirocinio.getStudente().getCognome() + " è stato concluso con successo");
+		return "redirect:/visualizzaTirociniInCorsoDocente";
 	}
 }

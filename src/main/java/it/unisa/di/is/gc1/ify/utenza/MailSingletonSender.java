@@ -89,27 +89,43 @@ public class MailSingletonSender {
 
 			String progetto = domandaTirocinio.getProgettoFormativo().getNome();
 			String nomeAzienda = domandaTirocinio.getAzienda().getRagioneSociale();
+			String nomeDocente = domandaTirocinio.getTutor().getNome();
+			String cognomeDocente = domandaTirocinio.getTutor().getCognome();
+
+			System.err.println("Status: " + stato);
 
 			if (stato == DomandaTirocinio.ACCETTATA)
 				return "Gentile " + nome + " " + cognome
 						+ " la informiamo che la sua domanda di tirocinio inviata all'azienda " + nomeAzienda
 						+ ", per il progetto " + progetto + ", è stata " + stato
-						+ " dall'azienda.\nCordiali saluti, l'Ufficio Tirocini dell'Università degli Studi di Salerno.";
+						+ " dall'azienda e dal docente tutor " +nomeDocente+" "+cognomeDocente+".\nManca l'approvazione dell'Ufficio Tirocini per concludere la richiesta.\nCordiali saluti, l'Ufficio Tirocini dell'Università degli Studi di Salerno.";
 			else if (stato == DomandaTirocinio.RIFIUTATA)
 				return "Gentile " + nome + " " + cognome
 						+ " la informiamo che la sua domanda di tirocinio inviata all'azienda " + nomeAzienda
 						+ ", per il progetto " + progetto + ", è stata " + stato
-						+ " dall'azienda. La invitiamo a riprovare.\nCordiali saluti, l'Ufficio Tirocini dell'Università degli Studi di Salerno.";
+						+ " . La invitiamo a riprovare.\nCordiali saluti, l'Ufficio Tirocini dell'Università degli Studi di Salerno.";
 			else if (stato == DomandaTirocinio.APPROVATA)
 				return "Gentile " + nome + " " + cognome
 						+ " la informiamo che la sua domanda di tirocinio inviata all'azienda " + nomeAzienda
-						+ ", per il progetto " + progetto + ", è stata definitivamente " + stato
-						+ ".\nCordiali saluti, l'Ufficio Tirocini dell'Università degli Studi di Salerno.";
+						+ " e al docente " +nomeDocente+" "+cognomeDocente+", per il progetto " + progetto + ", è stata definitivamente " + stato
+						+ " dall'Ufficio Tirocini.\nCordiali saluti, l'Ufficio Tirocini dell'Università degli Studi di Salerno.";
 			else if (stato == DomandaTirocinio.RESPINTA)
 				return "Gentile " + nome + " " + cognome
 						+ " la informiamo che la sua domanda di tirocinio inviata all'azienda " + nomeAzienda
 						+ ", per il progetto " + progetto + ", è stata definitivamente " + stato
 						+ ". La inviriamo a riprovare.\nCordiali saluti, l'Ufficio Tirocini dell'Università degli Studi di Salerno.";
+			else if (stato == DomandaTirocinio.IN_ATTESA_TUTOR)
+				return "Gentile " + nome + " " + cognome
+						+ " la informiamo che la sua domanda di tirocinio inviata all'azienda " + nomeAzienda
+						+ ", per il progetto " + progetto + ", è stata accettata dall'azienda.\nManca l'accettazione del docente " +nomeDocente+" "+cognomeDocente+" per completare la procedura.\nCordiali saluti, l'Ufficio Tirocini dell'Università degli Studi di Salerno.";
+			else if (stato == DomandaTirocinio.IN_ATTESA_AZIENDA)
+				return "Gentile " + nome + " " + cognome
+						+ " la informiamo che la sua domanda di tirocinio inviata all'azienda " + nomeAzienda
+						+ ", per il progetto " + progetto + ", è stata accettata dal docente " +nomeDocente+" "+cognomeDocente+".\nManca l'accettazione dell'azienda per completare la procedura.\nCordiali saluti, l'Ufficio Tirocini dell'Università degli Studi di Salerno.";
+			else if (stato == DomandaTirocinio.TERMINATA)
+				return "Gentile " + nome + " " + cognome
+						+ " la informiamo che il suo tirocinio presso l'azienda " + nomeAzienda
+						+ " per il progetto " + progetto + " è stato concluso con successo e approvato dal docente " +nomeDocente+" "+cognomeDocente+".\nCordiali saluti, l'Ufficio Tirocini dell'Università degli Studi di Salerno.";
 		}
 		return "";
 	}

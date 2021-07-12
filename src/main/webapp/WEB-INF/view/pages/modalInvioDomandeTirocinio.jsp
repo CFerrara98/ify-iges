@@ -37,6 +37,26 @@
 						</c:choose>
 					</div>
 					<div class="form-group">
+						<label for="docenteTutorId">Docente tutor: </label>
+						<c:choose>
+							<c:when test="${DocenteTutorError == null}">
+								<select class="form-control" id="docenteTutorId" name="docenteTutorId">
+									<c:forEach items="${docentiList}" var="docente" varStatus="loop">
+										<option value = "${docente.id}">${docente.nome} ${docente.cognome}</option>
+									</c:forEach>
+								</select>
+							</c:when>
+							<c:otherwise>
+								<select class="form-control" id="docenteTutorId" name="docenteTutorId">
+									<c:forEach items="${docentiList}" var="docente" varStatus="loop">
+										<option value = "${docente.id}">${docente.nome} ${docente.cognome}</option>
+									</c:forEach>
+								</select>
+								<span class="myError">${DocenteTutorError}</span>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div class="form-group">
 						<label for="formGroupExampleInput2">Motivazioni</label>
 						<c:choose>
 							<c:when test="${MotivazioniError == null}">
