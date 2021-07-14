@@ -124,7 +124,7 @@ public class ProgettoFormativoServiceUT {
 	public void archiviaProgettoFormativoUtenteNonAutorizzato() {
 		String message="Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(studente);
-		when(progettoFormativoRepository.findById(progettoFormativo.getId())).thenReturn(Optional.of(progettoFormativo));
+//		when(progettoFormativoRepository.findById(progettoFormativo.getId())).thenReturn(Optional.of(progettoFormativo));
 		progettoFormativo.setStato(ProgettoFormativo.ATTIVO);
 		try {
 			progettoFormativoService.archiviaProgettoFormativo(progettoFormativo.getId());
@@ -213,7 +213,7 @@ public class ProgettoFormativoServiceUT {
 	public void riattivazioneProgettoFormativoUtenteNonAutorizzato() {
 		String message="Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(studente);
-		when(progettoFormativoRepository.findById(progettoFormativo.getId())).thenReturn(Optional.of(progettoFormativo));
+//		when(progettoFormativoRepository.findById(progettoFormativo.getId())).thenReturn(Optional.of(progettoFormativo));
 		progettoFormativo.setStato(ProgettoFormativo.ARCHIVIATO);
 		try {
 			progettoFormativoService.riattivazioneProgettoFormativo(progettoFormativo.getId());
@@ -276,7 +276,7 @@ public class ProgettoFormativoServiceUT {
 	 */
 	@Test
 	public void cercaProgettoPerId() {
-		when(progettoFormativoRepository.save(progettoFormativo)).thenReturn(progettoFormativo);
+		//when(progettoFormativoRepository.save(progettoFormativo)).thenReturn(progettoFormativo);
 		progettoFormativoService.cercaProgettoPerId(progettoFormativo.getId());
 		verify(progettoFormativoRepository, times(1)).findById(progettoFormativo.getId());
 	}
@@ -292,7 +292,7 @@ public class ProgettoFormativoServiceUT {
 	public void modificaProgettoFormativoUtenteNonAutorizzato() {
 		String message="Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(studente);
-		when(progettoFormativoRepository.findById(progettoFormativo.getId())).thenReturn(Optional.of(progettoFormativo));
+//		when(progettoFormativoRepository.findById(progettoFormativo.getId())).thenReturn(Optional.of(progettoFormativo));
 		String descrizione = "programmazione";
 		String conoscenze= "linguaggio c";
 		int maxPartecipanti = 7;
