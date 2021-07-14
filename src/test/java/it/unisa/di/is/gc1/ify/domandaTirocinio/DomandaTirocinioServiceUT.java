@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 import it.unisa.di.is.gc1.ify.DocenteTutor.DocenteTutor;
-import org.graalvm.compiler.nodes.calc.IntegerDivRemNode;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -561,6 +560,10 @@ public class DomandaTirocinioServiceUT {
 	 */
 	@Test
 	public void visualizzaDomandeTirocinioInAttesaAzienda() {
+
+		listaDomande = new ArrayList<>();
+		listaDomande.add(domanda);
+
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegato);
 		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
 		when(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), DomandaTirocinio.IN_ATTESA)).thenReturn(listaDomande);
@@ -572,6 +575,7 @@ public class DomandaTirocinioServiceUT {
 			e.printStackTrace();
 		}
 		verify(domandaTirocinioRepository , times(1)).findAllByAziendaPIvaAndStato(azienda.getpIva() , DomandaTirocinio.IN_ATTESA);
+
 	}
 	
 	/**
@@ -670,7 +674,7 @@ public class DomandaTirocinioServiceUT {
 	public void visualizzaTirociniInCorsoAziendaPivaNotEqual() {
 		String messaggio = "Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
-		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(delegatoMock.getAzienda()).thenReturn(aziendaMock);
 		when(aziendaMock.getpIva()).thenReturn("0123456781");
 		try {
@@ -1038,7 +1042,7 @@ public class DomandaTirocinioServiceUT {
 	@Test
 	public void visualizzaDomandeTirocinioValutateUfficio() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(responsabile);
-		when(domandaTirocinioRepository.findAllByStato(DomandaTirocinio.ACCETTATA)).thenReturn(listaDomande);
+		//when(domandaTirocinioRepository.findAllByStato(DomandaTirocinio.ACCETTATA)).thenReturn(listaDomande);
 		try {
 			domandaTirocinioService.visualizzaDomandeTirocinioValutateUfficio();
 		} catch (OperazioneNonAutorizzataException e) {

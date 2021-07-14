@@ -387,12 +387,8 @@ public class DomandaTirocinioService {
 			throw new OperazioneNonAutorizzataException();
 		}
 
-		System.out.println("piva"+ piva);
-
 		List<DomandaTirocinio> domandeTirocinio = domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva,
 				DomandaTirocinio.IN_ATTESA);
-
-		System.out.println("Domanda tiro"+ domandeTirocinio);
 
 		domandeTirocinio.addAll(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva,
 				DomandaTirocinio.IN_ATTESA_AZIENDA));
