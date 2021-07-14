@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,6 +26,8 @@ import it.unisa.di.is.gc1.ify.progettoFormativo.ProgettoFormativo;
 import it.unisa.di.is.gc1.ify.responsabileUfficioTirocini.ResponsabileUfficioTirocini;
 import it.unisa.di.is.gc1.ify.utenza.MailSingletonSender;
 import it.unisa.di.is.gc1.ify.utenza.UtenzaService;
+
+import javax.swing.text.html.Option;
 
 /**
  * Test di unità per la classe DomandaTirocinioService; tipologia di test:
@@ -232,7 +235,7 @@ public class DomandaTirocinioServiceUT {
 	public void accettaDomandaTirocinioPIvaNotEqual() {
 		String messaggio = "Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(delegatoMock.getAzienda()).thenReturn(aziendaMock);
 		when(aziendaMock.getpIva()).thenReturn("0123456781");
 		try {
@@ -254,7 +257,7 @@ public class DomandaTirocinioServiceUT {
 	public void accettaDomandaTirocinioStatoNotInAttesa() {
 		String messaggio = "Impossibile accettare questa domanda";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(delegatoMock.getAzienda()).thenReturn(aziendaMock);
 		when(aziendaMock.getpIva()).thenReturn("0123456789");
 		domanda.setStato(DomandaTirocinio.ACCETTATA);
@@ -275,7 +278,7 @@ public class DomandaTirocinioServiceUT {
 	@Test
 	public void accettaDomandaTirocinio() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegato);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
 		try {
 			domandaTirocinioService.accettaDomandaTirocinioByAzienda(domanda.getId());
@@ -317,7 +320,7 @@ public class DomandaTirocinioServiceUT {
 	public void rifiutoDomandaTirocinioPivaNotEqual() {
 		String messaggio = "Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(delegatoMock.getAzienda()).thenReturn(aziendaMock);
 		when(aziendaMock.getpIva()).thenReturn("0123456781");
 		try {
@@ -339,7 +342,7 @@ public class DomandaTirocinioServiceUT {
 	public void rifiutoDomandaTirocinioStatoNotAttesa() {
 		String messaggio = "Impossibile rifiutare questa domanda";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(delegatoMock.getAzienda()).thenReturn(aziendaMock);
 		when(aziendaMock.getpIva()).thenReturn("0123456789");
 		domanda.setStato(DomandaTirocinio.ACCETTATA);
@@ -360,7 +363,7 @@ public class DomandaTirocinioServiceUT {
 	@Test
 	public void rifiutoDomandaTirocinio() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegato);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
 		try {
 			domandaTirocinioService.rifiutoDomandaTirocinioByAzienda(domanda.getId());
@@ -401,7 +404,7 @@ public class DomandaTirocinioServiceUT {
 	public void approvazioneDomandaTirocinioStatoFail() {
 		String messaggio = "Impossibile rifiutare questa domanda";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(responsabile);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		try {
 			domandaTirocinioService.approvazioneDomandaTirocinio(domanda.getId());
 		} catch (OperazioneNonAutorizzataException e) {
@@ -419,7 +422,7 @@ public class DomandaTirocinioServiceUT {
 	@Test
 	public void approvazioneDomandaTirocinio() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(responsabile);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
 		domanda.setStato(DomandaTirocinio.ACCETTATA);
 		try {
@@ -461,7 +464,7 @@ public class DomandaTirocinioServiceUT {
 	public void respintaDomandaTirocinioStatoFail() {
 		String messaggio = "Impossibile rifiutare questa domanda";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(responsabile);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		try {
 			domandaTirocinioService.respintaDomandaTirocinio(domanda.getId());
 		} catch (OperazioneNonAutorizzataException e) {
@@ -479,7 +482,7 @@ public class DomandaTirocinioServiceUT {
 	@Test
 	public void respintaDomandaTirocinio() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(responsabile);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
 		domanda.setStato(DomandaTirocinio.ACCETTATA);
 		try {
@@ -645,7 +648,7 @@ public class DomandaTirocinioServiceUT {
 	public void visualizzaTirociniInCorsoAziendaPivaNotEqual() {
 		String messaggio = "Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(delegatoMock.getAzienda()).thenReturn(aziendaMock);
 		when(aziendaMock.getpIva()).thenReturn("0123456781");
 		try {

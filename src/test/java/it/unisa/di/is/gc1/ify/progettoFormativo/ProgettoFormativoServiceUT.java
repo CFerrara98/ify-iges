@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -101,7 +102,7 @@ public class ProgettoFormativoServiceUT {
 	@Test
 	public void archiviaProgettoFormativo() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoAziendale);
-		when(progettoFormativoRepository.findById(progettoFormativo.getId()).orElse(null)).thenReturn(progettoFormativo);
+		when(progettoFormativoRepository.findById(progettoFormativo.getId())).thenReturn(Optional.of(progettoFormativo));
 		progettoFormativo.setStato(ProgettoFormativo.ATTIVO);
 		try {
 			progettoFormativoService.archiviaProgettoFormativo(progettoFormativo.getId());
@@ -123,7 +124,7 @@ public class ProgettoFormativoServiceUT {
 	public void archiviaProgettoFormativoUtenteNonAutorizzato() {
 		String message="Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(studente);
-		when(progettoFormativoRepository.findById(progettoFormativo.getId()).orElse(null)).thenReturn(progettoFormativo);
+		when(progettoFormativoRepository.findById(progettoFormativo.getId())).thenReturn(Optional.of(progettoFormativo));
 		progettoFormativo.setStato(ProgettoFormativo.ATTIVO);
 		try {
 			progettoFormativoService.archiviaProgettoFormativo(progettoFormativo.getId());
@@ -145,7 +146,7 @@ public class ProgettoFormativoServiceUT {
 	public void archiviaProgettoFormativoPIvaNotEquals() {
 		String message="Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoAziendaleMock);
-		when(progettoFormativoRepository.findById(progettoFormativo.getId()).orElse(null)).thenReturn(progettoFormativo);
+		when(progettoFormativoRepository.findById(progettoFormativo.getId())).thenReturn(Optional.of(progettoFormativo));
 		when(delegatoAziendaleMock.getAzienda()).thenReturn(aziendaMock);
 		when(aziendaMock.getpIva()).thenReturn("0123456784");
 		progettoFormativo.setStato(ProgettoFormativo.ATTIVO);
@@ -168,7 +169,7 @@ public class ProgettoFormativoServiceUT {
 	public void archiviaProgettoFormativoStatoNonAttivo() {
 		String message="Impossibile archiviare questo progetto";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoAziendale);
-		when(progettoFormativoRepository.findById(progettoFormativo.getId()).orElse(null)).thenReturn(progettoFormativo);
+		when(progettoFormativoRepository.findById(progettoFormativo.getId())).thenReturn(Optional.of(progettoFormativo));
 		progettoFormativo.setStato(ProgettoFormativo.ARCHIVIATO);
 		try {
 			progettoFormativoService.archiviaProgettoFormativo(progettoFormativo.getId());
@@ -191,7 +192,7 @@ public class ProgettoFormativoServiceUT {
 		progetto1.setId(progettoFormativo.getId());
 		
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoAziendale);
-		when(progettoFormativoRepository.findById(progettoFormativo.getId()).orElse(null)).thenReturn(progetto1);
+		when(progettoFormativoRepository.findById(progettoFormativo.getId())).thenReturn(Optional.of(progetto1));
 		try {
 			progettoFormativoService.riattivazioneProgettoFormativo(progetto1.getId());
 		} catch (OperazioneNonAutorizzataException e) {
@@ -212,7 +213,7 @@ public class ProgettoFormativoServiceUT {
 	public void riattivazioneProgettoFormativoUtenteNonAutorizzato() {
 		String message="Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(studente);
-		when(progettoFormativoRepository.findById(progettoFormativo.getId()).orElse(null)).thenReturn(progettoFormativo);
+		when(progettoFormativoRepository.findById(progettoFormativo.getId())).thenReturn(Optional.of(progettoFormativo));
 		progettoFormativo.setStato(ProgettoFormativo.ARCHIVIATO);
 		try {
 			progettoFormativoService.riattivazioneProgettoFormativo(progettoFormativo.getId());
@@ -234,7 +235,7 @@ public class ProgettoFormativoServiceUT {
 	public void riattivazioneProgettoFormativoPIvaNotEquals() {
 		String message="Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoAziendaleMock);
-		when(progettoFormativoRepository.findById(progettoFormativo.getId()).orElse(null)).thenReturn(progettoFormativo);
+		when(progettoFormativoRepository.findById(progettoFormativo.getId())).thenReturn(Optional.of(progettoFormativo));
 		when(delegatoAziendaleMock.getAzienda()).thenReturn(aziendaMock);
 		when(aziendaMock.getpIva()).thenReturn("0123456784");
 		progettoFormativo.setStato(ProgettoFormativo.ARCHIVIATO);
@@ -257,7 +258,7 @@ public class ProgettoFormativoServiceUT {
 	public void riattivazioneProgettoFormativoStatoNonArchiviato() {
 		String message="Impossibile riattivare questo progetto";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoAziendale);
-		when(progettoFormativoRepository.findById(progettoFormativo.getId()).orElse(null)).thenReturn(progettoFormativo);
+		when(progettoFormativoRepository.findById(progettoFormativo.getId())).thenReturn(Optional.of(progettoFormativo));
 		progettoFormativo.setStato(ProgettoFormativo.ATTIVO);
 		try {
 			progettoFormativoService.riattivazioneProgettoFormativo(progettoFormativo.getId());
@@ -291,7 +292,7 @@ public class ProgettoFormativoServiceUT {
 	public void modificaProgettoFormativoUtenteNonAutorizzato() {
 		String message="Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(studente);
-		when(progettoFormativoRepository.findById(progettoFormativo.getId()).orElse(null)).thenReturn(progettoFormativo);
+		when(progettoFormativoRepository.findById(progettoFormativo.getId())).thenReturn(Optional.of(progettoFormativo));
 		String descrizione = "programmazione";
 		String conoscenze= "linguaggio c";
 		int maxPartecipanti = 7;
@@ -319,7 +320,7 @@ public class ProgettoFormativoServiceUT {
 	public void modificaProgettoFormativoPIvaNotEquals() {
 		String message="Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoAziendaleMock);
-		when(progettoFormativoRepository.findById(progettoFormativo.getId()).orElse(null)).thenReturn(progettoFormativo);
+		when(progettoFormativoRepository.findById(progettoFormativo.getId())).thenReturn(Optional.of(progettoFormativo));
 		when(delegatoAziendaleMock.getAzienda()).thenReturn(aziendaMock);
 		when(aziendaMock.getpIva()).thenReturn("0123456784");
 		String descrizione = "programmazione";
@@ -346,7 +347,7 @@ public class ProgettoFormativoServiceUT {
 	@Test
 	public void modificaProgettoFormativo() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoAziendale);
-		when(progettoFormativoRepository.findById(progettoFormativo.getId()).orElse(null)).thenReturn(progettoFormativo);
+		when(progettoFormativoRepository.findById(progettoFormativo.getId())).thenReturn(Optional.of(progettoFormativo));
 		String descrizione = "programmazione";
 		String conoscenze= "linguaggio c";
 		int maxPartecipanti = 7;

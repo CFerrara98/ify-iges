@@ -6,6 +6,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.time.LocalDate;
+import java.util.Optional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -1283,7 +1285,7 @@ public class RichiestaIscrizioneUT {
 	@Test
 	public void accettaRichiestaIscrizioneNonAutorizzata() {
 		RichiestaIscrizione richiestaiscrizione = new RichiestaIscrizione();
-		when(richiestaIscrizioneRepository.findById(10L).orElse(null)).thenReturn(richiestaiscrizione);
+		when(richiestaIscrizioneRepository.findById(10L)).thenReturn(Optional.of(richiestaiscrizione));
 		when(richiestaIscrizioneRepository.save(richiestaiscrizione)).thenReturn(richiestaiscrizione);
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new Studente());
 
@@ -1304,7 +1306,7 @@ public class RichiestaIscrizioneUT {
 	public void accettaRichiestaIscrizioneAutorizzataStatoErrato() {
 		RichiestaIscrizione richiestaiscrizione = new RichiestaIscrizione();
 		richiestaiscrizione.setStato(RichiestaIscrizione.RIFIUTATA);
-		when(richiestaIscrizioneRepository.findById(11L).orElse(null)).thenReturn(richiestaiscrizione);
+		when(richiestaIscrizioneRepository.findById(11L)).thenReturn(Optional.of(richiestaiscrizione));
 		when(richiestaIscrizioneRepository.save(richiestaiscrizione)).thenReturn(richiestaiscrizione);
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new ResponsabileUfficioTirocini());
 
@@ -1323,7 +1325,7 @@ public class RichiestaIscrizioneUT {
 	@Test
 	public void accettaRichiestaIscrizioneSuccesso() {
 	
-		when(richiestaIscrizioneRepository.findById(any(Long.class)).orElse(null)).thenReturn(richiestaMock);
+		when(richiestaIscrizioneRepository.findById(any(Long.class))).thenReturn(Optional.of(richiestaMock));
 		when(richiestaIscrizioneRepository.save(richiestaMock)).thenReturn(richiestaMock);
 		when(richiestaMock.getStato()).thenReturn(RichiestaIscrizione.IN_ATTESA);
 
@@ -1347,7 +1349,7 @@ public class RichiestaIscrizioneUT {
 	@Test
 	public void rifiutaRichiestaIscrizioneNonAutorizzata() {
 		RichiestaIscrizione richiestaiscrizione = new RichiestaIscrizione();
-		when(richiestaIscrizioneRepository.findById(13L).orElse(null)).thenReturn(richiestaiscrizione);
+		when(richiestaIscrizioneRepository.findById(13L)).thenReturn(Optional.of(richiestaiscrizione));
 		when(richiestaIscrizioneRepository.save(richiestaiscrizione)).thenReturn(richiestaiscrizione);
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new Studente());
 
@@ -1367,7 +1369,7 @@ public class RichiestaIscrizioneUT {
 	public void rifiutaRichiestaIscrizioneStatoErrato() {
 		RichiestaIscrizione richiestaiscrizione = new RichiestaIscrizione();
 		richiestaiscrizione.setStato(RichiestaIscrizione.ACCETTATA);
-		when(richiestaIscrizioneRepository.findById(14L).orElse(null)).thenReturn(richiestaiscrizione);
+		when(richiestaIscrizioneRepository.findById(14L)).thenReturn(Optional.of(richiestaiscrizione));
 		when(richiestaIscrizioneRepository.save(richiestaiscrizione)).thenReturn(richiestaiscrizione);
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new ResponsabileUfficioTirocini());
 
@@ -1387,7 +1389,7 @@ public class RichiestaIscrizioneUT {
 	 */
 	@Test
 	public void rifiutaRichiestaIscrizioneSuccesso() {		
-		when(richiestaIscrizioneRepository.findById(15L).orElse(null)).thenReturn(richiestaMock);
+		when(richiestaIscrizioneRepository.findById(15L)).thenReturn(Optional.of(richiestaMock));
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new ResponsabileUfficioTirocini());
 		when(richiestaMock.getStato()).thenReturn(RichiestaIscrizione.IN_ATTESA);
 		when(richiestaIscrizioneRepository.save(richiestaMock)).thenReturn(richiestaMock);

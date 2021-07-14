@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -1998,7 +1999,7 @@ public class RichiestaConvenzionamentoUT {
 	@Test
 	public void accettaRichiestaConvenzionamento_NonAutorizzato() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new Studente());
-		when(richiestaConvenzionamentoRepository.findById(10L).orElse(null)).thenReturn(richiestaConvenzionamento);
+		when(richiestaConvenzionamentoRepository.findById(10L)).thenReturn(Optional.of(richiestaConvenzionamento));
 		when(richiestaConvenzionamento.getStato()).thenReturn(RichiestaConvenzionamento.IN_ATTESA);
 		when(richiestaConvenzionamentoRepository.save(richiestaConvenzionamento)).thenReturn(richiestaConvenzionamento);
 		
@@ -2021,7 +2022,7 @@ public class RichiestaConvenzionamentoUT {
 	@Test
 	public void accettaRichiestaConvenzionamento_StatoInvalido() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new ResponsabileUfficioTirocini());
-		when(richiestaConvenzionamentoRepository.findById(10L).orElse(null)).thenReturn(richiestaConvenzionamento);
+		when(richiestaConvenzionamentoRepository.findById(10L)).thenReturn(Optional.of(richiestaConvenzionamento));
 		when(richiestaConvenzionamento.getStato()).thenReturn(RichiestaConvenzionamento.RIFIUTATA);
 		when(richiestaConvenzionamentoRepository.save(richiestaConvenzionamento)).thenReturn(richiestaConvenzionamento);
 		
@@ -2044,7 +2045,7 @@ public class RichiestaConvenzionamentoUT {
 	@Test
 	public void accettaRichiestaConvenzionamento_Successo() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new ResponsabileUfficioTirocini());
-		when(richiestaConvenzionamentoRepository.findById(10L).orElse(null)).thenReturn(richiestaConvenzionamento);
+		when(richiestaConvenzionamentoRepository.findById(10L)).thenReturn(Optional.of(richiestaConvenzionamento));
 		when(richiestaConvenzionamento.getStato()).thenReturn(RichiestaConvenzionamento.IN_ATTESA);
 		when(richiestaConvenzionamentoRepository.save(richiestaConvenzionamento)).thenReturn(richiestaConvenzionamento);
 		
@@ -2066,7 +2067,7 @@ public class RichiestaConvenzionamentoUT {
 	@Test
 	public void rifiutaRichiestaConvenzionamento_NonAutorizzato() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new Studente());
-		when(richiestaConvenzionamentoRepository.findById(10L).orElse(null)).thenReturn(richiestaConvenzionamento);
+		when(richiestaConvenzionamentoRepository.findById(10L)).thenReturn(Optional.of(richiestaConvenzionamento));
 		when(richiestaConvenzionamento.getStato()).thenReturn(RichiestaConvenzionamento.IN_ATTESA);
 		when(richiestaConvenzionamentoRepository.save(richiestaConvenzionamento)).thenReturn(richiestaConvenzionamento);
 		
@@ -2089,7 +2090,7 @@ public class RichiestaConvenzionamentoUT {
 	@Test
 	public void rifiutaRichiestaConvenzionamento_StatoInvalido() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new ResponsabileUfficioTirocini());
-		when(richiestaConvenzionamentoRepository.findById(10L).orElse(null)).thenReturn(richiestaConvenzionamento);
+		when(richiestaConvenzionamentoRepository.findById(10L)).thenReturn(Optional.of(richiestaConvenzionamento));
 		when(richiestaConvenzionamento.getStato()).thenReturn(RichiestaConvenzionamento.ACCETTATA);
 		when(richiestaConvenzionamentoRepository.save(richiestaConvenzionamento)).thenReturn(richiestaConvenzionamento);
 		
@@ -2112,7 +2113,7 @@ public class RichiestaConvenzionamentoUT {
 	@Test
 	public void rifiutaRichiestaConvenzionamento_Successo() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new ResponsabileUfficioTirocini());
-		when(richiestaConvenzionamentoRepository.findById(10L).orElse(null)).thenReturn(richiestaConvenzionamento);
+		when(richiestaConvenzionamentoRepository.findById(10L)).thenReturn(Optional.of(richiestaConvenzionamento));
 		when(richiestaConvenzionamento.getStato()).thenReturn(RichiestaConvenzionamento.IN_ATTESA);
 		when(richiestaConvenzionamentoRepository.save(richiestaConvenzionamento)).thenReturn(richiestaConvenzionamento);
 		
