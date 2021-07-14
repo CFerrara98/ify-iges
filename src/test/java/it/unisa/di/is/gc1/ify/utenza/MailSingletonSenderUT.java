@@ -4,6 +4,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import it.unisa.di.is.gc1.ify.DocenteTutor.DocenteTutor;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,6 +55,8 @@ public class MailSingletonSenderUT {
 	private Azienda azienda;
 	
 	private ProgettoFormativo progettoFormativo;
+
+	private DocenteTutor docenteTutor;
 	
 	/**
 	 * Salva lo studente, la richiesta di iscrizione, l'azienda, il delegato aziendale,
@@ -82,11 +85,21 @@ public class MailSingletonSenderUT {
 		progettoFormativo = new ProgettoFormativo();
 		progettoFormativo.setNome("DataScience");
 		progettoFormativo.setAzienda(azienda);
+
+		docenteTutor = new DocenteTutor();
+		docenteTutor.setEmail("docente@prova.it");
+		docenteTutor.setCognome("Di Prova");
+		docenteTutor.setNome("Docente");
+		docenteTutor.setIndirizzo("via tal dei tali 1");
+		docenteTutor.setSesso("M");
+		docenteTutor.setCampoRicerca("Ingegneria");
+		docenteTutor.setPassword("Password1");
 	
 		domandaTirocinio = new DomandaTirocinio();
 		domandaTirocinio.setAzienda(azienda);
 		domandaTirocinio.setStudente(studente);
 		domandaTirocinio.setProgettoFormativo(progettoFormativo);
+		domandaTirocinio.setTutor(docenteTutor);
 		
 		richiestaConvenzionamento = new RichiestaConvenzionamento();
 		richiestaConvenzionamento.setDelegatoAziendale(delegato);
