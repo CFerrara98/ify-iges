@@ -9,8 +9,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.print.Doc;
 import javax.transaction.Transactional;
 
+import it.unisa.di.is.gc1.ify.DocenteTutor.DocenteTutor;
+import it.unisa.di.is.gc1.ify.DocenteTutor.DocenteTutorRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -81,6 +84,9 @@ public class DomandaTirocinioServiceRepositoriesIT {
 	private UtenteRepository utenteRepository;
 
 	@Autowired
+	private DocenteTutorRepository docenteTutorRepository;
+
+	@Autowired
 	private DomandaTirocinioService domandaTirocinioService;
 	
 	@Autowired
@@ -120,6 +126,8 @@ public class DomandaTirocinioServiceRepositoriesIT {
 
 	private DomandaTirocinio domanda2;
 
+	private DocenteTutor docenteTutor;
+
 	/**
 	 * Salva la lista delle domande di tirocinio sul database prima dell'esecuzione
 	 * di ogni singolo test.
@@ -134,6 +142,7 @@ public class DomandaTirocinioServiceRepositoriesIT {
 		iscrizioneRepository.deleteAll();
 		studenteRepository.deleteAll();
 		responsabileRepository.deleteAll();
+		docenteTutorRepository.deleteAll();
 		utenteRepository.deleteAll();
 		
 		listaProgettiFormativi = new ArrayList<ProgettoFormativo>();
@@ -167,6 +176,16 @@ public class DomandaTirocinioServiceRepositoriesIT {
 		progettoFormativo1.setNome("Progetto 1");
 		progettoFormativo1.setStato(ProgettoFormativo.ATTIVO);
 
+
+		docenteTutor = new DocenteTutor();
+		docenteTutor.setEmail("docente@prova.it");
+		docenteTutor.setCognome("Di Prova");
+		docenteTutor.setNome("Docente");
+		docenteTutor.setIndirizzo("via tal dei tali 1");
+		docenteTutor.setSesso("M");
+		docenteTutor.setCampoRicerca("Ingegneria");
+		docenteTutor.setPassword("Password1");
+
 		// creo e salvo lo studente 1
 		studente1 = new Studente();
 		studente1.setNome("Mario");
@@ -188,11 +207,13 @@ public class DomandaTirocinioServiceRepositoriesIT {
 		domanda1.setDataInizio(LocalDate.of(2019, 11, 10));
 		domanda1.setDataFine(LocalDate.of(2020, 03, 10));
 		domanda1.setCfu(6);
+		domanda1.setTutor(docenteTutor);
 		domanda1.setStato(DomandaTirocinio.IN_ATTESA);
 
 		delegato1 = new DelegatoAziendale();
 		delegato1.setEmail("g.bianchi@gmail.it");
 		delegato1.setAzienda(azienda1);
+
 
 		studentiRepository.save(studente1);
 		// aziendeRepository.save(azienda1);
@@ -244,7 +265,8 @@ public class DomandaTirocinioServiceRepositoriesIT {
 		domanda2.setDataFine(LocalDate.of(2020, 03, 10));
 		domanda2.setCfu(6);
 		domanda2.setStato(DomandaTirocinio.IN_ATTESA);
-		
+		domanda2.setTutor(docenteTutor);
+
 		String conoscenze = "linguaggio java";
 		String motivazioni ="introduizione al mondo lavorativo";
 		LocalDate dataInizio = LocalDate.of(2019, 9, 10);
@@ -263,6 +285,7 @@ public class DomandaTirocinioServiceRepositoriesIT {
 		responsabile.setEmail("m.rossi@unisa.it");
 		utenteRepository.save(responsabile);
 
+		docenteTutorRepository.save(docenteTutor);
 		studentiRepository.save(studente2);
 		// aziendeRepository.save(azienda2);
 		delegatoRepository.save(delegato2);
