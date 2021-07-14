@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import it.unisa.di.is.gc1.ify.DocenteTutor.DocenteTutor;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -78,6 +79,8 @@ public class DomandaTirocinioServiceUT {
 
 	private DelegatoAziendale delegato;
 
+	private DocenteTutor docenteTutor;
+
 	private ResponsabileUfficioTirocini responsabile;
 
 	private List<DomandaTirocinio> listaDomande;
@@ -98,7 +101,16 @@ public class DomandaTirocinioServiceUT {
 		delegato = new DelegatoAziendale();
 		delegato.setAzienda(azienda);
 		delegato.setEmail("m.rossi@gmail.com");
-		
+
+		docenteTutor = new DocenteTutor();
+		docenteTutor.setEmail("docente@prova.it");
+		docenteTutor.setCognome("Di Prova");
+		docenteTutor.setNome("Docente");
+		docenteTutor.setIndirizzo("via tal dei tali 1");
+		docenteTutor.setSesso("M");
+		docenteTutor.setCampoRicerca("Ingegneria");
+		docenteTutor.setPassword("Password1");
+
 		responsabile = new ResponsabileUfficioTirocini();
 
 		// creo e salvo lo studente 1
@@ -114,6 +126,7 @@ public class DomandaTirocinioServiceUT {
 		domanda.setDataInizio(LocalDate.of(2019, 11, 10));
 		domanda.setDataFine(LocalDate.of(2020, 03, 10));
 		domanda.setCfu(6);
+		domanda.setTutor(docenteTutor);
 		domanda.setStato(DomandaTirocinio.IN_ATTESA);
 	}
 
