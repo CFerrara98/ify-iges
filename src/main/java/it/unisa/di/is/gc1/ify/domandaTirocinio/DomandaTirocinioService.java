@@ -224,7 +224,7 @@ public class DomandaTirocinioService {
 		if (!(utente instanceof DelegatoAziendale)) {
 			throw new OperazioneNonAutorizzataException();
 		}
-
+		System.out.println("Domanda service " + idDomanda );
 		DelegatoAziendale delegatoAziendale = (DelegatoAziendale) utente;
 
 		DomandaTirocinio domandaTirocinio = domandaTirocinioRepository.findById(idDomanda).orElse(null);
@@ -238,8 +238,9 @@ public class DomandaTirocinioService {
 
 		domandaTirocinio.setStato(DomandaTirocinio.RIFIUTATA);
 		domandaTirocinio = domandaTirocinioRepository.save(domandaTirocinio);
-
+		if (domandaTirocinio == null) System.err.println("CIAO SONO NULL ");
 		mailSingletonSender.sendEmail(domandaTirocinio, domandaTirocinio.getStudente().getEmail());
+
 
 		return domandaTirocinio;
 	}
@@ -386,8 +387,12 @@ public class DomandaTirocinioService {
 			throw new OperazioneNonAutorizzataException();
 		}
 
+		System.out.println("piva"+ piva);
+
 		List<DomandaTirocinio> domandeTirocinio = domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva,
 				DomandaTirocinio.IN_ATTESA);
+
+		System.out.println("Domanda tiro"+ domandeTirocinio);
 
 		domandeTirocinio.addAll(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva,
 				DomandaTirocinio.IN_ATTESA_AZIENDA));

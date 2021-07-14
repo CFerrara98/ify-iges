@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 import it.unisa.di.is.gc1.ify.DocenteTutor.DocenteTutor;
+import org.graalvm.compiler.nodes.calc.IntegerDivRemNode;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -128,6 +129,7 @@ public class DomandaTirocinioServiceUT {
 		domanda.setCfu(6);
 		domanda.setTutor(docenteTutor);
 		domanda.setStato(DomandaTirocinio.IN_ATTESA);
+
 	}
 
 	/**
@@ -353,12 +355,16 @@ public class DomandaTirocinioServiceUT {
 	 */
 	@Test
 	public void rifiutoDomandaTirocinioStatoNotAttesa() {
+		long idDomanda = domanda.getId();
 		String messaggio = "Impossibile rifiutare questa domanda";
+		when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		//when(domandaTirocinioRepository.findById(idDomanda)).thenReturn(Optional.of(domanda));
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
-		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		when(domandaTirocinioRepository.findById(idDomanda)).thenReturn(Optional.of(domanda));
 		when(delegatoMock.getAzienda()).thenReturn(aziendaMock);
 		when(aziendaMock.getpIva()).thenReturn("0123456789");
 		domanda.setStato(DomandaTirocinio.ACCETTATA);
+		System.out.println("domanda " + domanda.getId());
 		try {
 			domandaTirocinioService.rifiutoDomandaTirocinioByAzienda(domanda.getId());
 		} catch (OperazioneNonAutorizzataException e) {
@@ -556,7 +562,10 @@ public class DomandaTirocinioServiceUT {
 	@Test
 	public void visualizzaDomandeTirocinioInAttesaAzienda() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegato);
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
 		when(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), DomandaTirocinio.IN_ATTESA)).thenReturn(listaDomande);
+		when(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), DomandaTirocinio.IN_ATTESA_AZIENDA)).thenReturn(listaDomande);
+		System.out.println("ciao piva"+ azienda.getpIva());
 		try {
 			domandaTirocinioService.visualizzaDomandeTirocinioInAttesaAzienda(azienda.getpIva());
 		} catch (OperazioneNonAutorizzataException e) {
