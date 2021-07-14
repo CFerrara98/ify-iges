@@ -88,7 +88,7 @@ public class AziendaRepositoryIT {
 		utenteRepository.deleteAll();
 		
 		azienda = new Azienda();
-		azienda.setpIva("12345678910");
+		azienda.setPartitaIva("12345678910");
 		azienda.setRagioneSociale("NetData Società per azioni");
 		azienda.setDescrizione("Consulenza e Data Analytics");
 		azienda.setSettore("Informatica");
@@ -107,7 +107,7 @@ public class AziendaRepositoryIT {
 	 * Testa l'interazione con il database per determinare se la ricerca di un'azienda
 	 *  tramite pIva avvenga correttamente.
 	 * 
-	 * @test {@link AziendaRepository#findByPIva(String)}
+	 * @test {@link AziendaRepository#findByPartitaIva(String)}
 	 * 
 	 * @result Il test è superato se la ricerca per pIva dell'azienda
 	 *         presente per il test ha successo
@@ -119,7 +119,7 @@ public class AziendaRepositoryIT {
 		
 		Azienda a;
 		
-		a = aziendaRepository.findByPIva(azienda.getpIva());
+		a = aziendaRepository.findByPartitaIva(azienda.getPartitaIva());
 		assertThat(azienda, is(equalTo(a)));
 	}
 	
@@ -127,7 +127,7 @@ public class AziendaRepositoryIT {
 	 * Testa l'interazione con il database per determinare se la ricerca di una
 	 * azienda tramite pIva avvenga correttamente.
 	 * 
-	 * @test {@link AziendaRepository#existsByPIva(String)}
+	 * @test {@link AziendaRepository#existsByPartitaIva(String)}
 	 * 
 	 * @result Il test è superato se la ricerca per pIva dell'azienda
 	 *         presente nel test ha successo
@@ -137,7 +137,7 @@ public class AziendaRepositoryIT {
 		// Controlla che l'azienda inserita per il test sia esistente
 		// nel database 
 		
-		boolean aziendaEsistente = aziendaRepository.existsByPIva(azienda.getpIva());
+		boolean aziendaEsistente = aziendaRepository.existsByPartitaIva(azienda.getPartitaIva());
 		assertThat(aziendaEsistente, is(true));
 	}
 

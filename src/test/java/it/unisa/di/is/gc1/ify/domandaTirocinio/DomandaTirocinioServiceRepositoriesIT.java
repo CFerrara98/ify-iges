@@ -163,7 +163,7 @@ public class DomandaTirocinioServiceRepositoriesIT {
 		// Crea l'azienda #1
 		azienda1 = new Azienda();
 		azienda1.setDescrizione("azienda di software informatici");
-		azienda1.setpIva("01234567892");
+		azienda1.setPartitaIva("01234567892");
 		azienda1.setRagioneSociale("azienda 1");
 		azienda1.setSede("Roma");
 		azienda1.setSettore("Informatica");
@@ -230,7 +230,7 @@ public class DomandaTirocinioServiceRepositoriesIT {
 		// Crea l'azienda #2
 		azienda2 = new Azienda();
 		azienda2.setDescrizione("azienda di software gestionali");
-		azienda2.setpIva("01234789564");
+		azienda2.setPartitaIva("01234789564");
 		azienda2.setRagioneSociale("azienda 2");
 		azienda2.setSede("Milano");
 		azienda2.setSettore("Informatica");
@@ -389,7 +389,7 @@ public class DomandaTirocinioServiceRepositoriesIT {
 			utenzaService.setUtenteAutenticato(delegato.getEmail());
 			try {
 				domandeRestituite = domandaTirocinioService
-						.visualizzaDomandeTirocinioInAttesaAzienda(delegato.getAzienda().getpIva());
+						.visualizzaDomandeTirocinioInAttesaAzienda(delegato.getAzienda().getPartitaIva());
 			} catch (OperazioneNonAutorizzataException e) {
 				e.printStackTrace();
 			}

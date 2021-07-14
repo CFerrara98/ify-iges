@@ -87,6 +87,7 @@ public class ProgettoFormativoRepositoryIT {
 	
 	@Before
 	public void salvaProgettoFormativo() {
+
 		domandeRepository.deleteAll();
 		progettiRepository.deleteAll();
 		convenzionamentiRepository.deleteAll();
@@ -104,7 +105,7 @@ public class ProgettoFormativoRepositoryIT {
 		// Crea l'azienda #1
 		Azienda azienda1=new Azienda();
 		azienda1.setDescrizione("azienda di software informatici");
-		azienda1.setpIva("01234567892");
+		azienda1.setPartitaIva("01234567892");
 		azienda1.setRagioneSociale("azienda 1");
 		azienda1.setSede("Roma");
 		azienda1.setSettore("Informatica");
@@ -117,8 +118,7 @@ public class ProgettoFormativoRepositoryIT {
 		progettoFormativo1.setNome("Progetto 1");
 		progettoFormativo1.setStato(ProgettoFormativo.ATTIVO);
 		progettoFormativo1.toString();
-		
-		aziendaRepository.save(azienda1);
+
 		progettoFormativoRepository.save(progettoFormativo1);
 		listaProgettiFormativi.add(progettoFormativo1);
 		listaAziende.add(azienda1);
@@ -128,7 +128,7 @@ public class ProgettoFormativoRepositoryIT {
 		// Crea l'azienda #2
 		Azienda azienda2=new Azienda();
 		azienda2.setDescrizione("azienda di software gestionali");
-		azienda2.setpIva("01234789564");
+		azienda2.setPartitaIva("01234789564");
 		azienda2.setRagioneSociale("azienda 2");
 		azienda2.setSede("Milano");
 		azienda2.setSettore("Informatica");
@@ -141,10 +141,10 @@ public class ProgettoFormativoRepositoryIT {
 		progettoFormativo2.setNome("Progetto 2");
 		progettoFormativo2.setStato(ProgettoFormativo.ATTIVO);
 		
-		aziendaRepository.save(azienda2);
 		progettoFormativoRepository.save(progettoFormativo2);
 		listaProgettiFormativi.add(progettoFormativo2);
 		listaAziende.add(azienda2);
+
 	}
 	
 	/**
@@ -171,18 +171,20 @@ public class ProgettoFormativoRepositoryIT {
 	 * Testa l'interazione con il database per determinare se la ricerca di un progetto formativo
 	 * tramite la partita iva dell'azienda e lo stato del progetto formativo avvenga correttamente.
 	 * 
-	 * @test {@link ProgettoFormativoRepository#findAllByAziendaPIvaAndStato(String, String)}
+	 * @test {@link ProgettoFormativoRepository#findAllByAziendaPartitaIvaAndStato(String, String)}
 	 * 
 	 * @result Il test è superato se la ricerca della partita iva e lo stato del progetto formativo
 	 *         presenti nella lista utilizzata per il test ha successo.
 	 */
 	@Test
-	public void findAllByAziendaPIvaAndStato() {
+	public void findAllByAziendaPartitaIvaAndStato() {
 		/* Controlla che ogni progetto formativo inserito per il test sia presente sul database
 		 * ricercandolo per partita iva e per stato del progetto formativo
 		 */
+		System.err.println("PIPPO: " + listaAziende);
+		System.err.println("BAUDO: " + progettoFormativoRepository);
 		for(Azienda azienda : listaAziende) {
-			List <ProgettoFormativo> listprogettiSalvati  = progettoFormativoRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), ProgettoFormativo.ATTIVO);
+			List <ProgettoFormativo> listprogettiSalvati = progettoFormativoRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), ProgettoFormativo.ATTIVO);
 			for (ProgettoFormativo progetto: listprogettiSalvati) {
 				assertThat(listaProgettiFormativi.contains(progetto), is(true));
 			}			

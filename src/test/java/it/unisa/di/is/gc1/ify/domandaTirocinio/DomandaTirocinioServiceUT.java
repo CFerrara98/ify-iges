@@ -94,7 +94,7 @@ public class DomandaTirocinioServiceUT {
 		progettoFormativo = new ProgettoFormativo();
 		// Crea l'azienda #1
 		azienda = new Azienda();
-		azienda.setpIva("0123456789");
+		azienda.setPartitaIva("0123456789");
 		progettoFormativo.setAzienda(azienda);
 		progettoFormativo.setStato(ProgettoFormativo.ATTIVO);
 
@@ -251,7 +251,7 @@ public class DomandaTirocinioServiceUT {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
 		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(delegatoMock.getAzienda()).thenReturn(aziendaMock);
-		when(aziendaMock.getpIva()).thenReturn("0123456781");
+		when(aziendaMock.getPartitaIva()).thenReturn("0123456781");
 		try {
 			domandaTirocinioService.accettaDomandaTirocinioByAzienda(domanda.getId());
 		} catch (OperazioneNonAutorizzataException e) {
@@ -273,7 +273,7 @@ public class DomandaTirocinioServiceUT {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
 		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(delegatoMock.getAzienda()).thenReturn(aziendaMock);
-		when(aziendaMock.getpIva()).thenReturn("0123456789");
+		when(aziendaMock.getPartitaIva()).thenReturn("0123456789");
 		domanda.setStato(DomandaTirocinio.ACCETTATA);
 		try {
 			domandaTirocinioService.accettaDomandaTirocinioByAzienda(domanda.getId());
@@ -336,7 +336,7 @@ public class DomandaTirocinioServiceUT {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
 		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(delegatoMock.getAzienda()).thenReturn(aziendaMock);
-		when(aziendaMock.getpIva()).thenReturn("0123456781");
+		when(aziendaMock.getPartitaIva()).thenReturn("0123456781");
 		try {
 			domandaTirocinioService.rifiutoDomandaTirocinioByAzienda(domanda.getId());
 		} catch (OperazioneNonAutorizzataException e) {
@@ -361,7 +361,7 @@ public class DomandaTirocinioServiceUT {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
 		when(domandaTirocinioRepository.findById(idDomanda)).thenReturn(Optional.of(domanda));
 		when(delegatoMock.getAzienda()).thenReturn(aziendaMock);
-		when(aziendaMock.getpIva()).thenReturn("0123456789");
+		when(aziendaMock.getPartitaIva()).thenReturn("0123456789");
 		domanda.setStato(DomandaTirocinio.ACCETTATA);
 		System.out.println("domanda " + domanda.getId());
 		try {
@@ -524,7 +524,7 @@ public class DomandaTirocinioServiceUT {
 		String messaggio = "Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(studente);
 		try {
-			domandaTirocinioService.visualizzaDomandeTirocinioInAttesaAzienda(azienda.getpIva());
+			domandaTirocinioService.visualizzaDomandeTirocinioInAttesaAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			assertEquals(messaggio, e.getMessage());
 		}
@@ -566,15 +566,15 @@ public class DomandaTirocinioServiceUT {
 
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegato);
 		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
-		when(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), DomandaTirocinio.IN_ATTESA)).thenReturn(listaDomande);
-		when(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), DomandaTirocinio.IN_ATTESA_AZIENDA)).thenReturn(listaDomande);
-		System.out.println("ciao piva"+ azienda.getpIva());
+		when(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), DomandaTirocinio.IN_ATTESA)).thenReturn(listaDomande);
+		when(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), DomandaTirocinio.IN_ATTESA_AZIENDA)).thenReturn(listaDomande);
+		System.out.println("ciao piva"+ azienda.getPartitaIva());
 		try {
-			domandaTirocinioService.visualizzaDomandeTirocinioInAttesaAzienda(azienda.getpIva());
+			domandaTirocinioService.visualizzaDomandeTirocinioInAttesaAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			e.printStackTrace();
 		}
-		verify(domandaTirocinioRepository , times(1)).findAllByAziendaPIvaAndStato(azienda.getpIva() , DomandaTirocinio.IN_ATTESA);
+		verify(domandaTirocinioRepository , times(1)).findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva() , DomandaTirocinio.IN_ATTESA);
 
 	}
 	
@@ -591,7 +591,7 @@ public class DomandaTirocinioServiceUT {
 		String messaggio = "Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(studente);
 		try {
-			domandaTirocinioService.visualizzaDomandeTirocinioInoltrateAzienda(azienda.getpIva());
+			domandaTirocinioService.visualizzaDomandeTirocinioInoltrateAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			assertEquals(messaggio, e.getMessage());
 		}
@@ -629,17 +629,17 @@ public class DomandaTirocinioServiceUT {
 	public void visualizzaDomandeTirocinioInoltrateAzienda() {
 		listaDomande = new ArrayList<>();
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegato);
-		when(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), DomandaTirocinio.ACCETTATA)).thenReturn(listaDomande);
-		when(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), DomandaTirocinio.APPROVATA)).thenReturn(listaDomande);
-		when(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), DomandaTirocinio.RESPINTA)).thenReturn(listaDomande);
+		when(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), DomandaTirocinio.ACCETTATA)).thenReturn(listaDomande);
+		when(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), DomandaTirocinio.APPROVATA)).thenReturn(listaDomande);
+		when(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), DomandaTirocinio.RESPINTA)).thenReturn(listaDomande);
 		try {
-			domandaTirocinioService.visualizzaDomandeTirocinioInoltrateAzienda(azienda.getpIva());
+			domandaTirocinioService.visualizzaDomandeTirocinioInoltrateAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			e.printStackTrace();
 		}
-		verify(domandaTirocinioRepository , times(1)).findAllByAziendaPIvaAndStato(azienda.getpIva() , DomandaTirocinio.ACCETTATA);
-		verify(domandaTirocinioRepository , times(1)).findAllByAziendaPIvaAndStato(azienda.getpIva() , DomandaTirocinio.APPROVATA);
-		verify(domandaTirocinioRepository , times(1)).findAllByAziendaPIvaAndStato(azienda.getpIva() , DomandaTirocinio.RESPINTA);
+		verify(domandaTirocinioRepository , times(1)).findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva() , DomandaTirocinio.ACCETTATA);
+		verify(domandaTirocinioRepository , times(1)).findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva() , DomandaTirocinio.APPROVATA);
+		verify(domandaTirocinioRepository , times(1)).findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva() , DomandaTirocinio.RESPINTA);
 
 	}
 	
@@ -656,7 +656,7 @@ public class DomandaTirocinioServiceUT {
 		String messaggio = "Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(responsabile);
 		try {
-			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getpIva());
+			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			assertEquals(messaggio, e.getMessage());
 		}
@@ -676,9 +676,9 @@ public class DomandaTirocinioServiceUT {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
 		//when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(delegatoMock.getAzienda()).thenReturn(aziendaMock);
-		when(aziendaMock.getpIva()).thenReturn("0123456781");
+		when(aziendaMock.getPartitaIva()).thenReturn("0123456781");
 		try {
-			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getpIva());
+			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			assertEquals(messaggio, e.getMessage());
 		}
@@ -697,10 +697,10 @@ public class DomandaTirocinioServiceUT {
 		listaDomande = new ArrayList<>();
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
 		when(delegatoMock.getAzienda()).thenReturn(azienda);
-		when(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), DomandaTirocinio.APPROVATA))
+		when(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), DomandaTirocinio.APPROVATA))
 				.thenReturn(listaDomande);
 		try {
-			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getpIva());
+			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			e.printStackTrace();
 		}
@@ -723,10 +723,10 @@ public class DomandaTirocinioServiceUT {
 		listaDomande.add(domanda);
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
 		when(delegatoMock.getAzienda()).thenReturn(azienda);
-		when(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), DomandaTirocinio.APPROVATA))
+		when(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), DomandaTirocinio.APPROVATA))
 				.thenReturn(listaDomande);
 		try {
-			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getpIva());
+			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			e.printStackTrace();
 		}
@@ -749,10 +749,10 @@ public class DomandaTirocinioServiceUT {
 		listaDomande.add(domanda);
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
 		when(delegatoMock.getAzienda()).thenReturn(azienda);
-		when(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), DomandaTirocinio.APPROVATA))
+		when(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), DomandaTirocinio.APPROVATA))
 				.thenReturn(listaDomande);
 		try {
-			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getpIva());
+			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			e.printStackTrace();
 		}
@@ -773,10 +773,10 @@ public class DomandaTirocinioServiceUT {
 		listaDomande.add(domanda);
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
 		when(delegatoMock.getAzienda()).thenReturn(azienda);
-		when(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), DomandaTirocinio.APPROVATA))
+		when(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), DomandaTirocinio.APPROVATA))
 				.thenReturn(listaDomande);
 		try {
-			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getpIva());
+			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			e.printStackTrace();
 		}

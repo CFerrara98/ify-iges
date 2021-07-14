@@ -118,7 +118,7 @@ public class ProgettoFormativoServiceRepositoriesIT {
 		azienda1=new Azienda();
 		delegatoAziendale=new DelegatoAziendale();
 		azienda1.setDescrizione("azienda di software informatici");
-		azienda1.setpIva("01234567899");
+		azienda1.setPartitaIva("01234567899");
 		azienda1.setRagioneSociale("azienda 1");
 		azienda1.setSede("Roma");
 		azienda1.setSettore("Informatica");
@@ -147,7 +147,7 @@ public class ProgettoFormativoServiceRepositoriesIT {
 		delegatoAziendale2.setAzienda(azienda2);
 		
 		azienda2.setDescrizione("azienda2");
-		azienda2.setpIva("01234567894");
+		azienda2.setPartitaIva("01234567894");
 		azienda2.setRagioneSociale("azienda 2");
 		azienda2.setSede("Milano");
 		azienda2.setSettore("Informatica");
@@ -290,8 +290,8 @@ public class ProgettoFormativoServiceRepositoriesIT {
 		List<ProgettoFormativo> progettiSalvati = new ArrayList<ProgettoFormativo>() ;
 		for(Azienda azienda : listaAziende) {
 			try {
-				utenzaService.setUtenteAutenticato(delegatoAziendaleRepository.findByAziendaPIva(azienda.getpIva()).getEmail());
-				progettiSalvati = progettoFormativoService.visualizzaProgettiFormativiArchiviatiByAzienda(azienda.getpIva());
+				utenzaService.setUtenteAutenticato(delegatoAziendaleRepository.findByAziendaPartitaIva(azienda.getPartitaIva()).getEmail());
+				progettiSalvati = progettoFormativoService.visualizzaProgettiFormativiArchiviatiByAzienda(azienda.getPartitaIva());
 			} catch (OperazioneNonAutorizzataException e) {
 				e.printStackTrace();
 			}
@@ -315,7 +315,7 @@ public class ProgettoFormativoServiceRepositoriesIT {
 		List<ProgettoFormativo> progettiSalvati = new ArrayList<ProgettoFormativo>() ;
 		for(Azienda azienda : listaAziende) {
 			try {
-				progettiSalvati = progettoFormativoService.visualizzaProgettiFormativiAttiviByAzienda(azienda.getpIva());
+				progettiSalvati = progettoFormativoService.visualizzaProgettiFormativiAttiviByAzienda(azienda.getPartitaIva());
 			} catch (OperazioneNonAutorizzataException e) {
 				e.printStackTrace();
 			}

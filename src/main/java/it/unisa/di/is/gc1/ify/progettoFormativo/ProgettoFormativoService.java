@@ -69,7 +69,7 @@ public class ProgettoFormativoService {
 		ProgettoFormativo progettoFormativo = progettoFormativoRepository.findById(idProgettoFormativo).orElse(null);
 	
 		//Un progetto formativo di un'azienda puo' essere archiviato solo dal delegato aziendale dell'azienda stessa
-		if(!(delegatoAziendale.getAzienda().getpIva().equals(progettoFormativo.getAzienda().getpIva()))) {
+		if(!(delegatoAziendale.getAzienda().getPartitaIva().equals(progettoFormativo.getAzienda().getPartitaIva()))) {
 			throw new OperazioneNonAutorizzataException();
 		}
 		
@@ -109,7 +109,7 @@ public class ProgettoFormativoService {
 		ProgettoFormativo progettoFormativo = progettoFormativoRepository.findById(idProgettoFormativo).orElse(null);
 	
 		//Un progetto formativo di un'azienda puo' essere archiviato solo dal delegato aziendale dell'azienda stessa
-		if(!(delegatoAziendale.getAzienda().getpIva().equals(progettoFormativo.getAzienda().getpIva()))) {
+		if(!(delegatoAziendale.getAzienda().getPartitaIva().equals(progettoFormativo.getAzienda().getPartitaIva()))) {
 			throw new OperazioneNonAutorizzataException();
 		}
 		
@@ -136,7 +136,7 @@ public class ProgettoFormativoService {
 	public List<ProgettoFormativo> visualizzaProgettiFormativiAttiviByAzienda(String pIva) 
 			throws OperazioneNonAutorizzataException {
 		
-		List<ProgettoFormativo> progettiFormativi = progettoFormativoRepository.findAllByAziendaPIvaAndStato(pIva, ProgettoFormativo.ATTIVO);
+		List<ProgettoFormativo> progettiFormativi = progettoFormativoRepository.findAllByAziendaPartitaIvaAndStato(pIva, ProgettoFormativo.ATTIVO);
 
 		return progettiFormativi;
 	}
@@ -162,10 +162,10 @@ public class ProgettoFormativoService {
 		}
 		DelegatoAziendale delegatoAziendale=(DelegatoAziendale) utente;
 		//Un progetto formativo di un'azienda puo' essere visualizzato solo dal delegato aziendale dell'azienda stessa
-		if(!(delegatoAziendale.getAzienda().getpIva().equals(pIva))) {
+		if(!(delegatoAziendale.getAzienda().getPartitaIva().equals(pIva))) {
 			throw new OperazioneNonAutorizzataException();
 		}
-		List<ProgettoFormativo> progettiFormativi = progettoFormativoRepository.findAllByAziendaPIvaAndStato(pIva, ProgettoFormativo.ARCHIVIATO);
+		List<ProgettoFormativo> progettiFormativi = progettoFormativoRepository.findAllByAziendaPartitaIvaAndStato(pIva, ProgettoFormativo.ARCHIVIATO);
 
 		return progettiFormativi;
 	}
@@ -203,7 +203,7 @@ public class ProgettoFormativoService {
 		ProgettoFormativo progettoFormativo = progettoFormativoRepository.findById(idProgettoFormativo).orElse(null);
 	
 		//Un progetto formativo di un'azienda puo' essere archiviato solo dal delegato aziendale dell'azienda stessa
-		if(!(delegatoAziendale.getAzienda().getpIva().equals(progettoFormativo.getAzienda().getpIva()))) {
+		if(!(delegatoAziendale.getAzienda().getPartitaIva().equals(progettoFormativo.getAzienda().getPartitaIva()))) {
 			throw new OperazioneNonAutorizzataException();
 		}
 		

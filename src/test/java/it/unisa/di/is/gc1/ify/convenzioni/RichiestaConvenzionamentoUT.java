@@ -1377,7 +1377,7 @@ public class RichiestaConvenzionamentoUT {
 		final String message = "La Partita IVA inserita è già esistente nel database ";
 		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 		
-		when(aziendaRepository.findByPIva(pIva)).thenReturn(new Azienda());
+		when(aziendaRepository.findByPartitaIva(pIva)).thenReturn(new Azienda());
 		
 		try {
 			validaCampi();

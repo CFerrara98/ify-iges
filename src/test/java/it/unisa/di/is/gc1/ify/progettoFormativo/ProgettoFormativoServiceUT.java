@@ -67,7 +67,7 @@ public class ProgettoFormativoServiceUT {
 		progettoFormativo=new ProgettoFormativo();
 		delegatoAziendale=new DelegatoAziendale();
 		azienda=new Azienda();
-		azienda.setpIva("01234567897");
+		azienda.setPartitaIva("01234567897");
 		delegatoAziendale.setAzienda(azienda);
 		progettoFormativo.setAmbito("Informatica");
 		progettoFormativo.setAttivita("tirocinio");
@@ -148,7 +148,7 @@ public class ProgettoFormativoServiceUT {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoAziendaleMock);
 		when(progettoFormativoRepository.findById(progettoFormativo.getId())).thenReturn(Optional.of(progettoFormativo));
 		when(delegatoAziendaleMock.getAzienda()).thenReturn(aziendaMock);
-		when(aziendaMock.getpIva()).thenReturn("0123456784");
+		when(aziendaMock.getPartitaIva()).thenReturn("0123456784");
 		progettoFormativo.setStato(ProgettoFormativo.ATTIVO);
 		try {
 			progettoFormativoService.archiviaProgettoFormativo(progettoFormativo.getId());
@@ -237,7 +237,7 @@ public class ProgettoFormativoServiceUT {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoAziendaleMock);
 		when(progettoFormativoRepository.findById(progettoFormativo.getId())).thenReturn(Optional.of(progettoFormativo));
 		when(delegatoAziendaleMock.getAzienda()).thenReturn(aziendaMock);
-		when(aziendaMock.getpIva()).thenReturn("0123456784");
+		when(aziendaMock.getPartitaIva()).thenReturn("0123456784");
 		progettoFormativo.setStato(ProgettoFormativo.ARCHIVIATO);
 		try {
 			progettoFormativoService.riattivazioneProgettoFormativo(progettoFormativo.getId());
@@ -322,7 +322,7 @@ public class ProgettoFormativoServiceUT {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoAziendaleMock);
 		when(progettoFormativoRepository.findById(progettoFormativo.getId())).thenReturn(Optional.of(progettoFormativo));
 		when(delegatoAziendaleMock.getAzienda()).thenReturn(aziendaMock);
-		when(aziendaMock.getpIva()).thenReturn("0123456784");
+		when(aziendaMock.getPartitaIva()).thenReturn("0123456784");
 		String descrizione = "programmazione";
 		String conoscenze= "linguaggio c";
 		int maxPartecipanti = 7;
@@ -374,13 +374,13 @@ public class ProgettoFormativoServiceUT {
 	@Test
 	public void visualizzaProgettiFormativiAttiviByAzienda() {
 		List<ProgettoFormativo> progettiFormativiSalvati= new ArrayList<ProgettoFormativo>();
-		when(progettoFormativoRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), ProgettoFormativo.ATTIVO)).thenReturn(progettiFormativiSalvati);
+		when(progettoFormativoRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), ProgettoFormativo.ATTIVO)).thenReturn(progettiFormativiSalvati);
 		try {
-			progettoFormativoService.visualizzaProgettiFormativiAttiviByAzienda(azienda.getpIva());
+			progettoFormativoService.visualizzaProgettiFormativiAttiviByAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			e.printStackTrace();
 		}
-		verify(progettoFormativoRepository, times(1)).findAllByAziendaPIvaAndStato(azienda.getpIva(), ProgettoFormativo.ATTIVO);
+		verify(progettoFormativoRepository, times(1)).findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), ProgettoFormativo.ATTIVO);
 	}
 	
 	/**
@@ -396,7 +396,7 @@ public class ProgettoFormativoServiceUT {
 		String message="Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(studente);
 		try {
-			progettoFormativoService.visualizzaProgettiFormativiArchiviatiByAzienda(azienda.getpIva());
+			progettoFormativoService.visualizzaProgettiFormativiArchiviatiByAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			assertEquals(message, e.getMessage());
 		}
@@ -434,13 +434,13 @@ public class ProgettoFormativoServiceUT {
 	public void visualizzaProgettiFormativiArchiviatiByAzienda() {
 		List<ProgettoFormativo> progettiFormativiSalvati= new ArrayList<ProgettoFormativo>();
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoAziendale);
-		when(progettoFormativoRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), ProgettoFormativo.ARCHIVIATO)).thenReturn(progettiFormativiSalvati);
+		when(progettoFormativoRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), ProgettoFormativo.ARCHIVIATO)).thenReturn(progettiFormativiSalvati);
 		try {
-			progettoFormativoService.visualizzaProgettiFormativiArchiviatiByAzienda(azienda.getpIva());
+			progettoFormativoService.visualizzaProgettiFormativiArchiviatiByAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			e.printStackTrace();
 		}
-		verify(progettoFormativoRepository, times(1)).findAllByAziendaPIvaAndStato(azienda.getpIva(), ProgettoFormativo.ARCHIVIATO);
+		verify(progettoFormativoRepository, times(1)).findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), ProgettoFormativo.ARCHIVIATO);
 	}
 	
 	/**

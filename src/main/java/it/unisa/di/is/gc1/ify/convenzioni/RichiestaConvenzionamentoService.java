@@ -496,7 +496,7 @@ public class RichiestaConvenzionamentoService {
 			throw new RichiestaConvenzionamentoNonValidaException("PartitaIvaError",
 					"Il campo partita IVA deve contenere esattamente 11 numeri ");
 		
-		if (aziendaRepository.findByPIva(piva) != null)
+		if (aziendaRepository.findByPartitaIva(piva) != null)
 			throw new RichiestaConvenzionamentoNonValidaException("PartitaIvaError",
 					"La Partita IVA inserita è già esistente nel database ");
 		
@@ -595,7 +595,7 @@ public class RichiestaConvenzionamentoService {
 	 * @return azienda associata
 	 */
 	public Azienda getAziendaFromPIva(String pIva) {
-		return aziendaRepository.findByPIva(pIva);
+		return aziendaRepository.findByPartitaIva(pIva);
 	}
 
 	/**
@@ -604,7 +604,7 @@ public class RichiestaConvenzionamentoService {
 	 * @return delegato aziendale associato
 	 */
 	public DelegatoAziendale getDelegatoFromAziendaPIva(String pIva) {
-		return delegatoAziendaleRepository.findByAziendaPIva(pIva);
+		return delegatoAziendaleRepository.findByAziendaPartitaIva(pIva);
 	}
 
 }

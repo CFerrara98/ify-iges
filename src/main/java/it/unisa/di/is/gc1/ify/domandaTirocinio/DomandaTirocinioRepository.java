@@ -31,14 +31,14 @@ public interface DomandaTirocinioRepository extends JpaRepository<DomandaTirocin
 	/**
 	 * Permette di ottenere l'elenco delle domande di tirocinio per una determinata azienda.
 	 *      
-	 * @param pIva String che rappresenta l'identificativo dell'azienda
+	 * @param partitaIva String che rappresenta l'identificativo dell'azienda
 	 * 
 	 * @return Lista di {@link DomandaTirocinio} che rappresenta la lista delle
 	 *         domande di tirocinio <b>Può essere vuota</b> se nel database non
 	 *         sono presenti domande di tirocinio per l'azienda passata come
 	 *         parametro 
 	 */
-	public List<DomandaTirocinio> findAllByAziendaPIva(String pIva);
+	public List<DomandaTirocinio> findAllByAziendaPartitaIva(String partitaIva);
 	
 	/**
 	 * Permette di ottenere l'elenco delle domande di tirocinio con un determinato studente e stato.
@@ -68,7 +68,7 @@ public interface DomandaTirocinioRepository extends JpaRepository<DomandaTirocin
 	 *      {@link DomandaTirocinio#APPROVATA} or stato =
 	 *      {@link DomandaTirocinio#RESPINTA}
 	 *      
-	 * @param pIva String che rappresenta la partita iva dell'azienda.
+	 * @param partitaIva String che rappresenta la partita iva dell'azienda.
 	 * @param stato String che rappresenta lo stato della domanda.
 	 * 
 	 * @return Lista di {@link DomandaTirocinio} che rappresenta la lista delle
@@ -76,7 +76,7 @@ public interface DomandaTirocinioRepository extends JpaRepository<DomandaTirocin
 	 *         sono presenti domande di tirocinio per azienda e stato passati come
 	 *         parametro 
 	 */
-	public List<DomandaTirocinio> findAllByAziendaPIvaAndStato(String pIva, String stato);
+	public List<DomandaTirocinio> findAllByAziendaPartitaIvaAndStato(String partitaIva, String stato);
 	
 	/**
 	 * Permette di ottenere l'elenco delle domande di tirocinio con un determinato stato.

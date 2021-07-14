@@ -99,7 +99,7 @@ public class DomandaTirocinioService {
 		DelegatoAziendale delegatoAziendale = (DelegatoAziendale) utente;
 
 		DomandaTirocinio domandaTirocinio = domandaTirocinioRepository.findById(idDomanda).orElse(null);
-		if (!(delegatoAziendale.getAzienda().getpIva().equals(domandaTirocinio.getAzienda().getpIva()))) {
+		if (!(delegatoAziendale.getAzienda().getPartitaIva().equals(domandaTirocinio.getAzienda().getPartitaIva()))) {
 			throw new OperazioneNonAutorizzataException();
 		}
 
@@ -228,7 +228,7 @@ public class DomandaTirocinioService {
 		DelegatoAziendale delegatoAziendale = (DelegatoAziendale) utente;
 
 		DomandaTirocinio domandaTirocinio = domandaTirocinioRepository.findById(idDomanda).orElse(null);
-		if (!(delegatoAziendale.getAzienda().getpIva().equals(domandaTirocinio.getAzienda().getpIva()))) {
+		if (!(delegatoAziendale.getAzienda().getPartitaIva().equals(domandaTirocinio.getAzienda().getPartitaIva()))) {
 			throw new OperazioneNonAutorizzataException();
 		}
 
@@ -383,14 +383,14 @@ public class DomandaTirocinioService {
 
 		// Le domande di tirocinio di un'azienda possono essere visualizzate solo dal
 		// delegato aziendale dell'azienda stessa
-		if (!(delegatoAziendale.getAzienda().getpIva().equals(piva))) {
+		if (!(delegatoAziendale.getAzienda().getPartitaIva().equals(piva))) {
 			throw new OperazioneNonAutorizzataException();
 		}
 
-		List<DomandaTirocinio> domandeTirocinio = domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva,
+		List<DomandaTirocinio> domandeTirocinio = domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(piva,
 				DomandaTirocinio.IN_ATTESA);
 
-		domandeTirocinio.addAll(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva,
+		domandeTirocinio.addAll(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(piva,
 				DomandaTirocinio.IN_ATTESA_AZIENDA));
 
 		return domandeTirocinio;
@@ -460,19 +460,19 @@ public class DomandaTirocinioService {
 
 		// Le domande di tirocinio di un'azienda possono essere visualizzate solo dal
 		// delegato aziendale dell'azienda stessa
-		if (!(delegatoAziendale.getAzienda().getpIva().equals(piva))) {
+		if (!(delegatoAziendale.getAzienda().getPartitaIva().equals(piva))) {
 			throw new OperazioneNonAutorizzataException();
 		}
 
 		List<DomandaTirocinio> domandeTirocinio = new ArrayList<DomandaTirocinio>();
 		domandeTirocinio
-				.addAll(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva, DomandaTirocinio.IN_ATTESA_TUTOR));
+				.addAll(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(piva, DomandaTirocinio.IN_ATTESA_TUTOR));
 		domandeTirocinio
-				.addAll(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva, DomandaTirocinio.ACCETTATA));
+				.addAll(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(piva, DomandaTirocinio.ACCETTATA));
 		domandeTirocinio
-				.addAll(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva, DomandaTirocinio.APPROVATA));
+				.addAll(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(piva, DomandaTirocinio.APPROVATA));
 		domandeTirocinio
-				.addAll(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva, DomandaTirocinio.RESPINTA));
+				.addAll(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(piva, DomandaTirocinio.RESPINTA));
 
 		return domandeTirocinio;
 	}
@@ -544,11 +544,11 @@ public class DomandaTirocinioService {
 
 		// I tirocini in corso di un'azienda possono essere visualizzate dall'azienda
 		// stessa
-		if (!(delegatoAziendale.getAzienda().getpIva().equals(piva))) {
+		if (!(delegatoAziendale.getAzienda().getPartitaIva().equals(piva))) {
 			throw new OperazioneNonAutorizzataException();
 		}
 
-		List<DomandaTirocinio> domandeTirocinio = domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva,
+		List<DomandaTirocinio> domandeTirocinio = domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(piva,
 				DomandaTirocinio.APPROVATA);
 		List<DomandaTirocinio> tirociniInCorso = new ArrayList<DomandaTirocinio>();
 

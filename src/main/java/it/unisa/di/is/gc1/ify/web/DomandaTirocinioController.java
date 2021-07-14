@@ -326,7 +326,7 @@ public class DomandaTirocinioController {
 
 		try {
 			domandeTirocinio = domandaTirocinioService
-					.visualizzaDomandeTirocinioInAttesaAzienda(delegatoAziendale.getAzienda().getpIva());
+					.visualizzaDomandeTirocinioInAttesaAzienda(delegatoAziendale.getAzienda().getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			return "redirect:/";
 		}
@@ -355,7 +355,7 @@ public class DomandaTirocinioController {
 
 		try {
 			domandeTirocinio = domandaTirocinioService
-					.visualizzaDomandeTirocinioInoltrateAzienda(delegatoAziendale.getAzienda().getpIva());
+					.visualizzaDomandeTirocinioInoltrateAzienda(delegatoAziendale.getAzienda().getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			return "redirect:/";
 		}
@@ -384,7 +384,7 @@ public class DomandaTirocinioController {
 
 		try {
 			tirocini = domandaTirocinioService
-					.visualizzaTirociniInCorsoAzienda(delegatoAziendale.getAzienda().getpIva());
+					.visualizzaTirociniInCorsoAzienda(delegatoAziendale.getAzienda().getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			return "redirect:/";
 		}

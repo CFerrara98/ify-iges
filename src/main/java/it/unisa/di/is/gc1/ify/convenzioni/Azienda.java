@@ -26,14 +26,14 @@ public class Azienda {
 
 	/**costruzione di un oggetto azienda con parametri utile per i casi di test
 	 *
-	 * @param pIva
+	 * @param partitaIva
 	 * @param ragioneSociale
 	 * @param sede
 	 * @param settore
 	 * @param descrizione
 	 */
-	public Azienda(String pIva, String ragioneSociale, String sede, String settore, String descrizione) {
-		this.PIva = pIva;
+	public Azienda(String partitaIva, String ragioneSociale, String sede, String settore, String descrizione) {
+		this.partitaIva = partitaIva;
 		this.ragioneSociale = ragioneSociale;
 		this.sede = sede;
 		this.settore = settore;
@@ -41,19 +41,19 @@ public class Azienda {
 	}
 	
 	/**
-	 * Restituisce il campo piva
+	 * Restituisce il campo partitaIva
 	 * @return partita iva
 	 */
-	public String getpIva() {
-		return PIva;
+	public String getPartitaIva() {
+		return partitaIva;
 	}
 	
 	/**
 	 * Setta il campo partita iva
-	 * @param pIva
+	 * @param partitaIva
 	 */
-	public void setpIva(String pIva) {
-		this.PIva = pIva;
+	public void setPartitaIva(String partitaIva) {
+		this.partitaIva = partitaIva;
 	}
 	
 	/**
@@ -140,7 +140,7 @@ public class Azienda {
 
 	@Id
 	@Column(unique=true)
-	private String PIva;
+	private String partitaIva;
 	private String ragioneSociale;
 	private String sede;
 	private String settore;
