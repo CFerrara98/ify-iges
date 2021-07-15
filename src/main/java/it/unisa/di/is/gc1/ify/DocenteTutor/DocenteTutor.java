@@ -53,6 +53,8 @@ public class DocenteTutor extends Utente {
         this.campoRicerca = campoRicerca;
     }
 
+    public void setId(Long id) { this.id = id; }
+
     /**
      * Espressione regolare che definisce il formato del campo di ricerca.
      */

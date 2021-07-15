@@ -143,7 +143,8 @@ public class DomandaTirocinioService {
 		}
 
 		if (!domandaTirocinio.getStato().equals(DomandaTirocinio.APPROVATA) ||
-				(!domandaTirocinio.getDataFine().isAfter(LocalDate.now()) || !domandaTirocinio.getDataInizio().isBefore(LocalDate.now()))) {
+				(!domandaTirocinio.getDataFine().isAfter(LocalDate.now()) ||
+						!domandaTirocinio.getDataInizio().isBefore(LocalDate.now()))) {
 			throw new OperazioneNonAutorizzataException("Impossibile terminare questa domanda");
 		}
 
