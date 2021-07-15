@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 import it.unisa.di.is.gc1.ify.DocenteTutor.DocenteTutor;
+import it.unisa.di.is.gc1.ify.DocenteTutor.DocenteTutorRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,6 +45,9 @@ import javax.swing.text.html.Option;
 public class DomandaTirocinioServiceUT {
 
 	@Mock
+	private DocenteTutorRepository docenteTutorRepository;
+
+	@Mock
 	private DomandaTirocinioRepository domandaTirocinioRepository;
 
 	@Mock
@@ -70,6 +74,7 @@ public class DomandaTirocinioServiceUT {
 	@Autowired
 	@InjectMocks
 	private DomandaTirocinioService domandaTirocinioService;
+
 
 	private Azienda azienda;
 
@@ -2030,6 +2035,135 @@ public class DomandaTirocinioServiceUT {
 
 		verify(domandaTirocinioRepository, times(1)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(),
 				DomandaTirocinio.APPROVATA);;
+
+	}
+
+	@Test
+	public void impossibileVisualizzareTirociniChiusiDocenteNonAutenticato() {
+		domanda.setStato(DomandaTirocinio.APPROVATA);
+
+		when(utenzaService.getUtenteAutenticato()).thenReturn(delegato);
+		//when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.visualizzaTirociniChiusi(docenteTutor.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(), DomandaTirocinio.APPROVATA);
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(), DomandaTirocinio.TERMINATA);
+
+	}
+
+	@Test
+	public void impossibileVisualizzareTirociniChiusiDocenteNonCombaciaConIdParam() {
+		domanda.setStato(DomandaTirocinio.APPROVATA);
+		DocenteTutor docenteTutor2 = new DocenteTutor();
+		docenteTutor2.setEmail("docente2@prova.it");
+		docenteTutor2.setCognome("Di Prova");
+		docenteTutor2.setNome("Docente");
+		docenteTutor2.setIndirizzo("via tal dei tali 1");
+		docenteTutor2.setSesso("M");
+		docenteTutor2.setCampoRicerca("Ingegneria");
+		docenteTutor2.setPassword("Password1");
+		docenteTutor2.setId((long) 1000);
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor2);
+		//when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.visualizzaTirociniChiusi(docenteTutor.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(), DomandaTirocinio.APPROVATA);
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(), DomandaTirocinio.TERMINATA);
+	}
+
+	@Test
+	public void visualizzareTirociniChiusiDocenteControlloData() {
+		domanda.setStato(DomandaTirocinio.APPROVATA);
+		domanda.setDataInizio(LocalDate.now().minusDays(5));
+		domanda.setDataFine(LocalDate.now().minusDays(5));
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		List<DomandaTirocinio> lista = new ArrayList<>();
+		lista.add(domanda);
+		when(domandaTirocinioRepository.findAllByDocenteTutorIdAndStato(docenteTutor.getId(), DomandaTirocinio.APPROVATA)).thenReturn(lista);
+
+		try {
+			domandaTirocinioService.visualizzaTirociniChiusi(docenteTutor.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(1)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(), DomandaTirocinio.APPROVATA);
+		verify(domandaTirocinioRepository, times(1)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(), DomandaTirocinio.TERMINATA);
+	}
+
+	@Test
+	public void visualizzareTirociniChiusiDocente() {
+		domanda.setStato(DomandaTirocinio.APPROVATA);
+
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+		//when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.visualizzaTirociniChiusi(docenteTutor.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(1)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(), DomandaTirocinio.APPROVATA);
+		verify(domandaTirocinioRepository, times(1)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(), DomandaTirocinio.TERMINATA);
+	}
+
+	@Test
+	public void impossibileValidareDocenteNull() {
+		//when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+
+		try {
+			domandaTirocinioService.validaDocenteTutor(null);
+
+		} catch (DomandaTirocinioNonValidaException e) {
+			e.printStackTrace();
+			Assert.assertEquals(e.getMessage(), "Non è stato immesso alcun utente");
+		}
+
+	}
+
+	@Test
+	public void impossibileValidareDocenteNonTrovato() {
+		//when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+		String id = String.valueOf(docenteTutor.getId());
+		when(docenteTutorRepository.existsById(Long.parseLong(id))).thenReturn(false);
+
+		try {
+			domandaTirocinioService.validaDocenteTutor(id);
+
+		} catch (DomandaTirocinioNonValidaException e) {
+			e.printStackTrace();
+			Assert.assertEquals(e.getMessage(), "Il docente immesso non è valido");
+		}
+
+	}
+
+	@Test
+	public void validareDocente() {
+		//when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+		String id = String.valueOf(docenteTutor.getId());
+
+		when(docenteTutorRepository.existsById(Long.parseLong(id))).thenReturn(true);
+		String docenteTutorId = "";
+
+		try {
+			docenteTutorId = domandaTirocinioService.validaDocenteTutor(id);
+
+		} catch (DomandaTirocinioNonValidaException e) {
+			e.printStackTrace();
+		}
+		Assert.assertEquals(id, docenteTutorId);
 
 	}
 

@@ -922,10 +922,13 @@ public class DomandaTirocinioService {
 		if (docenteTutorId == null)
 			throw new DomandaTirocinioNonValidaException("DocenteTutorError",
 					"Non è stato immesso alcun utente");
-		if (docenteTutorRepository.findById(Long.parseLong(docenteTutorId)).orElse(null) == null) {
+		//System.err.println(docenteTutorRepository.findById(Long.parseLong(docenteTutorId)).orElse(null));
+
+		if (!docenteTutorRepository.existsById(Long.parseLong(docenteTutorId))) {
 			throw new DomandaTirocinioNonValidaException("DocenteTutorError",
 					"Il docente immesso non è valido");
 		}
+		System.err.println("errivo qui");
 		return docenteTutorId;
 	}
 

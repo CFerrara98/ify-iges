@@ -13,5 +13,5 @@ import java.util.Optional;
 public interface DocenteTutorRepository extends JpaRepository<DocenteTutor, Long> {
 
     public Optional<DocenteTutor> findById(Long id);
-
+    public boolean existsById(Long id);
 }
