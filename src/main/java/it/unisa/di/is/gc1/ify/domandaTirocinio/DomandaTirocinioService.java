@@ -129,6 +129,7 @@ public class DomandaTirocinioService {
 	public DomandaTirocinio terminaTirocinio(Long idDomanda) throws OperazioneNonAutorizzataException {
 
 		Utente utente = utenzaService.getUtenteAutenticato();
+		System.err.println("metodo di test : "+ utente.getId());
 
 		// Solo il docente può terminare il tirocinio in corso
 		if (!(utente instanceof DocenteTutor)) {
