@@ -922,7 +922,7 @@ public class DomandaTirocinioService {
 	public String validaDocenteTutor(String docenteTutorId) throws DomandaTirocinioNonValidaException {
 		if (docenteTutorId.equals(""))
 			throw new DomandaTirocinioNonValidaException("DocenteTutorError",
-					"Non è stato immesso alcun utente");
+					"Non è stato scelto alcun docente");
 		//System.err.println(docenteTutorRepository.findById(Long.parseLong(docenteTutorId)).orElse(null));
 
 		if (!docenteTutorRepository.existsById(Long.parseLong(docenteTutorId))) {
