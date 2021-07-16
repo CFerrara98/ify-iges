@@ -920,7 +920,7 @@ public class DomandaTirocinioService {
 	 * @throws DomandaTirocinioNonValidaException
 	 */
 	public String validaDocenteTutor(String docenteTutorId) throws DomandaTirocinioNonValidaException {
-		if (docenteTutorId == null)
+		if (docenteTutorId.equals(""))
 			throw new DomandaTirocinioNonValidaException("DocenteTutorError",
 					"Non è stato immesso alcun utente");
 		//System.err.println(docenteTutorRepository.findById(Long.parseLong(docenteTutorId)).orElse(null));
