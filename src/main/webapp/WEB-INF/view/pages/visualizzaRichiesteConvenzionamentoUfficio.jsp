@@ -97,7 +97,7 @@
 													<dd>${current.azienda.descrizione}</dd>
 													<br>
 													<dt>Partita IVA:</dt>
-													<dd>${current.azienda.pIva}</dd>
+													<dd>${current.azienda.partitaIva}</dd>
 	
 												</dl>
 											</td>

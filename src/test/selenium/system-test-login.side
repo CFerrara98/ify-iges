@@ -1,7 +1,7 @@
 {
   "id": "fd0a62b6-ac03-40d3-8d9b-19362a2bf8df",
   "version": "2.0",
-  "name": "ify-changerequests",
+  "name": "ify-login",
   "url": "http://localhost:8080/",
   "tests": [{
     "id": "bcf5de53-a2cb-4435-8392-6d706b8df068",

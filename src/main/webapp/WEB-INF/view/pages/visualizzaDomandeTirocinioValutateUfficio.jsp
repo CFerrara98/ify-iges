@@ -87,7 +87,7 @@
 													<br>
 	
 													<dt>Partita iva azienda:</dt>
-													<dd>${current.azienda.pIva}</dd>
+													<dd>${current.azienda.partitaIva}</dd>
 													<br>
 													
 													<dt>Ragione Sociale azienda:</dt>
