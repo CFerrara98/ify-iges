@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -129,7 +130,7 @@ public class RichiestaConvenzionamentoUT {
 		condizioniAzienda = "on";	
 
 		final String message = "Il campo nome non può essere nullo.";
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		try {
 			validaCampi();
@@ -163,7 +164,7 @@ public class RichiestaConvenzionamentoUT {
 		condizioniAzienda = "on";	
 
 		final String message = "Il campo nome deve contenere almeno 2 caratteri.";
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 		
 		try {
 			validaCampi();
@@ -201,7 +202,7 @@ public class RichiestaConvenzionamentoUT {
 		condizioniAzienda = "on";	
 
 		final String message = "Il campo nome deve contenere al massimo 255 caratteri.";
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 		
 		try {
 			validaCampi();
@@ -235,7 +236,7 @@ public class RichiestaConvenzionamentoUT {
 		condizioniAzienda = "on";	
 
 		final String message = "Il campo nome deve contenere soltanto caratteri alfabetici.";
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 		
 		try {
 			validaCampi();
@@ -269,7 +270,7 @@ public class RichiestaConvenzionamentoUT {
 		condizioniAzienda = "on";	
 
 		final String message = "Il campo cognome non può essere nullo.";
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 		
 		try {
 			validaCampi();
@@ -303,7 +304,7 @@ public class RichiestaConvenzionamentoUT {
 		condizioniAzienda = "on";	
 
 		final String message = "Il campo cognome deve contenere almeno 2 caratteri.";
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 		
 		try {
 			validaCampi();
@@ -341,7 +342,7 @@ public class RichiestaConvenzionamentoUT {
 		condizioniAzienda = "on";	
 
 		final String message = "Il campo cognome deve contenere al massimo 255 caratteri.";
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 		
 		try {
 			validaCampi();
@@ -375,7 +376,7 @@ public class RichiestaConvenzionamentoUT {
 		condizioniAzienda = "on";	
 
 		final String message = "Il campo cognome deve contenere soltanto caratteri alfabetici.";
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 		
 		try {
 			validaCampi();
@@ -409,7 +410,7 @@ public class RichiestaConvenzionamentoUT {
 		condizioniAzienda = "on";	
 
 		final String message = "Il campo ruolo non può essere nullo.";
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 		
 		try {
 			validaCampi();
@@ -443,7 +444,7 @@ public class RichiestaConvenzionamentoUT {
 		condizioniAzienda = "on";	
 
 		final String message = "Il campo ruolo deve contenere almeno 2 caratteri.";
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 		
 		try {
 			validaCampi();
@@ -483,7 +484,7 @@ public class RichiestaConvenzionamentoUT {
 		condizioniAzienda = "on";	
 
 		final String message = "Il campo ruolo deve contenere al massimo 255 caratteri.";
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 		
 		try {
 			validaCampi();
@@ -517,7 +518,7 @@ public class RichiestaConvenzionamentoUT {
 		condizioniAzienda = "on";	
 
 		final String message = "Il campo ruolo deve contenere soltanto caratteri alfabetici.";
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 		
 		try {
 			validaCampi();
@@ -552,7 +553,7 @@ public class RichiestaConvenzionamentoUT {
 		condizioniAzienda = "on";	
 
 		final String message = "Effettuare una selezione per il campo Sesso.";
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 		
 		try {
 			validaCampi();
@@ -586,7 +587,7 @@ public class RichiestaConvenzionamentoUT {
 		condizioniAzienda = "on";	
 
 		final String message = "Il campo sesso deve essere valorizzato con un solo carattere tra M o F.";
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 		
 		try {
 			validaCampi();
@@ -620,7 +621,7 @@ public class RichiestaConvenzionamentoUT {
 		condizioniAzienda = "on";	
 
 		final String message = "Il campo email non può essere nullo.";
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 		
 		try {
 			validaCampi();
@@ -655,7 +656,7 @@ public class RichiestaConvenzionamentoUT {
 		condizioniAzienda = "on";	
 
 		final String message = "Il campo email deve contenere almeno 2 caratteri.";
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 		
 		try {
 			validaCampi();
@@ -692,7 +693,7 @@ public class RichiestaConvenzionamentoUT {
 		condizioniAzienda = "on";	
 
 		final String message = "Il campo email deve contenere al massimo 256 caratteri.";
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 		
 		try {
 			validaCampi();
@@ -726,7 +727,7 @@ public class RichiestaConvenzionamentoUT {
 		condizioniAzienda = "on";	
 
 		final String message = "Il campo email deve rispettare il formato.";
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 		
 		try {
 			validaCampi();
@@ -1376,7 +1377,7 @@ public class RichiestaConvenzionamentoUT {
 		final String message = "La Partita IVA inserita è già esistente nel database ";
 		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 		
-		when(aziendaRepository.findByPIva(pIva)).thenReturn(new Azienda());
+		when(aziendaRepository.findByPartitaIva(pIva)).thenReturn(new Azienda());
 		
 		try {
 			validaCampi();
@@ -1972,7 +1973,7 @@ public class RichiestaConvenzionamentoUT {
 		condizioniAzienda = "on";	
 
 		when(utenteRepository.existsByEmail(email)).thenReturn(false);
-		when(aziendaRepository.save(any(Azienda.class))).thenReturn(null);
+//		when(aziendaRepository.save(any(Azienda.class))).thenReturn(null);
 		when(delegatoAziendaleRepository.save(any(DelegatoAziendale.class))).thenReturn(null);
 		when(richiestaConvenzionamentoRepository.save(any(RichiestaConvenzionamento.class))).thenReturn(null);
 
@@ -1998,12 +1999,12 @@ public class RichiestaConvenzionamentoUT {
 	@Test
 	public void accettaRichiestaConvenzionamento_NonAutorizzato() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new Studente());
-		when(richiestaConvenzionamentoRepository.findById(10L).orElse(null)).thenReturn(richiestaConvenzionamento);
-		when(richiestaConvenzionamento.getStato()).thenReturn(RichiestaConvenzionamento.IN_ATTESA);
-		when(richiestaConvenzionamentoRepository.save(richiestaConvenzionamento)).thenReturn(richiestaConvenzionamento);
+//		when(richiestaConvenzionamentoRepository.findById(10L)).thenReturn(Optional.of(richiestaConvenzionamento));
+//		when(richiestaConvenzionamento.getStato()).thenReturn(RichiestaConvenzionamento.IN_ATTESA);
+//		when(richiestaConvenzionamentoRepository.save(richiestaConvenzionamento)).thenReturn(richiestaConvenzionamento);
 		
-		when(richiestaConvenzionamento.getDelegatoAziendale()).thenReturn(delegatoAziendale);
-		when(delegatoAziendale.getEmail()).thenReturn("m.rossi2@gmail.com");
+//		when(richiestaConvenzionamento.getDelegatoAziendale()).thenReturn(delegatoAziendale);
+//		when(delegatoAziendale.getEmail()).thenReturn("m.rossi2@gmail.com");
 		
 		final String message = "Operazione non autorizzata";
 
@@ -2021,12 +2022,12 @@ public class RichiestaConvenzionamentoUT {
 	@Test
 	public void accettaRichiestaConvenzionamento_StatoInvalido() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new ResponsabileUfficioTirocini());
-		when(richiestaConvenzionamentoRepository.findById(10L).orElse(null)).thenReturn(richiestaConvenzionamento);
+		when(richiestaConvenzionamentoRepository.findById(10L)).thenReturn(Optional.of(richiestaConvenzionamento));
 		when(richiestaConvenzionamento.getStato()).thenReturn(RichiestaConvenzionamento.RIFIUTATA);
-		when(richiestaConvenzionamentoRepository.save(richiestaConvenzionamento)).thenReturn(richiestaConvenzionamento);
+//		when(richiestaConvenzionamentoRepository.save(richiestaConvenzionamento)).thenReturn(richiestaConvenzionamento);
 		
-		when(richiestaConvenzionamento.getDelegatoAziendale()).thenReturn(delegatoAziendale);
-		when(delegatoAziendale.getEmail()).thenReturn("m.rossi2@gmail.com");
+//		when(richiestaConvenzionamento.getDelegatoAziendale()).thenReturn(delegatoAziendale);
+//		when(delegatoAziendale.getEmail()).thenReturn("m.rossi2@gmail.com");
 		
 		final String message = "Impossibile accettare questa richiesta";
 
@@ -2044,7 +2045,7 @@ public class RichiestaConvenzionamentoUT {
 	@Test
 	public void accettaRichiestaConvenzionamento_Successo() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new ResponsabileUfficioTirocini());
-		when(richiestaConvenzionamentoRepository.findById(10L).orElse(null)).thenReturn(richiestaConvenzionamento);
+		when(richiestaConvenzionamentoRepository.findById(10L)).thenReturn(Optional.of(richiestaConvenzionamento));
 		when(richiestaConvenzionamento.getStato()).thenReturn(RichiestaConvenzionamento.IN_ATTESA);
 		when(richiestaConvenzionamentoRepository.save(richiestaConvenzionamento)).thenReturn(richiestaConvenzionamento);
 		
@@ -2066,12 +2067,12 @@ public class RichiestaConvenzionamentoUT {
 	@Test
 	public void rifiutaRichiestaConvenzionamento_NonAutorizzato() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new Studente());
-		when(richiestaConvenzionamentoRepository.findById(10L).orElse(null)).thenReturn(richiestaConvenzionamento);
-		when(richiestaConvenzionamento.getStato()).thenReturn(RichiestaConvenzionamento.IN_ATTESA);
-		when(richiestaConvenzionamentoRepository.save(richiestaConvenzionamento)).thenReturn(richiestaConvenzionamento);
+//		when(richiestaConvenzionamentoRepository.findById(10L)).thenReturn(Optional.of(richiestaConvenzionamento));
+//		when(richiestaConvenzionamento.getStato()).thenReturn(RichiestaConvenzionamento.IN_ATTESA);
+//		when(richiestaConvenzionamentoRepository.save(richiestaConvenzionamento)).thenReturn(richiestaConvenzionamento);
 		
-		when(richiestaConvenzionamento.getDelegatoAziendale()).thenReturn(delegatoAziendale);
-		when(delegatoAziendale.getEmail()).thenReturn("m.rossi2@gmail.com");
+//		when(richiestaConvenzionamento.getDelegatoAziendale()).thenReturn(delegatoAziendale);
+//		when(delegatoAziendale.getEmail()).thenReturn("m.rossi2@gmail.com");
 		
 		final String message = "Operazione non autorizzata";
 
@@ -2089,12 +2090,12 @@ public class RichiestaConvenzionamentoUT {
 	@Test
 	public void rifiutaRichiestaConvenzionamento_StatoInvalido() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new ResponsabileUfficioTirocini());
-		when(richiestaConvenzionamentoRepository.findById(10L).orElse(null)).thenReturn(richiestaConvenzionamento);
+		when(richiestaConvenzionamentoRepository.findById(10L)).thenReturn(Optional.of(richiestaConvenzionamento));
 		when(richiestaConvenzionamento.getStato()).thenReturn(RichiestaConvenzionamento.ACCETTATA);
-		when(richiestaConvenzionamentoRepository.save(richiestaConvenzionamento)).thenReturn(richiestaConvenzionamento);
+//		when(richiestaConvenzionamentoRepository.save(richiestaConvenzionamento)).thenReturn(richiestaConvenzionamento);
 		
-		when(richiestaConvenzionamento.getDelegatoAziendale()).thenReturn(delegatoAziendale);
-		when(delegatoAziendale.getEmail()).thenReturn("m.rossi2@gmail.com");
+//		when(richiestaConvenzionamento.getDelegatoAziendale()).thenReturn(delegatoAziendale);
+//		when(delegatoAziendale.getEmail()).thenReturn("m.rossi2@gmail.com");
 		
 		final String message = "Impossibile rifiutare questa richiesta";
 
@@ -2112,7 +2113,7 @@ public class RichiestaConvenzionamentoUT {
 	@Test
 	public void rifiutaRichiestaConvenzionamento_Successo() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new ResponsabileUfficioTirocini());
-		when(richiestaConvenzionamentoRepository.findById(10L).orElse(null)).thenReturn(richiestaConvenzionamento);
+		when(richiestaConvenzionamentoRepository.findById(10L)).thenReturn(Optional.of(richiestaConvenzionamento));
 		when(richiestaConvenzionamento.getStato()).thenReturn(RichiestaConvenzionamento.IN_ATTESA);
 		when(richiestaConvenzionamentoRepository.save(richiestaConvenzionamento)).thenReturn(richiestaConvenzionamento);
 		
@@ -2134,7 +2135,7 @@ public class RichiestaConvenzionamentoUT {
 	@Test
 	public void visualizzaRichiesteConvenzionamentoDettagli_NonAutorizzato() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new Studente());
-		when(richiestaConvenzionamentoRepository.findAllByStato(RichiestaConvenzionamento.IN_ATTESA)).thenReturn(new ArrayList<RichiestaConvenzionamento>());
+//		when(richiestaConvenzionamentoRepository.findAllByStato(RichiestaConvenzionamento.IN_ATTESA)).thenReturn(new ArrayList<RichiestaConvenzionamento>());
 
 		final String message = "Operazione non autorizzata";
 
@@ -2173,8 +2174,8 @@ public class RichiestaConvenzionamentoUT {
 		l.add(richiesta);
 		when(richiestaConvenzionamentoRepository.findAllByStato(RichiestaConvenzionamento.ACCETTATA)).thenReturn(l);
 		
-		when(richiestaConvenzionamento.getAzienda()).thenReturn(azienda);
-		when(aziendaList.add(azienda)).thenReturn(true);
+		//when(richiestaConvenzionamento.getAzienda()).thenReturn(azienda);
+//		when(aziendaList.add(azienda)).thenReturn(true);
 		
 		richiestaConvenzionamentoService.visualizzaAziendeConvenzionate();
 	}

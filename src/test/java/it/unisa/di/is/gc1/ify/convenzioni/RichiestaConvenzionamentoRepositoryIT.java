@@ -96,14 +96,14 @@ public class RichiestaConvenzionamentoRepositoryIT {
 		utenteRepository.deleteAll();
 		
 		azienda = new Azienda();
-		azienda.setpIva("12345678911");
+		azienda.setPartitaIva("12345678911");
 		azienda.setRagioneSociale("NetData Società per azioni");
 		azienda.setDescrizione("Consulenza e Data Analytics");
 		azienda.setSettore("Informatica");
 		azienda.setSede("Via Roma, 39 Milano MI - Italia");
 		
 		azienda2 = new Azienda();
-		azienda2.setpIva("12345678910");
+		azienda2.setPartitaIva("12345678910");
 		azienda2.setRagioneSociale("NetData Società per azioni");
 		azienda2.setDescrizione("Consulenza e Data Analytics");
 		azienda2.setSettore("Informatica");
@@ -200,7 +200,7 @@ public class RichiestaConvenzionamentoRepositoryIT {
 		
 		RichiestaConvenzionamento r;
 		
-		r = richiestaConvenzionamentoRepository.findByAziendaPIva(richiestaConvenzionamento.getAzienda().getpIva());
+		r = richiestaConvenzionamentoRepository.findByAziendaPartitaIva(richiestaConvenzionamento.getAzienda().getPartitaIva());
 		assertThat(richiestaConvenzionamento, is(equalTo(r)));
 	}
 	

@@ -69,7 +69,7 @@ public class ConvenzioneController {
 		Azienda azienda = new Azienda();
 		azienda.setRagioneSociale(convenzioneForm.getRagioneSociale());
 		azienda.setSede(convenzioneForm.getSede());
-		azienda.setpIva(convenzioneForm.getpIva());
+		azienda.setPartitaIva(convenzioneForm.getpIva());
 		azienda.setSettore(convenzioneForm.getSettore());
 		azienda.setDescrizione(convenzioneForm.getDescrizione());
 		

@@ -6,9 +6,14 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import it.unisa.di.is.gc1.ify.DocenteTutor.DocenteTutor;
+import it.unisa.di.is.gc1.ify.DocenteTutor.DocenteTutorRepository;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +31,8 @@ import it.unisa.di.is.gc1.ify.responsabileUfficioTirocini.ResponsabileUfficioTir
 import it.unisa.di.is.gc1.ify.utenza.MailSingletonSender;
 import it.unisa.di.is.gc1.ify.utenza.UtenzaService;
 
+import javax.swing.text.html.Option;
+
 /**
  * Test di unità per la classe DomandaTirocinioService; tipologia di test:
  * whitebox strategia: branch coverage.
@@ -36,6 +43,9 @@ import it.unisa.di.is.gc1.ify.utenza.UtenzaService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DomandaTirocinioServiceUT {
+
+	@Mock
+	private DocenteTutorRepository docenteTutorRepository;
 
 	@Mock
 	private DomandaTirocinioRepository domandaTirocinioRepository;
@@ -65,6 +75,7 @@ public class DomandaTirocinioServiceUT {
 	@InjectMocks
 	private DomandaTirocinioService domandaTirocinioService;
 
+
 	private Azienda azienda;
 
 	private Studente studente;
@@ -74,6 +85,8 @@ public class DomandaTirocinioServiceUT {
 	private DomandaTirocinio domanda;
 
 	private DelegatoAziendale delegato;
+
+	private DocenteTutor docenteTutor;
 
 	private ResponsabileUfficioTirocini responsabile;
 
@@ -88,14 +101,23 @@ public class DomandaTirocinioServiceUT {
 		progettoFormativo = new ProgettoFormativo();
 		// Crea l'azienda #1
 		azienda = new Azienda();
-		azienda.setpIva("0123456789");
+		azienda.setPartitaIva("0123456789");
 		progettoFormativo.setAzienda(azienda);
 		progettoFormativo.setStato(ProgettoFormativo.ATTIVO);
 
 		delegato = new DelegatoAziendale();
 		delegato.setAzienda(azienda);
 		delegato.setEmail("m.rossi@gmail.com");
-		
+
+		docenteTutor = new DocenteTutor();
+		docenteTutor.setEmail("docente@prova.it");
+		docenteTutor.setCognome("Di Prova");
+		docenteTutor.setNome("Docente");
+		docenteTutor.setIndirizzo("via tal dei tali 1");
+		docenteTutor.setSesso("M");
+		docenteTutor.setCampoRicerca("Ingegneria");
+		docenteTutor.setPassword("Password1");
+
 		responsabile = new ResponsabileUfficioTirocini();
 
 		// creo e salvo lo studente 1
@@ -111,7 +133,9 @@ public class DomandaTirocinioServiceUT {
 		domanda.setDataInizio(LocalDate.of(2019, 11, 10));
 		domanda.setDataFine(LocalDate.of(2020, 03, 10));
 		domanda.setCfu(6);
+		domanda.setTutor(docenteTutor);
 		domanda.setStato(DomandaTirocinio.IN_ATTESA);
+
 	}
 
 	/**
@@ -232,9 +256,9 @@ public class DomandaTirocinioServiceUT {
 	public void accettaDomandaTirocinioPIvaNotEqual() {
 		String messaggio = "Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(delegatoMock.getAzienda()).thenReturn(aziendaMock);
-		when(aziendaMock.getpIva()).thenReturn("0123456781");
+		when(aziendaMock.getPartitaIva()).thenReturn("0123456781");
 		try {
 			domandaTirocinioService.accettaDomandaTirocinioByAzienda(domanda.getId());
 		} catch (OperazioneNonAutorizzataException e) {
@@ -254,9 +278,9 @@ public class DomandaTirocinioServiceUT {
 	public void accettaDomandaTirocinioStatoNotInAttesa() {
 		String messaggio = "Impossibile accettare questa domanda";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(delegatoMock.getAzienda()).thenReturn(aziendaMock);
-		when(aziendaMock.getpIva()).thenReturn("0123456789");
+		when(aziendaMock.getPartitaIva()).thenReturn("0123456789");
 		domanda.setStato(DomandaTirocinio.ACCETTATA);
 		try {
 			domandaTirocinioService.accettaDomandaTirocinioByAzienda(domanda.getId());
@@ -275,7 +299,7 @@ public class DomandaTirocinioServiceUT {
 	@Test
 	public void accettaDomandaTirocinio() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegato);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
 		try {
 			domandaTirocinioService.accettaDomandaTirocinioByAzienda(domanda.getId());
@@ -285,6 +309,23 @@ public class DomandaTirocinioServiceUT {
 		}
 		verify(domandaTirocinioRepository, times(1)).save(domanda);
 	}
+
+	@Test
+	public void accettaDomandaTirocinioGiaAccetataDalTutor() {
+		domanda.setStato(DomandaTirocinio.IN_ATTESA_AZIENDA);
+		when(utenzaService.getUtenteAutenticato()).thenReturn(delegato);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.accettaDomandaTirocinioByAzienda(domanda.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(1)).save(domanda);
+	}
+
+
 
 	/**
 	 * Testa il caso in cui l'utente non sia autorizzato al rifiuto della domanda.
@@ -317,9 +358,9 @@ public class DomandaTirocinioServiceUT {
 	public void rifiutoDomandaTirocinioPivaNotEqual() {
 		String messaggio = "Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(delegatoMock.getAzienda()).thenReturn(aziendaMock);
-		when(aziendaMock.getpIva()).thenReturn("0123456781");
+		when(aziendaMock.getPartitaIva()).thenReturn("0123456781");
 		try {
 			domandaTirocinioService.rifiutoDomandaTirocinioByAzienda(domanda.getId());
 		} catch (OperazioneNonAutorizzataException e) {
@@ -337,12 +378,16 @@ public class DomandaTirocinioServiceUT {
 	 */
 	@Test
 	public void rifiutoDomandaTirocinioStatoNotAttesa() {
+		long idDomanda = domanda.getId();
 		String messaggio = "Impossibile rifiutare questa domanda";
+		when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		//when(domandaTirocinioRepository.findById(idDomanda)).thenReturn(Optional.of(domanda));
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(idDomanda)).thenReturn(Optional.of(domanda));
 		when(delegatoMock.getAzienda()).thenReturn(aziendaMock);
-		when(aziendaMock.getpIva()).thenReturn("0123456789");
+		when(aziendaMock.getPartitaIva()).thenReturn("0123456789");
 		domanda.setStato(DomandaTirocinio.ACCETTATA);
+		System.out.println("domanda " + domanda.getId());
 		try {
 			domandaTirocinioService.rifiutoDomandaTirocinioByAzienda(domanda.getId());
 		} catch (OperazioneNonAutorizzataException e) {
@@ -360,7 +405,7 @@ public class DomandaTirocinioServiceUT {
 	@Test
 	public void rifiutoDomandaTirocinio() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegato);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
 		try {
 			domandaTirocinioService.rifiutoDomandaTirocinioByAzienda(domanda.getId());
@@ -401,7 +446,7 @@ public class DomandaTirocinioServiceUT {
 	public void approvazioneDomandaTirocinioStatoFail() {
 		String messaggio = "Impossibile rifiutare questa domanda";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(responsabile);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		try {
 			domandaTirocinioService.approvazioneDomandaTirocinio(domanda.getId());
 		} catch (OperazioneNonAutorizzataException e) {
@@ -419,7 +464,7 @@ public class DomandaTirocinioServiceUT {
 	@Test
 	public void approvazioneDomandaTirocinio() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(responsabile);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
 		domanda.setStato(DomandaTirocinio.ACCETTATA);
 		try {
@@ -461,7 +506,7 @@ public class DomandaTirocinioServiceUT {
 	public void respintaDomandaTirocinioStatoFail() {
 		String messaggio = "Impossibile rifiutare questa domanda";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(responsabile);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		try {
 			domandaTirocinioService.respintaDomandaTirocinio(domanda.getId());
 		} catch (OperazioneNonAutorizzataException e) {
@@ -479,7 +524,7 @@ public class DomandaTirocinioServiceUT {
 	@Test
 	public void respintaDomandaTirocinio() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(responsabile);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
 		domanda.setStato(DomandaTirocinio.ACCETTATA);
 		try {
@@ -503,7 +548,7 @@ public class DomandaTirocinioServiceUT {
 		String messaggio = "Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(studente);
 		try {
-			domandaTirocinioService.visualizzaDomandeTirocinioInAttesaAzienda(azienda.getpIva());
+			domandaTirocinioService.visualizzaDomandeTirocinioInAttesaAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			assertEquals(messaggio, e.getMessage());
 		}
@@ -539,14 +584,22 @@ public class DomandaTirocinioServiceUT {
 	 */
 	@Test
 	public void visualizzaDomandeTirocinioInAttesaAzienda() {
+
+		listaDomande = new ArrayList<>();
+		listaDomande.add(domanda);
+
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegato);
-		when(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), DomandaTirocinio.IN_ATTESA)).thenReturn(listaDomande);
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		when(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), DomandaTirocinio.IN_ATTESA)).thenReturn(listaDomande);
+		when(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), DomandaTirocinio.IN_ATTESA_AZIENDA)).thenReturn(listaDomande);
+		System.out.println("ciao piva"+ azienda.getPartitaIva());
 		try {
-			domandaTirocinioService.visualizzaDomandeTirocinioInAttesaAzienda(azienda.getpIva());
+			domandaTirocinioService.visualizzaDomandeTirocinioInAttesaAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			e.printStackTrace();
 		}
-		verify(domandaTirocinioRepository , times(1)).findAllByAziendaPIvaAndStato(azienda.getpIva() , DomandaTirocinio.IN_ATTESA);
+		verify(domandaTirocinioRepository , times(1)).findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva() , DomandaTirocinio.IN_ATTESA);
+
 	}
 	
 	/**
@@ -562,7 +615,7 @@ public class DomandaTirocinioServiceUT {
 		String messaggio = "Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(studente);
 		try {
-			domandaTirocinioService.visualizzaDomandeTirocinioInoltrateAzienda(azienda.getpIva());
+			domandaTirocinioService.visualizzaDomandeTirocinioInoltrateAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			assertEquals(messaggio, e.getMessage());
 		}
@@ -600,17 +653,17 @@ public class DomandaTirocinioServiceUT {
 	public void visualizzaDomandeTirocinioInoltrateAzienda() {
 		listaDomande = new ArrayList<>();
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegato);
-		when(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), DomandaTirocinio.ACCETTATA)).thenReturn(listaDomande);
-		when(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), DomandaTirocinio.APPROVATA)).thenReturn(listaDomande);
-		when(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), DomandaTirocinio.RESPINTA)).thenReturn(listaDomande);
+		when(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), DomandaTirocinio.ACCETTATA)).thenReturn(listaDomande);
+		when(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), DomandaTirocinio.APPROVATA)).thenReturn(listaDomande);
+		when(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), DomandaTirocinio.RESPINTA)).thenReturn(listaDomande);
 		try {
-			domandaTirocinioService.visualizzaDomandeTirocinioInoltrateAzienda(azienda.getpIva());
+			domandaTirocinioService.visualizzaDomandeTirocinioInoltrateAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			e.printStackTrace();
 		}
-		verify(domandaTirocinioRepository , times(1)).findAllByAziendaPIvaAndStato(azienda.getpIva() , DomandaTirocinio.ACCETTATA);
-		verify(domandaTirocinioRepository , times(1)).findAllByAziendaPIvaAndStato(azienda.getpIva() , DomandaTirocinio.APPROVATA);
-		verify(domandaTirocinioRepository , times(1)).findAllByAziendaPIvaAndStato(azienda.getpIva() , DomandaTirocinio.RESPINTA);
+		verify(domandaTirocinioRepository , times(1)).findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva() , DomandaTirocinio.ACCETTATA);
+		verify(domandaTirocinioRepository , times(1)).findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva() , DomandaTirocinio.APPROVATA);
+		verify(domandaTirocinioRepository , times(1)).findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva() , DomandaTirocinio.RESPINTA);
 
 	}
 	
@@ -627,7 +680,7 @@ public class DomandaTirocinioServiceUT {
 		String messaggio = "Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(responsabile);
 		try {
-			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getpIva());
+			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			assertEquals(messaggio, e.getMessage());
 		}
@@ -645,11 +698,11 @@ public class DomandaTirocinioServiceUT {
 	public void visualizzaTirociniInCorsoAziendaPivaNotEqual() {
 		String messaggio = "Operazione non autorizzata";
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
-		when(domandaTirocinioRepository.findById(domanda.getId()).orElse(null)).thenReturn(domanda);
+		//when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
 		when(delegatoMock.getAzienda()).thenReturn(aziendaMock);
-		when(aziendaMock.getpIva()).thenReturn("0123456781");
+		when(aziendaMock.getPartitaIva()).thenReturn("0123456781");
 		try {
-			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getpIva());
+			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			assertEquals(messaggio, e.getMessage());
 		}
@@ -668,10 +721,10 @@ public class DomandaTirocinioServiceUT {
 		listaDomande = new ArrayList<>();
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
 		when(delegatoMock.getAzienda()).thenReturn(azienda);
-		when(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), DomandaTirocinio.APPROVATA))
+		when(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), DomandaTirocinio.APPROVATA))
 				.thenReturn(listaDomande);
 		try {
-			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getpIva());
+			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			e.printStackTrace();
 		}
@@ -694,10 +747,10 @@ public class DomandaTirocinioServiceUT {
 		listaDomande.add(domanda);
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
 		when(delegatoMock.getAzienda()).thenReturn(azienda);
-		when(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), DomandaTirocinio.APPROVATA))
+		when(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), DomandaTirocinio.APPROVATA))
 				.thenReturn(listaDomande);
 		try {
-			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getpIva());
+			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			e.printStackTrace();
 		}
@@ -720,10 +773,10 @@ public class DomandaTirocinioServiceUT {
 		listaDomande.add(domanda);
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
 		when(delegatoMock.getAzienda()).thenReturn(azienda);
-		when(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), DomandaTirocinio.APPROVATA))
+		when(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), DomandaTirocinio.APPROVATA))
 				.thenReturn(listaDomande);
 		try {
-			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getpIva());
+			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			e.printStackTrace();
 		}
@@ -742,12 +795,14 @@ public class DomandaTirocinioServiceUT {
 		domanda.setStato(DomandaTirocinio.APPROVATA);
 		listaDomande = new ArrayList<>();
 		listaDomande.add(domanda);
+		domanda.setDataInizio(LocalDate.now().minusDays(5));
+		domanda.setDataFine(LocalDate.now().plusDays(5));
 		when(utenzaService.getUtenteAutenticato()).thenReturn(delegatoMock);
 		when(delegatoMock.getAzienda()).thenReturn(azienda);
-		when(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(azienda.getpIva(), DomandaTirocinio.APPROVATA))
+		when(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva(), DomandaTirocinio.APPROVATA))
 				.thenReturn(listaDomande);
 		try {
-			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getpIva());
+			domandaTirocinioService.visualizzaTirociniInCorsoAzienda(azienda.getPartitaIva());
 		} catch (OperazioneNonAutorizzataException e) {
 			e.printStackTrace();
 		}
@@ -1013,7 +1068,7 @@ public class DomandaTirocinioServiceUT {
 	@Test
 	public void visualizzaDomandeTirocinioValutateUfficio() {
 		when(utenzaService.getUtenteAutenticato()).thenReturn(responsabile);
-		when(domandaTirocinioRepository.findAllByStato(DomandaTirocinio.ACCETTATA)).thenReturn(listaDomande);
+		//when(domandaTirocinioRepository.findAllByStato(DomandaTirocinio.ACCETTATA)).thenReturn(listaDomande);
 		try {
 			domandaTirocinioService.visualizzaDomandeTirocinioValutateUfficio();
 		} catch (OperazioneNonAutorizzataException e) {
@@ -1513,5 +1568,605 @@ public class DomandaTirocinioServiceUT {
 			e.printStackTrace();
 		}
 	}
+
+	@Test
+	public void terminaTirocinioUtenteNonAutorizzato() {
+
+		domanda.setStato(DomandaTirocinio.APPROVATA);
+		when(utenzaService.getUtenteAutenticato()).thenReturn(delegato);
+		//when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.terminaTirocinio(domanda.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).save(domanda);
+	}
+
+	@Test
+	public void terminaTirocinioUtenteNonCombaciaConAutenticato() {
+		domanda.setStato(DomandaTirocinio.APPROVATA);
+		DocenteTutor docenteTutor2 = new DocenteTutor();
+		docenteTutor2.setEmail("docente2@prova.it");
+		docenteTutor2.setCognome("Di Prova");
+		docenteTutor2.setNome("Docente");
+		docenteTutor2.setIndirizzo("via tal dei tali 1");
+		docenteTutor2.setSesso("M");
+		docenteTutor2.setCampoRicerca("Ingegneria");
+		docenteTutor2.setPassword("Password1");
+		docenteTutor2.setId((long) 1000);
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor2);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.terminaTirocinio(domanda.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).save(domanda);
+	}
+
+	@Test
+	public void impossibileTerminareTirocinioPerStatoNotApprovato() {
+		domanda.setStato(DomandaTirocinio.IN_ATTESA_AZIENDA);
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.terminaTirocinio(domanda.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).save(domanda);
+	}
+
+	@Test
+	public void impossibileTerminareTirocinioPerDataScaduta() {
+		LocalDate today = LocalDate.now();
+		LocalDate yesterday = today.minus(Period.ofDays(1));
+		domanda.setDataFine(yesterday);
+		domanda.setStato(DomandaTirocinio.APPROVATA);
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.terminaTirocinio(domanda.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).save(domanda);
+	}
+
+	@Test
+	public void impossibileTerminareTirocinioPerDataInizio() {
+		LocalDate today = LocalDate.now();
+		LocalDate tomorrow = today.plus(Period.ofDays(1));
+		domanda.setDataInizio(tomorrow);
+		domanda.setDataFine(tomorrow.plusDays(50));
+		domanda.setStato(DomandaTirocinio.APPROVATA);
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.terminaTirocinio(domanda.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).save(domanda);
+	}
+
+	@Test
+	public void terminareTirocinioConSuccesso() {
+		LocalDate today = LocalDate.now();
+		LocalDate tomorrow = today.plus(Period.ofDays(1));
+		domanda.setDataInizio(tomorrow.minusDays(10));
+		domanda.setDataFine(tomorrow.plusDays(50));
+		domanda.setStato(DomandaTirocinio.APPROVATA);
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.terminaTirocinio(domanda.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(1)).save(domanda);
+	}
+
+	@Test
+	public void impossibileAccettareDomandaDocenteNonAutenticato() {
+
+		when(utenzaService.getUtenteAutenticato()).thenReturn(delegato);
+		//when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.accettaDomandaTirocinioByDocente(domanda.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).save(domanda);
+	}
+
+	@Test
+	public void impossibileAccettareDomandaDocenteNonCombaciaConAutenticato() {
+		domanda.setStato(DomandaTirocinio.IN_ATTESA);
+		DocenteTutor docenteTutor2 = new DocenteTutor();
+		docenteTutor2.setEmail("docente2@prova.it");
+		docenteTutor2.setCognome("Di Prova");
+		docenteTutor2.setNome("Docente");
+		docenteTutor2.setIndirizzo("via tal dei tali 1");
+		docenteTutor2.setSesso("M");
+		docenteTutor2.setCampoRicerca("Ingegneria");
+		docenteTutor2.setPassword("Password1");
+		docenteTutor2.setId((long) 1000);
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor2);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.accettaDomandaTirocinioByDocente(domanda.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).save(domanda);
+	}
+
+	@Test
+	public void impossibileAccettareDomandaStatoNonInAttesaOrInAttesaDocente() {
+		domanda.setStato(DomandaTirocinio.IN_ATTESA_AZIENDA);
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.accettaDomandaTirocinioByDocente(domanda.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).save(domanda);
+	}
+
+	@Test
+	public void accettareDomandaDalDocenteStatoInAttesa() {
+		domanda.setStato(DomandaTirocinio.IN_ATTESA);
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.accettaDomandaTirocinioByDocente(domanda.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(1)).save(domanda);
+	}
+
+	@Test
+	public void accettareDomandaDalDocenteStatoInAttesaTutor() {
+		domanda.setStato(DomandaTirocinio.IN_ATTESA_TUTOR);
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.accettaDomandaTirocinioByDocente(domanda.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(1)).save(domanda);
+	}
+
+	@Test
+	public void rifiutoNonPossibileDomandaDaAziendaPerStatoInAttesaTutor() {
+		domanda.setStato(DomandaTirocinio.IN_ATTESA_TUTOR);
+		when(utenzaService.getUtenteAutenticato()).thenReturn(delegato);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.rifiutoDomandaTirocinioByAzienda(domanda.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).save(domanda);
+	}
+
+	@Test
+	public void impossibileRifiutareDomandaDocenteNonCombaciaConAutenticato() {
+		domanda.setStato(DomandaTirocinio.IN_ATTESA);
+		DocenteTutor docenteTutor2 = new DocenteTutor();
+		docenteTutor2.setEmail("docente2@prova.it");
+		docenteTutor2.setCognome("Di Prova");
+		docenteTutor2.setNome("Docente");
+		docenteTutor2.setIndirizzo("via tal dei tali 1");
+		docenteTutor2.setSesso("M");
+		docenteTutor2.setCampoRicerca("Ingegneria");
+		docenteTutor2.setPassword("Password1");
+		docenteTutor2.setId((long) 1000);
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor2);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.rifiutoDomandaTirocinioByDocente(domanda.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).save(domanda);
+	}
+
+	@Test
+	public void impossibileRifiutareDomandaDocenteNonAutenticato() {
+
+		when(utenzaService.getUtenteAutenticato()).thenReturn(delegato);
+		//when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.rifiutoDomandaTirocinioByDocente(domanda.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).save(domanda);
+	}
+
+	@Test
+	public void impossibileRifiutareDomandaStatoNonInAttesaOrInAttesaTutor() {
+		domanda.setStato(DomandaTirocinio.IN_ATTESA_AZIENDA);
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.rifiutoDomandaTirocinioByDocente(domanda.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).save(domanda);
+	}
+
+	@Test
+	public void rifiutoDomandaDalDocenteStatoInAttesaTutor() {
+		domanda.setStato(DomandaTirocinio.IN_ATTESA_TUTOR);
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+		when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.rifiutoDomandaTirocinioByDocente(domanda.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(1)).save(domanda);
+	}
+
+	@Test
+	public void impossibileVisualizzareDomandeInAttesaDocenteNonAutenticato() {
+
+		when(utenzaService.getUtenteAutenticato()).thenReturn(delegato);
+		//when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.visualizzaDomandeTirocinioInAttesaDocente(domanda.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(),
+				DomandaTirocinio.IN_ATTESA);
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(),
+				DomandaTirocinio.IN_ATTESA_TUTOR);
+
+	}
+
+	@Test
+	public void impossibileVisualizzareDomandeInAttesaDocenteAutenticatoDiversoDaParametro() {
+
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+
+		//when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.visualizzaDomandeTirocinioInAttesaDocente(1000l);
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(1000l,
+				DomandaTirocinio.IN_ATTESA);
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(1000l,
+				DomandaTirocinio.IN_ATTESA_TUTOR);
+
+	}
+
+	@Test
+	public void visualizzareDomandeInAttesaDocente() {
+
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+
+		when(domandaTirocinioRepository.findAllByDocenteTutorIdAndStato(docenteTutor.getId(),DomandaTirocinio.IN_ATTESA)).thenReturn(new ArrayList<>());
+		when(domandaTirocinioRepository.findAllByDocenteTutorIdAndStato(docenteTutor.getId(),DomandaTirocinio.IN_ATTESA_TUTOR)).thenReturn(new ArrayList<>());
+
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.visualizzaDomandeTirocinioInAttesaDocente(docenteTutor.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(1)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(),
+				DomandaTirocinio.IN_ATTESA);
+		verify(domandaTirocinioRepository, times(1)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(),
+				DomandaTirocinio.IN_ATTESA_TUTOR);
+
+	}
+
+	@Test
+	public void impossibileVisualizzareDomandeInoltrateDocenteNonAutenticato() {
+
+		when(utenzaService.getUtenteAutenticato()).thenReturn(delegato);
+		//when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.visualizzaDomandeTirocinioInoltrateDocente(domanda.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(),
+				DomandaTirocinio.IN_ATTESA_AZIENDA);
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(),
+				DomandaTirocinio.ACCETTATA);
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(),
+				DomandaTirocinio.APPROVATA);
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(),
+				DomandaTirocinio.RESPINTA);
+
+
+	}
+
+	@Test
+	public void impossibileVisualizzareDomandeInoltrateDocenteAutenticatoDiversoDaParametro() {
+
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+
+		//when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.visualizzaDomandeTirocinioInoltrateDocente(1000l);
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(),
+				DomandaTirocinio.IN_ATTESA_AZIENDA);
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(),
+				DomandaTirocinio.ACCETTATA);
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(),
+				DomandaTirocinio.APPROVATA);
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(),
+				DomandaTirocinio.RESPINTA);
+
+	}
+
+	@Test
+	public void visualizzareDomandeInoltrateDocente() {
+
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+
+		//when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.visualizzaDomandeTirocinioInoltrateDocente(docenteTutor.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(1)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(),
+				DomandaTirocinio.IN_ATTESA_AZIENDA);
+		verify(domandaTirocinioRepository, times(1)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(),
+				DomandaTirocinio.ACCETTATA);
+		verify(domandaTirocinioRepository, times(1)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(),
+				DomandaTirocinio.APPROVATA);
+		verify(domandaTirocinioRepository, times(1)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(),
+				DomandaTirocinio.RESPINTA);
+
+	}
+
+	@Test
+	public void visualizzaTirociniInCorsoDocenteUtenteNonAutorizzato() {
+		String messaggio = "Operazione non autorizzata";
+		when(utenzaService.getUtenteAutenticato()).thenReturn(delegato);
+		try {
+			domandaTirocinioService.visualizzaTirociniInCorsoDocente(delegato.getId());
+		} catch (OperazioneNonAutorizzataException e) {
+			assertEquals(messaggio, e.getMessage());
+		}
+	}
+
+	@Test
+	public void visualizzaTirociniInCorsoDocenteUtenteDiversoDaParametro() {
+		DocenteTutor docenteTutor2 = new DocenteTutor();
+		docenteTutor2.setEmail("docente2@prova.it");
+		docenteTutor2.setCognome("Di Prova");
+		docenteTutor2.setNome("Docente");
+		docenteTutor2.setIndirizzo("via tal dei tali 1");
+		docenteTutor2.setSesso("M");
+		docenteTutor2.setCampoRicerca("Ingegneria");
+		docenteTutor2.setPassword("Password1");
+		docenteTutor2.setId((long) 1000);
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor2);
+		//when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.visualizzaTirociniInCorsoDocente(domanda.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(docenteTutor2.getId(),
+				DomandaTirocinio.APPROVATA);;
+	}
+
+	@Test
+	public void visualizzaTirociniInCorsoDocente() {
+		domanda.setStato(DomandaTirocinio.APPROVATA);
+		listaDomande = new ArrayList<>();
+		listaDomande.add(domanda);
+		domanda.setDataInizio(LocalDate.now().minusDays(5));
+		domanda.setDataFine(LocalDate.now().plusDays(5));
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+		//when(delegatoMock.getAzienda()).thenReturn(azienda);
+		when(domandaTirocinioRepository.findAllByDocenteTutorIdAndStato(docenteTutor.getId(),
+				DomandaTirocinio.APPROVATA)).thenReturn(listaDomande);
+		try {
+			domandaTirocinioService.visualizzaTirociniInCorsoDocente(docenteTutor.getId());
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+
+		verify(domandaTirocinioRepository, times(1)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(),
+				DomandaTirocinio.APPROVATA);;
+
+	}
+
+	@Test
+	public void impossibileVisualizzareTirociniChiusiDocenteNonAutenticato() {
+		domanda.setStato(DomandaTirocinio.APPROVATA);
+
+		when(utenzaService.getUtenteAutenticato()).thenReturn(delegato);
+		//when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.visualizzaTirociniChiusi(docenteTutor.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(), DomandaTirocinio.APPROVATA);
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(), DomandaTirocinio.TERMINATA);
+
+	}
+
+	@Test
+	public void impossibileVisualizzareTirociniChiusiDocenteNonCombaciaConIdParam() {
+		domanda.setStato(DomandaTirocinio.APPROVATA);
+		DocenteTutor docenteTutor2 = new DocenteTutor();
+		docenteTutor2.setEmail("docente2@prova.it");
+		docenteTutor2.setCognome("Di Prova");
+		docenteTutor2.setNome("Docente");
+		docenteTutor2.setIndirizzo("via tal dei tali 1");
+		docenteTutor2.setSesso("M");
+		docenteTutor2.setCampoRicerca("Ingegneria");
+		docenteTutor2.setPassword("Password1");
+		docenteTutor2.setId((long) 1000);
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor2);
+		//when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.visualizzaTirociniChiusi(docenteTutor.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(), DomandaTirocinio.APPROVATA);
+		verify(domandaTirocinioRepository, times(0)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(), DomandaTirocinio.TERMINATA);
+	}
+
+	@Test
+	public void visualizzareTirociniChiusiDocenteControlloData() {
+		domanda.setStato(DomandaTirocinio.APPROVATA);
+		domanda.setDataInizio(LocalDate.now().minusDays(5));
+		domanda.setDataFine(LocalDate.now().minusDays(5));
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		List<DomandaTirocinio> lista = new ArrayList<>();
+		lista.add(domanda);
+		when(domandaTirocinioRepository.findAllByDocenteTutorIdAndStato(docenteTutor.getId(), DomandaTirocinio.APPROVATA)).thenReturn(lista);
+
+		try {
+			domandaTirocinioService.visualizzaTirociniChiusi(docenteTutor.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(1)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(), DomandaTirocinio.APPROVATA);
+		verify(domandaTirocinioRepository, times(1)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(), DomandaTirocinio.TERMINATA);
+	}
+
+	@Test
+	public void visualizzareTirociniChiusiDocente() {
+		domanda.setStato(DomandaTirocinio.APPROVATA);
+
+		when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+		//when(domandaTirocinioRepository.findById(domanda.getId())).thenReturn(Optional.of(domanda));
+		//when(domandaTirocinioRepository.save(domanda)).thenReturn(domanda);
+		try {
+			domandaTirocinioService.visualizzaTirociniChiusi(docenteTutor.getId());
+
+		} catch (OperazioneNonAutorizzataException e) {
+			e.printStackTrace();
+		}
+		verify(domandaTirocinioRepository, times(1)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(), DomandaTirocinio.APPROVATA);
+		verify(domandaTirocinioRepository, times(1)).findAllByDocenteTutorIdAndStato(docenteTutor.getId(), DomandaTirocinio.TERMINATA);
+	}
+
+	@Test
+	public void impossibileValidareDocenteNull() {
+		//when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+
+		try {
+			domandaTirocinioService.validaDocenteTutor(null);
+
+		} catch (DomandaTirocinioNonValidaException e) {
+			e.printStackTrace();
+			Assert.assertEquals(e.getMessage(), "Non è stato immesso alcun utente");
+		}
+
+	}
+
+	@Test
+	public void impossibileValidareDocenteNonTrovato() {
+		//when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+		String id = String.valueOf(docenteTutor.getId());
+		when(docenteTutorRepository.existsById(Long.parseLong(id))).thenReturn(false);
+
+		try {
+			domandaTirocinioService.validaDocenteTutor(id);
+
+		} catch (DomandaTirocinioNonValidaException e) {
+			e.printStackTrace();
+			Assert.assertEquals(e.getMessage(), "Il docente immesso non è valido");
+		}
+
+	}
+
+	@Test
+	public void validareDocente() {
+		//when(utenzaService.getUtenteAutenticato()).thenReturn(docenteTutor);
+		String id = String.valueOf(docenteTutor.getId());
+
+		when(docenteTutorRepository.existsById(Long.parseLong(id))).thenReturn(true);
+		String docenteTutorId = "";
+
+		try {
+			docenteTutorId = domandaTirocinioService.validaDocenteTutor(id);
+
+		} catch (DomandaTirocinioNonValidaException e) {
+			e.printStackTrace();
+		}
+		Assert.assertEquals(id, docenteTutorId);
+
+	}
+
+
 
 }

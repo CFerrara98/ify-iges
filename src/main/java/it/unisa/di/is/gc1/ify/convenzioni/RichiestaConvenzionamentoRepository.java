@@ -35,14 +35,14 @@ public interface RichiestaConvenzionamentoRepository extends JpaRepository<Richi
 	/**
 	 * Permette di ottenere la richiesta di convenzionamento di un' azienda.
 	 * 
-	 * @param pIVA String che rappresenta l'id (partita iva dell' azienda per cui si cerca la
+	 * @param partitaIva String che rappresenta l'id (partita iva dell' azienda per cui si cerca la
 	 *           richiesta
 	 * 
 	 * @return Oggetto {@link RichiestaConvenzionamento} che rappresenta la richiesta di
 	 *         convenzionamento.
 	 * 
 	 */
-	public RichiestaConvenzionamento findByAziendaPIva(String pIVA);
+	public RichiestaConvenzionamento findByAziendaPartitaIva(String partitaIva);
 
 	/**
 	 * Permette di ottenere la richiesta di convenzionamento con un determinato id.

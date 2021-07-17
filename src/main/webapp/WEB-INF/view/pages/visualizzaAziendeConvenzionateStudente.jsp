@@ -163,7 +163,7 @@
 										<td class="testo-tabella">${current.settore}</td>
 										<td class="testo-tabella">
 											<form method="post" action="./dettagliAziendaStudente">
-												<input type="hidden" name="pIva" value="${current.pIva}">
+												<input type="hidden" name="pIva" value="${current.partitaIva}">
 												<input type="submit" class="btn reg" value="Dettagli">
 											</form>
 										</td>

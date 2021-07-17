@@ -228,7 +228,8 @@ public class ProgettoFormativo {
 	private int max_partecipanti;
 	private LocalDate data_compilazione;
 	private String stato;
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "azienda_partita_iva")
 	private Azienda azienda;
 	
 	

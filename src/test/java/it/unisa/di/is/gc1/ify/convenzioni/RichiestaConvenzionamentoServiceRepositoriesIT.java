@@ -119,7 +119,7 @@ public class RichiestaConvenzionamentoServiceRepositoriesIT {
 		utenteRepository.deleteAll();
 		
 		azienda1=new Azienda();
-		azienda1.setpIva("01234567895");
+		azienda1.setPartitaIva("01234567895");
 		
 		delegatoAziendale1=new DelegatoAziendale();
 		delegatoAziendale1.setEmail("p.bianchi2@azienda.it");
@@ -135,7 +135,7 @@ public class RichiestaConvenzionamentoServiceRepositoriesIT {
 		responsabileUfficioTirociniRepository.save(responsabileUfficioTirocini);
 		
 		azienda2=new Azienda();
-		azienda2.setpIva("01234567897");
+		azienda2.setPartitaIva("01234567897");
 		
 		delegatoAziendale2=new DelegatoAziendale();
 		delegatoAziendale2.setEmail("r.rossi2@azienda2.it");
@@ -183,7 +183,7 @@ public class RichiestaConvenzionamentoServiceRepositoriesIT {
 	
 	@Test
 	public void getAziendaFromPIva() {
-		Azienda aziendaSalvata=richiestaConvenzionamentoService.getAziendaFromPIva(azienda1.getpIva());
+		Azienda aziendaSalvata=richiestaConvenzionamentoService.getAziendaFromPIva(azienda1.getPartitaIva());
 		assertThat(azienda1, is(equalTo(aziendaSalvata)));
 	}
 	

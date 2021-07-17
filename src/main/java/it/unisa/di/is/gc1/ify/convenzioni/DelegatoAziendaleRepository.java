@@ -22,7 +22,7 @@ public interface DelegatoAziendaleRepository extends JpaRepository<DelegatoAzien
 	 * la partita iva a cui appartiene passata come parametro. 
 	 * @pre pIva != null
 	 */
-	DelegatoAziendale findByAziendaPIva(String pIva);
+	DelegatoAziendale findByAziendaPartitaIva(String partitaIva);
 	
 	/**
 	 * Permette di verificare se un Delegato Aziendale esiste nel database attraverso
@@ -33,7 +33,7 @@ public interface DelegatoAziendaleRepository extends JpaRepository<DelegatoAzien
 	 * aziendale non esiste nel database. 
 	 * @pre pIva != null
 	 */
-	boolean existsByAziendaPIva(String pIva);
+	boolean existsByAziendaPartitaIva(String partitaIva);
 	
 	/**
 	 * Permette di ottenere un delegato a partire dall'email.

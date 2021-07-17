@@ -98,7 +98,7 @@ public class DelegatoAziendaleRepositoryIT {
 		
 		
 		azienda = new Azienda();
-		azienda.setpIva("12345678911");
+		azienda.setPartitaIva("12345678911");
 		azienda.setRagioneSociale("NetData Società per azioni");
 		azienda.setDescrizione("Consulenza e Data Analytics");
 		azienda.setSettore("Informatica");
@@ -140,7 +140,7 @@ public class DelegatoAziendaleRepositoryIT {
 		
 		DelegatoAziendale d;
 		
-		d = delegatoAziendaleRepository.findByAziendaPIva(delegatoAziendale.getAzienda().getpIva());
+		d = delegatoAziendaleRepository.findByAziendaPartitaIva(delegatoAziendale.getAzienda().getPartitaIva());
 		assertThat(delegatoAziendale, is(equalTo(d)));
 	}
 	
@@ -149,7 +149,7 @@ public class DelegatoAziendaleRepositoryIT {
 	 * Testa l'interazione con il database per determinare se la ricerca di un
 	 *  delegato  tramite pIva avvenga correttamente.
 	 * 
-	 * @test {@link DelegatoAziendaleRepository#existsByAziendaPIva(String)}
+	 * @test {@link DelegatoAziendaleRepository#existsByAziendaPartitaIva(String)}
 	 * 
 	 * @result Il test è superato se la ricerca per pIva del delegato
 	 *         presente nel test ha successo
@@ -159,7 +159,7 @@ public class DelegatoAziendaleRepositoryIT {
 		// Controlla che il delegato inserito per il test sia esistente
 		// nel database 
 		
-		boolean delegatoEsistente = delegatoAziendaleRepository.existsByAziendaPIva(delegatoAziendale.getAzienda().getpIva());
+		boolean delegatoEsistente = delegatoAziendaleRepository.existsByAziendaPartitaIva(delegatoAziendale.getAzienda().getPartitaIva());
 		assertThat(delegatoEsistente, is(true));
 	}
 

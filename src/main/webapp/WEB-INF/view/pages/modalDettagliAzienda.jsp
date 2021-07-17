@@ -14,7 +14,7 @@
 			</div>
 			<div class="modal-body">
 				<p><b>Descrizione</b> <br>${AziendaPerDettagli.descrizione}</p>
-				<p><b>Partita Iva</b> <br>${AziendaPerDettagli.pIva}</p>
+				<p><b>Partita Iva</b> <br>${AziendaPerDettagli.partitaIva}</p>
 				<p><b>Email</b> <br>${DelegatoPerDettagli.email}</p>
 			</div>
 		</div>

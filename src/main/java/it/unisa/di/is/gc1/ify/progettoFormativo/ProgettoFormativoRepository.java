@@ -19,14 +19,14 @@ public interface ProgettoFormativoRepository extends JpaRepository<ProgettoForma
 	 *@pre stato = {@link ProgettoFormativo#ATTIVO} or stato =
 	 *      {@link  ProgettoFormativo#ARCHIVIATO} 
 	 *@param stato Stringa - rappresenta lo stato di un progetto fromativo
-	* @param pIva stringa - rappresenta la partita iva dell'azienda associata al progetto formativo
+	* @param partitaIva stringa - rappresenta la partita iva dell'azienda associata al progetto formativo
 	 *@return Lista di {@link ProgettoFormativo} che rappresenta una lista di progetti formativi di una azienda
 	 *       	<b>Può essere vuota</b> se nel database non
 	 *        sono presenti progetti formativi di un azienda 
 	 *         
 	 * 
 	 */
-	public List<ProgettoFormativo> findAllByAziendaPIvaAndStato(String pIva, String stato);
+	public List<ProgettoFormativo> findAllByAziendaPartitaIvaAndStato(String partitaIva, String stato);
 	
 	
 	/**

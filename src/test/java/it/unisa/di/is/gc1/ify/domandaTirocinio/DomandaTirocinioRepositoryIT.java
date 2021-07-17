@@ -121,7 +121,7 @@ public class DomandaTirocinioRepositoryIT {
 		// Crea l'azienda #1
 		Azienda azienda1 = new Azienda();
 		azienda1.setDescrizione("azienda di software informatici");
-		azienda1.setpIva("01234567892");
+		azienda1.setPartitaIva("01234567892");
 		azienda1.setRagioneSociale("azienda 1");
 		azienda1.setSede("Roma");
 		azienda1.setSettore("Informatica");
@@ -158,7 +158,6 @@ public class DomandaTirocinioRepositoryIT {
 		domanda1.setStato(DomandaTirocinio.IN_ATTESA);
 
 		studentiRepository.save(studente1);
-		aziendeRepository.save(azienda1);
 		progettiRepository.save(progettoFormativo1);
 		domandeRepository.save(domanda1);
 		listaProgettiFormativi.add(progettoFormativo1);
@@ -171,7 +170,7 @@ public class DomandaTirocinioRepositoryIT {
 		// Crea l'azienda #2
 		Azienda azienda2 = new Azienda();
 		azienda2.setDescrizione("azienda di software gestionali");
-		azienda2.setpIva("01234789564");
+		azienda2.setPartitaIva("01234789564");
 		azienda2.setRagioneSociale("azienda 2");
 		azienda2.setSede("Milano");
 		azienda2.setSettore("Informatica");
@@ -208,7 +207,6 @@ public class DomandaTirocinioRepositoryIT {
 		domanda2.setStato(DomandaTirocinio.IN_ATTESA);
 
 		studentiRepository.save(studente2);
-		aziendeRepository.save(azienda2);
 		progettiRepository.save(progettoFormativo2);
 		domandeRepository.save(domanda2);
 		listaProgettiFormativi.add(progettoFormativo2);
@@ -239,15 +237,15 @@ public class DomandaTirocinioRepositoryIT {
 	 * Testa l'interazione con il database per determinare se la ricerca di una
 	 * domanda di tirocinio tramite la partita iva dell'azienda associata avvenga correttamente.
 	 * 
-	 * @test {@link DomandaTirocinioRepository#findAllByAziendaPIva(String)}
+	 * @test {@link DomandaTirocinioRepository#findAllByAziendaPartitaIva(String)}
 	 * 
 	 * @result Il test è superato se le domande di tirocinio restituite dal metodo tramite 
 	 * 		   la partita iva dell'azienda associata sono presenti nella lista utilizzata per il test.
 	 */
 	@Test
-	public void findAllByAziendaPIva() {
+	public void findAllByAziendaPartitaIva() {
 		for (DomandaTirocinio domanda : listaDomande) {
-			List<DomandaTirocinio> domandeRestituite = domandeRepository.findAllByAziendaPIva(domanda.getAzienda().getpIva());
+			List<DomandaTirocinio> domandeRestituite = domandeRepository.findAllByAziendaPartitaIva(domanda.getAzienda().getPartitaIva());
 			for (DomandaTirocinio domandaRestituita : domandeRestituite)
 				assertThat(listaDomande.contains(domandaRestituita), is(true));
 		}
@@ -277,15 +275,15 @@ public class DomandaTirocinioRepositoryIT {
 	 * Testa l'interazione con il database per determinare se la ricerca di una
 	 * domanda di tirocinio tramite la partita iva dell'azienda associata e lo stato avvenga correttamente.
 	 * 
-	 * @test {@link DomandaTirocinioRepository#findAllByAziendaPIvaAndStato(String, String)}
+	 * @test {@link DomandaTirocinioRepository#findAllByAziendaPartitaIvaAndStato(String, String)}
 	 * 
 	 * @result Il test è superato se le domande di tirocinio restituite dal metodo tramite la partita iva dell'azienda associata
 	 * 		   e lo stato sono presenti nella lista utilizzata per il test.
 	 */
 	@Test
-	public void findAllByAziendaPIvaAndStato() {
+	public void findAllByAziendaPartitaIvaAndStato() {
 		for (DomandaTirocinio domanda : listaDomande) {
-			List<DomandaTirocinio> domandeRestituite = domandeRepository.findAllByAziendaPIvaAndStato(domanda.getAzienda().getpIva(), domanda.getStato());
+			List<DomandaTirocinio> domandeRestituite = domandeRepository.findAllByAziendaPartitaIvaAndStato(domanda.getAzienda().getPartitaIva(), domanda.getStato());
 			for (DomandaTirocinio domandaRestituita : domandeRestituite)
 				assertThat(listaDomande.contains(domandaRestituita), is(true));
 		}

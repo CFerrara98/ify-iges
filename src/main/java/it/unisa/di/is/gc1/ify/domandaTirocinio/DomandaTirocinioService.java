@@ -99,7 +99,7 @@ public class DomandaTirocinioService {
 		DelegatoAziendale delegatoAziendale = (DelegatoAziendale) utente;
 
 		DomandaTirocinio domandaTirocinio = domandaTirocinioRepository.findById(idDomanda).orElse(null);
-		if (!(delegatoAziendale.getAzienda().getpIva().equals(domandaTirocinio.getAzienda().getpIva()))) {
+		if (!(delegatoAziendale.getAzienda().getPartitaIva().equals(domandaTirocinio.getAzienda().getPartitaIva()))) {
 			throw new OperazioneNonAutorizzataException();
 		}
 
@@ -129,6 +129,7 @@ public class DomandaTirocinioService {
 	public DomandaTirocinio terminaTirocinio(Long idDomanda) throws OperazioneNonAutorizzataException {
 
 		Utente utente = utenzaService.getUtenteAutenticato();
+		System.err.println("metodo di test : "+ utente.getId());
 
 		// Solo il docente può terminare il tirocinio in corso
 		if (!(utente instanceof DocenteTutor)) {
@@ -143,7 +144,8 @@ public class DomandaTirocinioService {
 		}
 
 		if (!domandaTirocinio.getStato().equals(DomandaTirocinio.APPROVATA) ||
-				(!domandaTirocinio.getDataFine().isAfter(LocalDate.now()) || !domandaTirocinio.getDataInizio().isBefore(LocalDate.now()))) {
+				(!domandaTirocinio.getDataFine().isAfter(LocalDate.now()) ||
+						!domandaTirocinio.getDataInizio().isBefore(LocalDate.now()))) {
 			throw new OperazioneNonAutorizzataException("Impossibile terminare questa domanda");
 		}
 
@@ -224,11 +226,11 @@ public class DomandaTirocinioService {
 		if (!(utente instanceof DelegatoAziendale)) {
 			throw new OperazioneNonAutorizzataException();
 		}
-
+		System.out.println("Domanda service " + idDomanda );
 		DelegatoAziendale delegatoAziendale = (DelegatoAziendale) utente;
 
 		DomandaTirocinio domandaTirocinio = domandaTirocinioRepository.findById(idDomanda).orElse(null);
-		if (!(delegatoAziendale.getAzienda().getpIva().equals(domandaTirocinio.getAzienda().getpIva()))) {
+		if (!(delegatoAziendale.getAzienda().getPartitaIva().equals(domandaTirocinio.getAzienda().getPartitaIva()))) {
 			throw new OperazioneNonAutorizzataException();
 		}
 
@@ -238,8 +240,9 @@ public class DomandaTirocinioService {
 
 		domandaTirocinio.setStato(DomandaTirocinio.RIFIUTATA);
 		domandaTirocinio = domandaTirocinioRepository.save(domandaTirocinio);
-
+		if (domandaTirocinio == null) System.err.println("CIAO SONO NULL ");
 		mailSingletonSender.sendEmail(domandaTirocinio, domandaTirocinio.getStudente().getEmail());
+
 
 		return domandaTirocinio;
 	}
@@ -382,14 +385,14 @@ public class DomandaTirocinioService {
 
 		// Le domande di tirocinio di un'azienda possono essere visualizzate solo dal
 		// delegato aziendale dell'azienda stessa
-		if (!(delegatoAziendale.getAzienda().getpIva().equals(piva))) {
+		if (!(delegatoAziendale.getAzienda().getPartitaIva().equals(piva))) {
 			throw new OperazioneNonAutorizzataException();
 		}
 
-		List<DomandaTirocinio> domandeTirocinio = domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva,
+		List<DomandaTirocinio> domandeTirocinio = domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(piva,
 				DomandaTirocinio.IN_ATTESA);
 
-		domandeTirocinio.addAll(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva,
+		domandeTirocinio.addAll(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(piva,
 				DomandaTirocinio.IN_ATTESA_AZIENDA));
 
 		return domandeTirocinio;
@@ -459,19 +462,19 @@ public class DomandaTirocinioService {
 
 		// Le domande di tirocinio di un'azienda possono essere visualizzate solo dal
 		// delegato aziendale dell'azienda stessa
-		if (!(delegatoAziendale.getAzienda().getpIva().equals(piva))) {
+		if (!(delegatoAziendale.getAzienda().getPartitaIva().equals(piva))) {
 			throw new OperazioneNonAutorizzataException();
 		}
 
 		List<DomandaTirocinio> domandeTirocinio = new ArrayList<DomandaTirocinio>();
 		domandeTirocinio
-				.addAll(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva, DomandaTirocinio.IN_ATTESA_TUTOR));
+				.addAll(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(piva, DomandaTirocinio.IN_ATTESA_TUTOR));
 		domandeTirocinio
-				.addAll(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva, DomandaTirocinio.ACCETTATA));
+				.addAll(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(piva, DomandaTirocinio.ACCETTATA));
 		domandeTirocinio
-				.addAll(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva, DomandaTirocinio.APPROVATA));
+				.addAll(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(piva, DomandaTirocinio.APPROVATA));
 		domandeTirocinio
-				.addAll(domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva, DomandaTirocinio.RESPINTA));
+				.addAll(domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(piva, DomandaTirocinio.RESPINTA));
 
 		return domandeTirocinio;
 	}
@@ -543,11 +546,11 @@ public class DomandaTirocinioService {
 
 		// I tirocini in corso di un'azienda possono essere visualizzate dall'azienda
 		// stessa
-		if (!(delegatoAziendale.getAzienda().getpIva().equals(piva))) {
+		if (!(delegatoAziendale.getAzienda().getPartitaIva().equals(piva))) {
 			throw new OperazioneNonAutorizzataException();
 		}
 
-		List<DomandaTirocinio> domandeTirocinio = domandaTirocinioRepository.findAllByAziendaPIvaAndStato(piva,
+		List<DomandaTirocinio> domandeTirocinio = domandaTirocinioRepository.findAllByAziendaPartitaIvaAndStato(piva,
 				DomandaTirocinio.APPROVATA);
 		List<DomandaTirocinio> tirociniInCorso = new ArrayList<DomandaTirocinio>();
 
@@ -917,13 +920,16 @@ public class DomandaTirocinioService {
 	 * @throws DomandaTirocinioNonValidaException
 	 */
 	public String validaDocenteTutor(String docenteTutorId) throws DomandaTirocinioNonValidaException {
-		if (docenteTutorId == null)
+		if (docenteTutorId.equals(""))
 			throw new DomandaTirocinioNonValidaException("DocenteTutorError",
-					"Non è stato immesso alcun utente");
-		if (docenteTutorRepository.findById(Long.parseLong(docenteTutorId)).orElse(null) == null) {
+					"Non è stato scelto alcun docente");
+		//System.err.println(docenteTutorRepository.findById(Long.parseLong(docenteTutorId)).orElse(null));
+
+		if (!docenteTutorRepository.existsById(Long.parseLong(docenteTutorId))) {
 			throw new DomandaTirocinioNonValidaException("DocenteTutorError",
 					"Il docente immesso non è valido");
 		}
+		System.err.println("errivo qui");
 		return docenteTutorId;
 	}
 

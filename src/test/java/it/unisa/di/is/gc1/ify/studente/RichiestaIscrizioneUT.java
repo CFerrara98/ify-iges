@@ -6,6 +6,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.time.LocalDate;
+import java.util.Optional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -104,7 +106,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo nome non può essere nullo.";
 
@@ -133,7 +135,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+	//	when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo nome deve contenere almeno 2 caratteri.";
 
@@ -169,7 +171,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo nome deve contenere al massimo 255 caratteri.";
 
@@ -199,7 +201,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo nome deve contenere soltanto caratteri alfabetici o spazi.";
 
@@ -229,7 +231,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo cognome non può essere nullo.";
 
@@ -258,7 +260,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+		//when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo cognome deve contenere almeno 2 caratteri.";
 
@@ -292,7 +294,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo cognome deve contenere al massimo 255 caratteri.";
 
@@ -322,7 +324,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+		//when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo cognome deve contenere soltanto caratteri alfabetici o spazi.";
 
@@ -351,7 +353,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo indirizzo non può essere nullo.";
 
@@ -381,7 +383,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+		//when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo indirizzo deve contenere almeno 2 caratteri.";
 
@@ -411,7 +413,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo indirizzo deve contenere al massimo 255 caratteri.";
 
@@ -439,7 +441,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+		//when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo indirizzo deve contenere soltanto caratteri alfanumerici e segni di punteggiatura.";
 
@@ -467,7 +469,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+		//when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo telefono non può essere nullo.";
 
@@ -495,7 +497,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+		//when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo telefono deve contenere almeno 10 caratteri.";
 
@@ -523,7 +525,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo telefono deve contenere al massimo 11 caratteri.";
 
@@ -551,7 +553,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+		//when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo telefono deve contenere soltanto caratteri numerici, al più le prime tre cifre possono essere separate da un trattino.";
 
@@ -579,7 +581,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo data di nascita non può essere nullo.";
 
@@ -607,7 +609,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "La data di nascita non rientra nel range consento " + Studente.MIN_DATE.getDayOfMonth()
 				+ "/" + Studente.MIN_DATE.getMonthValue() + "/" + Studente.MIN_DATE.getYear() + " - "
@@ -638,7 +640,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "La data di nascita non rientra nel range consento " + Studente.MIN_DATE.getDayOfMonth()
 				+ "/" + Studente.MIN_DATE.getMonthValue() + "/" + Studente.MIN_DATE.getYear() + " - "
@@ -669,7 +671,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+		//when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo matricola non può essere nullo.";
 
@@ -697,7 +699,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo matricola deve contenere 10 caratteri.";
 
@@ -725,7 +727,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+		//when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo matricola deve contenere solo caratteri numerici.";
 
@@ -782,7 +784,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo sesso non può essere nullo.";
 
@@ -810,7 +812,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+		//when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo sesso deve essere valorizzato con un solo carattere tra M o F.";
 
@@ -838,7 +840,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo e-mail non può essere nullo.";
 
@@ -866,7 +868,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo e-mail deve contenere almeno 2 caratteri.";
 
@@ -896,7 +898,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+		//when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo e-mail deve contenere al massimo 256 caratteri.";
 
@@ -924,7 +926,7 @@ public class RichiestaIscrizioneUT {
 		confermaPassword = "Password#1";
 		condizioni = "on";
 
-		when(utenteRepository.existsByEmail(email)).thenReturn(false);
+//		when(utenteRepository.existsByEmail(email)).thenReturn(false);
 
 		final String message = "Il campo e-mail non rispetta il formato stabilito.";
 
@@ -1283,8 +1285,8 @@ public class RichiestaIscrizioneUT {
 	@Test
 	public void accettaRichiestaIscrizioneNonAutorizzata() {
 		RichiestaIscrizione richiestaiscrizione = new RichiestaIscrizione();
-		when(richiestaIscrizioneRepository.findById(10L).orElse(null)).thenReturn(richiestaiscrizione);
-		when(richiestaIscrizioneRepository.save(richiestaiscrizione)).thenReturn(richiestaiscrizione);
+//		when(richiestaIscrizioneRepository.findById(10L)).thenReturn(Optional.of(richiestaiscrizione));
+//		when(richiestaIscrizioneRepository.save(richiestaiscrizione)).thenReturn(richiestaiscrizione);
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new Studente());
 
 		final String message = "Operazione non autorizzata";
@@ -1304,8 +1306,8 @@ public class RichiestaIscrizioneUT {
 	public void accettaRichiestaIscrizioneAutorizzataStatoErrato() {
 		RichiestaIscrizione richiestaiscrizione = new RichiestaIscrizione();
 		richiestaiscrizione.setStato(RichiestaIscrizione.RIFIUTATA);
-		when(richiestaIscrizioneRepository.findById(11L).orElse(null)).thenReturn(richiestaiscrizione);
-		when(richiestaIscrizioneRepository.save(richiestaiscrizione)).thenReturn(richiestaiscrizione);
+		when(richiestaIscrizioneRepository.findById(11L)).thenReturn(Optional.of(richiestaiscrizione));
+//		when(richiestaIscrizioneRepository.save(richiestaiscrizione)).thenReturn(richiestaiscrizione);
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new ResponsabileUfficioTirocini());
 
 		final String message = "Impossibile accettare questa richiesta";
@@ -1323,7 +1325,7 @@ public class RichiestaIscrizioneUT {
 	@Test
 	public void accettaRichiestaIscrizioneSuccesso() {
 	
-		when(richiestaIscrizioneRepository.findById(any(Long.class)).orElse(null)).thenReturn(richiestaMock);
+		when(richiestaIscrizioneRepository.findById(any(Long.class))).thenReturn(Optional.of(richiestaMock));
 		when(richiestaIscrizioneRepository.save(richiestaMock)).thenReturn(richiestaMock);
 		when(richiestaMock.getStato()).thenReturn(RichiestaIscrizione.IN_ATTESA);
 
@@ -1347,8 +1349,8 @@ public class RichiestaIscrizioneUT {
 	@Test
 	public void rifiutaRichiestaIscrizioneNonAutorizzata() {
 		RichiestaIscrizione richiestaiscrizione = new RichiestaIscrizione();
-		when(richiestaIscrizioneRepository.findById(13L).orElse(null)).thenReturn(richiestaiscrizione);
-		when(richiestaIscrizioneRepository.save(richiestaiscrizione)).thenReturn(richiestaiscrizione);
+//		when(richiestaIscrizioneRepository.findById(13L)).thenReturn(Optional.of(richiestaiscrizione));
+//		when(richiestaIscrizioneRepository.save(richiestaiscrizione)).thenReturn(richiestaiscrizione);
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new Studente());
 
 		final String message = "Operazione non autorizzata";
@@ -1367,8 +1369,8 @@ public class RichiestaIscrizioneUT {
 	public void rifiutaRichiestaIscrizioneStatoErrato() {
 		RichiestaIscrizione richiestaiscrizione = new RichiestaIscrizione();
 		richiestaiscrizione.setStato(RichiestaIscrizione.ACCETTATA);
-		when(richiestaIscrizioneRepository.findById(14L).orElse(null)).thenReturn(richiestaiscrizione);
-		when(richiestaIscrizioneRepository.save(richiestaiscrizione)).thenReturn(richiestaiscrizione);
+		when(richiestaIscrizioneRepository.findById(14L)).thenReturn(Optional.of(richiestaiscrizione));
+//		when(richiestaIscrizioneRepository.save(richiestaiscrizione)).thenReturn(richiestaiscrizione);
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new ResponsabileUfficioTirocini());
 
 		final String message = "Impossibile rifiutare questa richiesta";
@@ -1387,7 +1389,7 @@ public class RichiestaIscrizioneUT {
 	 */
 	@Test
 	public void rifiutaRichiestaIscrizioneSuccesso() {		
-		when(richiestaIscrizioneRepository.findById(15L).orElse(null)).thenReturn(richiestaMock);
+		when(richiestaIscrizioneRepository.findById(15L)).thenReturn(Optional.of(richiestaMock));
 		when(utenzaService.getUtenteAutenticato()).thenReturn(new ResponsabileUfficioTirocini());
 		when(richiestaMock.getStato()).thenReturn(RichiestaIscrizione.IN_ATTESA);
 		when(richiestaIscrizioneRepository.save(richiestaMock)).thenReturn(richiestaMock);

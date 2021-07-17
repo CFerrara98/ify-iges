@@ -264,7 +264,7 @@ public class ProgettoFormativoController {
 			try {
 				DelegatoAziendale delegatoAziendale = (DelegatoAziendale) utente;
 				List<ProgettoFormativo> progettiFormativi = progettoFormativoService
-						.visualizzaProgettiFormativiAttiviByAzienda(delegatoAziendale.getAzienda().getpIva());
+						.visualizzaProgettiFormativiAttiviByAzienda(delegatoAziendale.getAzienda().getPartitaIva());
 				model.addAttribute("progettiFormativiAttivi", progettiFormativi);
 			} catch (OperazioneNonAutorizzataException e) {
 				System.out.println(e.getMessage());
@@ -291,7 +291,7 @@ public class ProgettoFormativoController {
 			try {
 				DelegatoAziendale delegatoAziendale = (DelegatoAziendale) utente;
 				List<ProgettoFormativo> progettiFormativi = progettoFormativoService
-						.visualizzaProgettiFormativiArchiviatiByAzienda(delegatoAziendale.getAzienda().getpIva());
+						.visualizzaProgettiFormativiArchiviatiByAzienda(delegatoAziendale.getAzienda().getPartitaIva());
 				model.addAttribute("progettiFormativiArchiviati", progettiFormativi);
 			} catch (OperazioneNonAutorizzataException e) {
 				System.out.println(e.getMessage());
