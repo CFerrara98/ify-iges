@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * La classe fornisce i metodi per la logica di business per la gestione delle
  * richieste d'iscrizione
- * 
+ *
  * @author Giusy Castaldo Geremia Cavezza Carmine Ferrara
  */
 
@@ -59,9 +59,9 @@ public class DomandaTirocinioService {
 	/**
 	 * Il metodo fornisce la funzionalità di salvataggio di una domanda di tirocinio
 	 * pervenuta da uno studente e posta in stato di attesa
-	 * 
+	 *
 	 * @param domandaTirocinio
-	 * 
+	 *
 	 * @return DomandaTirocinio domandaTirocinio
 	 * @pre domandaTirocinio != null
 	 * @post domandaTirocinio != null
@@ -77,8 +77,8 @@ public class DomandaTirocinioService {
 	/**
 	 * Il metodo fornisce la funzionalità di accettazione aziendale di una domanda
 	 * di tirocinio
-	 * 
-	 * 
+	 *
+	 *
 	 * @param idDomanda
 	 * @return Oggetto {@link DomandaTirocinio} che rappresenta la domanda di
 	 *         tirocinio approvata
@@ -208,8 +208,8 @@ public class DomandaTirocinioService {
 	/**
 	 * Il metodo fornisce la funzionalita' di rifiuto aziendale di una domanda di
 	 * tirocinio
-	 * 
-	 * 
+	 *
+	 *
 	 * @param idDomanda
 	 * @return Oggetto {@link DomandaTirocinio} che rappresenta la domanda di
 	 *         tirocinio rifiutata
@@ -289,8 +289,8 @@ public class DomandaTirocinioService {
 	/**
 	 * Il metodo fornisce la funzionalita' di approvazione dell'ufficio tirocini di
 	 * una domanda di tirocinio
-	 * 
-	 * 
+	 *
+	 *
 	 * @param idDomanda
 	 * @return Oggetto {@link DomandaTirocinio} che rappresenta la domanda di
 	 *         tirocinio rifiutata
@@ -325,12 +325,12 @@ public class DomandaTirocinioService {
 	/**
 	 * Il metodo fornisce la funzionalita' di respinta dell'ufficio tirocini di una
 	 * domanda di tirocinio
-	 * 
-	 * 
+	 *
+	 *
 	 * @param idDomanda
 	 * @return Oggetto {@link DomandaTirocinio} che rappresenta la domanda di
 	 *         tirocinio rifiutata
-	 * 
+	 *
 	 * @throws OperazioneNonAutorizzataException
 	 */
 
@@ -362,12 +362,12 @@ public class DomandaTirocinioService {
 	/**
 	 * Il metodo fornisce la funzionalita' di visualizzazione delle domande di
 	 * tirocinio in attesa
-	 * 
+	 *
 	 * @param piva
 	 * @return Lista di {@link DomandaTirocinio} che rappresenta la lista delle
 	 *         domande di tirocinio <b>Può essere vuota</b> se nel database non sono
 	 *         presenti domande di tirocinio di quella determinata azienda
-	 *         
+	 *
 	 * @throws OperazioneNonAutorizzataException
 	 */
 	@Transactional(rollbackFor = Exception.class)
@@ -439,12 +439,12 @@ public class DomandaTirocinioService {
 	/**
 	 * Il metodo fornisce la funzionalita' di visualizzazione delle domande di
 	 * tirocinio inoltrate
-	 * 
+	 *
 	 * @param piva
 	 * @return Lista di {@link DomandaTirocinio} che rappresenta la lista delle
 	 *         domande di tirocinio <b>Può essere vuota</b> se nel database non sono
 	 *         presenti domande di tirocinio di quella determinata azienda
-	 *         
+	 *
 	 * @throws OperazioneNonAutorizzataException
 	 */
 	@Transactional(rollbackFor = Exception.class)
@@ -523,13 +523,13 @@ public class DomandaTirocinioService {
 	/**
 	 * Il metodo fornisce la funzionalita' di visualizzazione dei tirocini in corso
 	 * dell'azienda
-	 * 
+	 *
 	 * @param piva
 	 * @return Lista di {@link DomandaTirocinio} che rappresenta la lista delle
 	 *         domande di tirocinio <b>Può essere vuota</b> se nel database non sono
 	 *         presenti domande di tirocinio di quella determinata azienda e in
 	 *         corso
-	 *         
+	 *
 	 * @throws OperazioneNonAutorizzataException
 	 */
 	@Transactional(rollbackFor = Exception.class)
@@ -644,7 +644,7 @@ public class DomandaTirocinioService {
 	/**
 	 * Il metodo fornisce la funzionalita' di visualizzazione delle domande di
 	 * tirocinio inoltrate da uno studente
-	 * 
+	 *
 	 * @param id
 	 * @return Lista di {@link DomandaTirocinio} che rappresenta la lista delle
 	 *         domande di tirocinio <b>Può essere vuota</b> se nel database non sono
@@ -673,11 +673,11 @@ public class DomandaTirocinioService {
 
 		return domandeTirocinio;
 	}
-	
+
 	/**
 	 *  Il metodo fornisce la funzionalita' di visualizzazione dei tirocini in corso
 	 * di uno studente
-	 * 
+	 *
 	 * @param id
 	 * @return Lista di {@link DomandaTirocinio} che rappresenta la lista delle
 	 *         domande di tirocinio <b>Può essere vuota</b> se nel database non sono
@@ -716,7 +716,7 @@ public class DomandaTirocinioService {
 	/**
 	 * Il metodo fornisce la funzionalita' di visualizzazione delle domande di
 	 * tirocinio in attesa dell'ufficio
-	 * 
+	 *
 	 * @return Lista di {@link DomandaTirocinio} che rappresenta la lista delle
 	 *         domande di tirocinio <b>Può essere vuota</b> se nel database non sono
 	 *         presenti domande di tirocinio in attesa dell'ufficio
@@ -741,11 +741,11 @@ public class DomandaTirocinioService {
 	/**
 	 * Il metodo fornisce la funzionalita' di visualizzazione delle domande di
 	 * tirocinio valutate dall'ufficio
-	 * 
+	 *
 	 * @return Lista di {@link DomandaTirocinio} che rappresenta la lista delle
 	 *         domande di tirocinio <b>Può essere vuota</b> se nel database non sono
 	 *         presenti domande di tirocinio valutate dall'ufficio
-	 * @throws OperazioneNonAutorizzataException        
+	 * @throws OperazioneNonAutorizzataException
 	 */
 	@Transactional(rollbackFor = Exception.class)
 	public List<DomandaTirocinio> visualizzaDomandeTirocinioValutateUfficio() throws OperazioneNonAutorizzataException {
@@ -768,11 +768,11 @@ public class DomandaTirocinioService {
 	/**
 	 * Il metodo fornisce la funzionalita' di visualizzazione dei tirocini in corso
 	 * ufficio
-	 * 
+	 *
 	 * @return Lista di {@link DomandaTirocinio} che rappresenta la lista dei
 	 *         tirocini in corso <b>Può essere vuota</b> se nel database non sono
 	 *         presenti tirocini in corso
-	 *         
+	 *
 	 * @throws OperazioneNonAutorizzataException
 	 */
 	@Transactional(rollbackFor = Exception.class)
@@ -798,7 +798,7 @@ public class DomandaTirocinioService {
 
 	/**
 	 * Il metodo fornisce i controlli di validazione del parametro conoscenze
-	 * 
+	 *
 	 * @param conoscenze
 	 * @return conoscenze
 	 * @throws DomandaTirocinioNonValidaException
@@ -820,7 +820,7 @@ public class DomandaTirocinioService {
 
 	/**
 	 * Il metodo fornisce i controlli di validazione del parametro motivazioni
-	 * 
+	 *
 	 * @param motivazioni
 	 * @return motivazioni
 	 * @throws DomandaTirocinioNonValidaException
@@ -842,7 +842,7 @@ public class DomandaTirocinioService {
 
 	/**
 	 * Il metodo fornisce i controlli di validazione del parametro dataInizio
-	 * 
+	 *
 	 * @param dataInizio
 	 * @return dataInizio
 	 * @throws DomandaTirocinioNonValidaException
@@ -860,7 +860,7 @@ public class DomandaTirocinioService {
 
 	/**
 	 * Il metodo fornisce i controlli di validazione del parametro dataFine
-	 * 
+	 *
 	 * @param dataInizio
 	 * @param dataFine
 	 * @return dataFine
@@ -880,7 +880,7 @@ public class DomandaTirocinioService {
 
 	/**
 	 * Il metodo fornisce i controlli di validazione del parametro cfu
-	 * 
+	 *
 	 * @param cfu
 	 * @return cfu
 	 * @throws DomandaTirocinioNonValidaException
@@ -897,11 +897,11 @@ public class DomandaTirocinioService {
 
 	/**
 	 * Il metodo fornisce i controlli di validazione del parametro cfu
-	 * 
+	 *
 	 * @param condizioni
 	 * @return
 	 * @throws DomandaTirocinioNonValidaException
-	 * 
+	 *
 	 * @return condizioni
 	 */
 	public String validaCondizioni(String condizioni) throws DomandaTirocinioNonValidaException {
@@ -920,7 +920,7 @@ public class DomandaTirocinioService {
 	 * @throws DomandaTirocinioNonValidaException
 	 */
 	public String validaDocenteTutor(String docenteTutorId) throws DomandaTirocinioNonValidaException {
-		if (docenteTutorId.equals(""))
+		if (docenteTutorId == null || docenteTutorId.equals(""))
 			throw new DomandaTirocinioNonValidaException("DocenteTutorError",
 					"Non è stato scelto alcun docente");
 		//System.err.println(docenteTutorRepository.findById(Long.parseLong(docenteTutorId)).orElse(null));

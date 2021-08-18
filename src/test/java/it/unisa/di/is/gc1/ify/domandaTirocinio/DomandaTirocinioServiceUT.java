@@ -36,7 +36,7 @@ import javax.swing.text.html.Option;
 /**
  * Test di unità per la classe DomandaTirocinioService; tipologia di test:
  * whitebox strategia: branch coverage.
- * 
+ *
  * @author Giacomo Izzo , Alessia Natale , Roberto Calabrese
  *
  */
@@ -140,10 +140,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui la lista da controllare sia vuota.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#controllaStatoStudente()}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -163,10 +163,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui l' id della domanda non corrisponda a quello dello studente.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#controllaStatoStudente()}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -189,10 +189,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui esista già una domanda in attesa.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#controllaStatoStudente()}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -213,9 +213,9 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui il salvataggio della domanda vada a buon fine.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#salvaDomandaTirocinio(DomandaTirocinio)}
-	 * 
+	 *
 	 * @result Il test è superato se il metodo save del repository è correttamente invocato.
 	 */
 	@Test
@@ -227,10 +227,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui l'utente non sia autorizzato all'accettazione della domanda.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#accettaDomandaTirocinio(Long)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -246,10 +246,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui la piva di delegato e azienda associata alla domanda siano diverse.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#accettaDomandaTirocinioByAzienda(Long)} (Long)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -268,10 +268,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui la piva di delegato e azienda associata alla domanda siano diverse.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#accettaDomandaTirocinio(Long)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -291,9 +291,9 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui l'accettazione della domanda vada a buon fine.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#accettaDomandaTirocinio(Long)}
-	 * 
+	 *
 	 * @result Il test è superato se il metodo save del repository è correttamente invocato.
 	 */
 	@Test
@@ -329,10 +329,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui l'utente non sia autorizzato al rifiuto della domanda.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#rifiutoDomandaTirocinio(Long)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -348,10 +348,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui la piva di delegato e azienda associata alla domanda siano diverse.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#rifiutoDomandaTirocinio(Long)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -370,10 +370,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui lo stato della domanda da rifiutare non sia in attesa.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#rifiutoDomandaTirocinioByAzienda(Long)} (Long)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -397,9 +397,9 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui il rifiuto della domanda vada a buon fine.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#rifiutoDomandaTirocinioByAzienda(Long)} (Long)}
-	 * 
+	 *
 	 * @result Il test è superato se il metodo save del repository è correttamente invocato.
 	 */
 	@Test
@@ -414,13 +414,13 @@ public class DomandaTirocinioServiceUT {
 		}
 		verify(domandaTirocinioRepository , times(1)).save(domanda);
 	}
-	
+
 	/**
 	 * Testa il caso in cui l'utente non sia autorizzato all'approvazione della domanda.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#approvazioneDomandaTirocinio(Long)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -436,10 +436,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui lo stato della domanda da approvare non sia 'accettata'.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#approvazioneDomandaTirocinio(Long)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -453,12 +453,12 @@ public class DomandaTirocinioServiceUT {
 			assertEquals(messaggio, e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Testa il caso in cui l'approvazione della domdanda vada a buon fine.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#approvazioneDomandaTirocinio(Long)}
-	 * 
+	 *
 	 * @result Il test è superato se il metodo save del repository è correttamente invocato.
 	 */
 	@Test
@@ -474,13 +474,13 @@ public class DomandaTirocinioServiceUT {
 		}
 		verify(domandaTirocinioRepository , times(1)).save(domanda);
 	}
-	
+
 	/**
 	 * Testa il caso in cui l'utente non sia autorizzato al respingimento della domanda.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#respintaDomandaTirocinio(Long)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -493,13 +493,13 @@ public class DomandaTirocinioServiceUT {
 			assertEquals(messaggio, e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Testa il caso in cui lo stato della domanda da respingere non sia 'accettata'.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#respintaDomandaTirocinio(Long)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -513,12 +513,12 @@ public class DomandaTirocinioServiceUT {
 			assertEquals(messaggio, e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Testa il caso in cui il respingimento della domanda vada a buon fine.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#respintaDomandaTirocinio(Long)}
-	 * 
+	 *
 	 * @result Il test è superato se il metodo save del repository è correttamente invocato.
 	 */
 	@Test
@@ -534,13 +534,13 @@ public class DomandaTirocinioServiceUT {
 		}
 		verify(domandaTirocinioRepository , times(1)).save(domanda);
 	}
-	
+
 	/**
 	 * Testa il caso in cui l'utente non sia autorizzato alla  delle domande.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaDomandeTirocinioInAttesaAzienda(String)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -553,13 +553,13 @@ public class DomandaTirocinioServiceUT {
 			assertEquals(messaggio, e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Testa il caso in cui la piva di delegato e azienda associata alle domande siano diverse.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaDomandeTirocinioInAttesaAzienda(String)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -573,12 +573,12 @@ public class DomandaTirocinioServiceUT {
 			assertEquals(messaggio, e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Testa il caso in cui la visualizzazione delle domande vada a buon fine.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaDomandeTirocinioInAttesaAzienda(String)}
-	 * 
+	 *
 	 * @result Il test è superato se il metodo findAllByAziendaPIvaAndStato del repository
 	 * è correttamente invocato.
 	 */
@@ -601,13 +601,13 @@ public class DomandaTirocinioServiceUT {
 		verify(domandaTirocinioRepository , times(1)).findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva() , DomandaTirocinio.IN_ATTESA);
 
 	}
-	
+
 	/**
 	 * Testa il caso in cui l'utente non sia autorizzato alla  delle domande.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaDomandeTirocinioInoltrateAzienda(String)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -623,10 +623,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui la piva di delegato e azienda associata alle domande siano diverse.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaDomandeTirocinioInoltrateAzienda(String)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -640,12 +640,12 @@ public class DomandaTirocinioServiceUT {
 			assertEquals(messaggio, e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Testa il caso in cui la visualizzazione delle domande inoltrate vada a buon fine.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaDomandeTirocinioInoltrateAzienda(String)}
-	 * 
+	 *
 	 * @result Il test è superato se il metodo findAllByAziendaPIvaAndStato del repository è correttamente
 	 * invocato .
 	 */
@@ -666,13 +666,13 @@ public class DomandaTirocinioServiceUT {
 		verify(domandaTirocinioRepository , times(1)).findAllByAziendaPartitaIvaAndStato(azienda.getPartitaIva() , DomandaTirocinio.RESPINTA);
 
 	}
-	
+
 	/**
 	 * Testa il caso in cui l'utente non sia autorizzato alla  dei tirocini.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaTirociniInCorsoAzienda(String)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -688,10 +688,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui la piva di delegato e azienda associata alle domande siano diverse.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaTirociniInCorsoAzienda(String)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -710,9 +710,9 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui la lista dei tirocini in corso restituita sia vuota.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaTirociniInCorsoAzienda(String)}
-	 * 
+	 *
 	 * @result Il test è superato se il branch corrispondente al caso è correttamente raggiunto.
 	 */
 	@Test
@@ -732,11 +732,11 @@ public class DomandaTirocinioServiceUT {
 	}
 
 	/**
-	 * Testa il caso in cui la data di fine di uno dei tirocini in lista sia precedente 
+	 * Testa il caso in cui la data di fine di uno dei tirocini in lista sia precedente
 	 * alla data odierna.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaTirociniInCorsoAzienda(String)}
-	 * 
+	 *
 	 * @result Il test è superato se il branch corrispondente al caso è correttamente raggiunto.
 	 */
 	@Test
@@ -758,11 +758,11 @@ public class DomandaTirocinioServiceUT {
 	}
 
 	/**
-	 * Testa il caso in cui la data di inizio di uno dei tirocini in lista sia successiva 
+	 * Testa il caso in cui la data di inizio di uno dei tirocini in lista sia successiva
 	 * alla data odierna.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaTirociniInCorsoAzienda(String)}
-	 * 
+	 *
 	 * @result Il test è superato se il branch corrispondente al caso è correttamente raggiunto.
 	 */
 	@Test
@@ -785,9 +785,9 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui la visualizzazione dei tirocini in corso vada a buon fine.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaTirociniInCorsoAzienda(String)}
-	 * 
+	 *
 	 * @result Il test è superato se il branch corrispondente al caso è correttamente raggiunto.
 	 */
 	@Test
@@ -811,10 +811,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui l'utente non sia autorizzato alla  delle domande.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaDomandeTirocinioInoltrateStudente(Long)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -829,12 +829,12 @@ public class DomandaTirocinioServiceUT {
 	}
 
 	/**
-	 * Testa il caso in cui l'id dello utente autenticato sia diverso da quello passato come 
+	 * Testa il caso in cui l'id dello utente autenticato sia diverso da quello passato come
 	 * parametro.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaDomandeTirocinioInoltrateStudente(Long)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -851,9 +851,9 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui la visualizzazione delle domande inoltrate vada a buon fine.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaDomandeTirocinioInoltrateStudente(Long)}
-	 * 
+	 *
 	 * @result Il test è superato se il metodo findAllByStudenteId del repository è correttamente
 	 * invocato.
 	 */
@@ -870,10 +870,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui l'utente non sia autorizzato alla visualizzazione delle domande.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaTirociniInCorsoStudente(Long)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -888,12 +888,12 @@ public class DomandaTirocinioServiceUT {
 	}
 
 	/**
-	 * Testa il caso in cui l'id dello utente autenticato sia diverso da quello passato come 
+	 * Testa il caso in cui l'id dello utente autenticato sia diverso da quello passato come
 	 * parametro.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaTirociniInCorsoStudente(Long)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -910,9 +910,9 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui la lista dei tirocini in corso restituita sia vuota.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaTirociniInCorsoStudente(Long)}
-	 * 
+	 *
 	 * @result Il test è superato se il branch corrispondente al caso è correttamente raggiunto.
 	 */
 	@Test
@@ -930,11 +930,11 @@ public class DomandaTirocinioServiceUT {
 	}
 
 	/**
-	 * Testa il caso in cui la data di inizio di uno dei tirocini in lista sia successiva 
+	 * Testa il caso in cui la data di inizio di uno dei tirocini in lista sia successiva
 	 * alla data odierna.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaTirociniInCorsoStudente(Long)}
-	 * 
+	 *
 	 * @result Il test è superato se il branch corrispondente al caso è correttamente raggiunto.
 	 */
 	@Test
@@ -954,11 +954,11 @@ public class DomandaTirocinioServiceUT {
 	}
 
 	/**
-	 * Testa il caso in cui la data di fine di uno dei tirocini in lista sia precedente 
+	 * Testa il caso in cui la data di fine di uno dei tirocini in lista sia precedente
 	 * alla data odierna.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaTirociniInCorsoStudente(Long)}
-	 * 
+	 *
 	 * @result Il test è superato se il branch corrispondente al caso è correttamente raggiunto.
 	 */
 	@Test
@@ -979,9 +979,9 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui la visualizzazione dei tirocini in corso vada a buon fine.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaTirociniInCorsoStudente(Long)}
-	 * 
+	 *
 	 * @result Il test è superato se il branch corrispondente al caso è correttamente raggiunto.
 	 */
 	@Test
@@ -1001,10 +1001,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui l'utente non sia autorizzato alla visualizzazione delle domande.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaDomandeTirocinioInAttesaUfficio()}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -1020,10 +1020,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui la visualizzazione delle domande vada a buon fine.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaDomandeTirocinioInAttesaUfficio()}
-	 * 
-	 * @result Il test è superato se il metodo findAllByStato del repository è correttamente 
+	 *
+	 * @result Il test è superato se il metodo findAllByStato del repository è correttamente
 	 * invocato.
 	 */
 	@Test
@@ -1040,10 +1040,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui l'utente non sia autorizzato alla visualizzazione delle domande.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaDomandeTirocinioValutateUfficio()}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -1059,9 +1059,9 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui la visualizzazione delle domande vada a buon fine.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaDomandeTirocinioValutateUfficio()}
-	 * 
+	 *
 	 * @result Il test è superato se il metodo findAllByStato del repository è correttamente
 	 * invocato.
 	 */
@@ -1080,10 +1080,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui l'utente non sia autorizzato alla visualizzazione delle domande.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaTirociniInCorsoUfficio()}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -1099,9 +1099,9 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui la lista dei tirocini in corso restituita sia vuota.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaTirociniInCorsoUfficio()}
-	 * 
+	 *
 	 * @result Il test è superato se il branch corrispondente al caso è correttamente raggiunto.
 	 */
 	@Test
@@ -1118,11 +1118,11 @@ public class DomandaTirocinioServiceUT {
 	}
 
 	/**
-	 * Testa il caso in cui la data di inizio di uno dei tirocini in lista sia successiva 
+	 * Testa il caso in cui la data di inizio di uno dei tirocini in lista sia successiva
 	 * alla data odierna.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaTirociniInCorsoUfficio()}
-	 * 
+	 *
 	 * @result Il test è superato se il branch corrispondente al caso è correttamente raggiunto.
 	 */
 	@Test
@@ -1141,11 +1141,11 @@ public class DomandaTirocinioServiceUT {
 	}
 
 	/**
-	 * Testa il caso in cui la data di fine di uno dei tirocini in lista sia precedente 
+	 * Testa il caso in cui la data di fine di uno dei tirocini in lista sia precedente
 	 * alla data odierna.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaTirociniInCorsoUfficio()}
-	 * 
+	 *
 	 * @result Il test è superato se il branch corrispondente al caso è correttamente raggiunto.
 	 */
 	@Test
@@ -1165,9 +1165,9 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui la visualizzazione dei tirocini vada a buon fine.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#visualizzaTirociniInCorsoUfficio()}
-	 * 
+	 *
 	 * @result Il test è superato se il branch corrispondente al caso è correttamente raggiunto.
 	 */
 	@Test
@@ -1186,10 +1186,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui il campo conoscenze inserito , sia null.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#validaConoscenze(String)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -1207,12 +1207,12 @@ public class DomandaTirocinioServiceUT {
 	}
 
 	/**
-	 * Testa il caso in cui la lunghezza del campo conoscenze inserito sia minore della 
+	 * Testa il caso in cui la lunghezza del campo conoscenze inserito sia minore della
 	 * lunghezza minima.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#validaConoscenze(String)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -1226,12 +1226,12 @@ public class DomandaTirocinioServiceUT {
 	}
 
 	/**
-	 * Testa il caso in cui la lunghezza del campo conoscenze inserito sia maggiore della 
+	 * Testa il caso in cui la lunghezza del campo conoscenze inserito sia maggiore della
 	 * lunghezza massima.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#validaConoscenze(String)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -1248,9 +1248,9 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui il campo conoscenze inserito , sia corretto.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#validaConoscenze(String)}
-	 * 
+	 *
 	 * @result Il test è superato se il branch corrispondente al caso è correttamente raggiunto.
 	 */
 	@Test
@@ -1261,13 +1261,13 @@ public class DomandaTirocinioServiceUT {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Testa il caso in cui il campo motivazioni inserito , sia null.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#validaMotivazioni(String)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -1281,12 +1281,12 @@ public class DomandaTirocinioServiceUT {
 	}
 
 	/**
-	 * Testa il caso in cui la lunghezza del campo motivazioni inserito , sia minore della 
+	 * Testa il caso in cui la lunghezza del campo motivazioni inserito , sia minore della
 	 * lunghezza minima.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#validaMotivazioni(String)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -1300,12 +1300,12 @@ public class DomandaTirocinioServiceUT {
 	}
 
 	/**
-	 * Testa il caso in cui la lunghezza del campo conoscenze inserito sia maggiore della 
+	 * Testa il caso in cui la lunghezza del campo conoscenze inserito sia maggiore della
 	 * lunghezza massima.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#validaMotivazioni(String)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -1324,9 +1324,9 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui il campo motivazioni inserito , sia corretto.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#validaMotivazioni(String)}
-	 * 
+	 *
 	 * @result Il test è superato se il branch corrispondente al caso è correttamente raggiunto.
 	 */
 	@Test
@@ -1340,10 +1340,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui il campo data inizio inserito , sia null.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#validaDataInizio(LocalDate)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -1359,10 +1359,10 @@ public class DomandaTirocinioServiceUT {
 	/**
 	 * Testa il caso in cui la data di inizio inserita ,  sia antecedente alla minima
 	 * data di inizio consentita .
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#validaDataInizio(LocalDate)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -1377,9 +1377,9 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui il campo data inizio inserito , sia corretto.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#validaDataInizio(LocalDate)}
-	 * 
+	 *
 	 * @result Il test è superato se il branch corrispondente al caso è correttamente raggiunto.
 	 */
 	@Test
@@ -1393,10 +1393,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui il campo data fine inserito , sia null.
-	 * 
+	 *
 	 * @test
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -1410,12 +1410,12 @@ public class DomandaTirocinioServiceUT {
 	}
 
 	/**
-	 * Testa il caso in cui la data di fine inserita, sia antecedente alla data di 
+	 * Testa il caso in cui la data di fine inserita, sia antecedente alla data di
 	 * inizio inserita .
-	 * 
 	 *
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -1430,9 +1430,9 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui il campo data fine inserito, sia corretto.
-	 * 
+	 *
 	 * @test
-	 * 
+	 *
 	 * @result Il test è superato se il branch corrispondente al caso è correttamente raggiunto.
 	 */
 	@Test
@@ -1446,10 +1446,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui il campo cfu inserito, sia null.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#cfu(String)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -1464,10 +1464,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui il cfu inserito , sia vuoto.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#cfu(String)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -1482,10 +1482,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui il cfu inserito , sia minore dei cfu minimi.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#cfu(String)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -1501,10 +1501,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui il cfu inserito , sia maggiore dei cfu massimi.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#cfu(String)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -1520,9 +1520,9 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui il campo data cfu inserito, sia corretto.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#cfu(String)}
-	 * 
+	 *
 	 * @result Il test è superato se il branch corrispondente al caso è correttamente raggiunto.
 	 */
 	@Test
@@ -1537,10 +1537,10 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui il campo condizioni inserito, sia null.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#validaCondizioni(String)}
-	 * 
-	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello 
+	 *
+	 * @result Il test è superato se il messaggio generato dal sistema è uguale a quello
 	 * previsto dall'oracolo.
 	 */
 	@Test
@@ -1555,9 +1555,9 @@ public class DomandaTirocinioServiceUT {
 
 	/**
 	 * Testa il caso in cui il campo condizioni inserito, sia corretto.
-	 * 
+	 *
 	 * @test {@link DomandaTirocinioService#validaCondizioni(String)}
-	 * 
+	 *
 	 * @result Il test è superato se il branch corrispondente al caso è correttamente raggiunto.
 	 */
 	@Test
@@ -2128,7 +2128,7 @@ public class DomandaTirocinioServiceUT {
 
 		} catch (DomandaTirocinioNonValidaException e) {
 			e.printStackTrace();
-			Assert.assertEquals(e.getMessage(), "Non è stato immesso alcun utente");
+			Assert.assertEquals(e.getMessage(), "Non è stato scelto alcun docente");
 		}
 
 	}
