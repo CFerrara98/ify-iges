@@ -6,4 +6,4 @@ rilasciato dal precedente team di sviluppo è così descritto:
 # IFY
 Applicazione web per la gestione dei tirocini formativi sviluppata per il Dipartimento di Informatica dell'Università degli Studi di Salerno per il corso di Ingegneria del Software 2019/2020
 
-La documentazione iniziale del progetto e quella prodotta ai fini del progetto di manutenzione è disponibile su google drive al link: https://drive.google.com/drive/u/1/folders/0AELtgEy1JD8FUk9PVA .
+La documentazione iniziale del progetto e quella prodotta ai fini del progetto di manutenzione è disponibile su google drive al link: https://drive.google.com/drive/folders/1tkW7HouKbZeUHU-TX5BsAHWGGletY-cB?usp=sharing .
